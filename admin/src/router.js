@@ -17,14 +17,17 @@ export default new Router({
         path:'/login',
         component: Login
     },{
-        path: '/admin',
+        path: '/',
+        name: "admin",
         component: Admin,
         children:[{
             // 子路由不需要加/
             path:'welcome',
+            name:"welcome",
             component: Welcome
         },{
-            path: 'chapter',
+            path: 'business/chapter',
+            name:"business/chapter",
             component: Chapter,
         }]
     }]
