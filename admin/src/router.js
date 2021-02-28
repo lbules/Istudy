@@ -23,11 +23,11 @@ export default new Router({
         children:[{
             // 子路由不需要加/
             path:'welcome',
-            name:"welcome",
+            name:"welcome-sidebar",
             component: Welcome
         },{
             path: 'business/chapter',
-            name:"business/chapter",
+            name:"business-chapter-sidebar",
             component: Chapter,
         }]
     }]
