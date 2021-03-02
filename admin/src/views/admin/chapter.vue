@@ -102,7 +102,7 @@
                             <div class="form-group">
                                 <label  class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control"  placeholder="名称">
+                                    <input v-model="chapter.name" class="form-control"  placeholder="名称">
                                 </div>
                             </div>
                             <!--名称输入--END-->
@@ -111,7 +111,7 @@
                             <div class="form-group">
                                 <label  class="col-sm-2 control-label">课程ID</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control"  placeholder="课程ID">
+                                    <input v-model="chapter.courseId" class="form-control"  placeholder="课程ID">
                                 </div>
                             </div>
                             <!--课程id输入-->
@@ -120,7 +120,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-primary">保存</button>
+                        <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -138,6 +138,7 @@ import Pagination from "../../components/pagination.vue"
         name: 'chapter',
         data: function () {
             return {
+                chapter:{}, //映射表单数据
                 chapters: []
             }
         },
@@ -161,6 +162,14 @@ import Pagination from "../../components/pagination.vue"
                     console.log("查询大章节列表结果:", response);
                     _this.chapters = response.data.list;
                     _this.$refs.pagination.render(page,response.data.total)
+                })
+            },
+
+            //保存大章节
+            save() {
+                let _this = this;
+                _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save',_this.chapter).then((response) => {
+                    console.log("保存大章节列表结果:", response);
                 })
             }
         }
