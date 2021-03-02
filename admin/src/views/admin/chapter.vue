@@ -1,6 +1,13 @@
 <template>
 
     <div>
+        <!--新增章节按钮-->
+        <p><button v-on:click="add()" class="btn btn-white btn-default btn-round">
+            <i class="ace-icon fa fa-edit"></i>
+           新增
+        </button></p>
+        <!--新增章节按钮--END-->
+
         <!--详细列表-->
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
@@ -78,12 +85,47 @@
         <!--分页组件-->
         <pagination ref="pagination" v-bind:list="list" v-bind:itemCount="8"></pagination>
         <!--分页组件--END-->
-<!--        刷新
-        <p><button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
-            <i class="ace-icon fa fa-refresh"></i>
-            刷新
-        </button></p>
-        刷新&#45;&#45;END-->
+
+        <!--模态框-->
+        <div class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">表单</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <!--弹出框内容-->
+                        <form class="form-horizontal">
+                            <!--名称输入-->
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">名称</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control"  placeholder="名称">
+                                </div>
+                            </div>
+                            <!--名称输入--END-->
+
+                            <!--课程id输入-->
+                            <div class="form-group">
+                                <label  class="col-sm-2 control-label">课程ID</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control"  placeholder="课程ID">
+                                </div>
+                            </div>
+                            <!--课程id输入-->
+                        </form>
+                        <!--弹出框内容--END-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary">保存</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!--模态框--END-->
 
     </div>
 </template>
@@ -104,6 +146,12 @@ import Pagination from "../../components/pagination.vue"
             _this.list(1);
         },
         methods: {
+            add(){
+                let _this = this;
+                $(".modal").modal("show"); //让模态框显示出来
+            },
+
+            //查询大章节记录
             list(page) {
                 let _this = this;
                 _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/list', {

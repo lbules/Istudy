@@ -46,6 +46,7 @@
           刷新
       </button>
       <!--刷新--END-->
+
   </div>
 </template>
 
@@ -57,6 +58,7 @@
         type: Function,
         default: null
       },
+
       itemCount: Number // 显示的页码数，比如总共有100页，只显示10页，其它用省略号表示
     },
     data: function () {
