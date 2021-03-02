@@ -87,7 +87,7 @@
         <!--分页组件--END-->
 
         <!--模态框-->
-        <div class="modal fade" tabindex="-1" role="dialog">
+        <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -149,7 +149,7 @@ import Pagination from "../../components/pagination.vue"
         methods: {
             add(){
                 let _this = this;
-                $(".modal").modal("show"); //让模态框显示出来
+                $("#form-modal").modal("show"); //让模态框显示出来
             },
 
             //查询大章节记录
@@ -160,8 +160,9 @@ import Pagination from "../../components/pagination.vue"
                     size: _this.$refs.pagination.size, //每页查询多少条记录
                 }).then((response) => {
                     console.log("查询大章节列表结果:", response);
-                    _this.chapters = response.data.list;
-                    _this.$refs.pagination.render(page,response.data.total)
+                    let resp  = response.data;//response.data就相当于responseDto
+                    _this.chapters = resp.content.list;
+                    _this.$refs.pagination.render(page,resp.content.total)
                 })
             },
 
@@ -170,6 +171,11 @@ import Pagination from "../../components/pagination.vue"
                 let _this = this;
                 _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save',_this.chapter).then((response) => {
                     console.log("保存大章节列表结果:", response);
+                    let resp = response.data;
+                    if (resp.success) { //保存成功就将弹出框隐藏
+                        $("#form-modal").modal("hide");
+                        _this.list(1); //重新刷新
+                    }
                 })
             }
         }
