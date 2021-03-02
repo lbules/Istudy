@@ -1,10 +1,7 @@
 <template>
 
     <div>
-        <p><button v-on:click="list()" class="btn btn-white btn-default btn-round">
-            <i class="ace-icon fa fa-refresh"></i>
-            刷新
-        </button></p>
+        <!--详细列表-->
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
@@ -77,11 +74,25 @@
             </tr>
             </tbody>
         </table>
+        <!--详细列表-END-->
+        <!--分页组件-->
+        <pagination ref="pagination" v-bind:list="list" v-bind:itemCount="8"></pagination>
+        <!--分页组件--END-->
+<!--        刷新
+        <p><button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
+            <i class="ace-icon fa fa-refresh"></i>
+            刷新
+        </button></p>
+        刷新&#45;&#45;END-->
+
     </div>
 </template>
 
 <script>
+import Pagination from "../../components/pagination.vue"
+
     export default {
+    components: {Pagination},
         name: 'chapter',
         data: function () {
             return {
@@ -90,17 +101,18 @@
         },
         mounted: function () {
             let _this = this;
-            _this.list();
+            _this.list(1);
         },
         methods: {
-            list() {
+            list(page) {
                 let _this = this;
                 _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/list', {
-                    page: 1,
-                    size: 1
+                    page: page, //第几页
+                    size: _this.$refs.pagination.size, //每页查询多少条记录
                 }).then((response) => {
                     console.log("查询大章节列表结果:", response);
                     _this.chapters = response.data.list;
+                    _this.$refs.pagination.render(page,response.data.total)
                 })
             }
         }
