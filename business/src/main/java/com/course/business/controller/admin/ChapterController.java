@@ -25,4 +25,9 @@ public class ChapterController {
         return chapterService.list();
     }
 
+    @RequestMapping("/test")
+    public String test() {
+        return "test";
+    }
+
 }
