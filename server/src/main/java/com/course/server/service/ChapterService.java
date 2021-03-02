@@ -25,10 +25,10 @@ public class ChapterService {
 
     public List<ChapterDto> list() {
 
-//        PageHelper.startPage(1,1);
+        PageHelper.startPage(2,1);
 
         ChapterExample chapterExample = new ChapterExample();
-        chapterExample.setOrderByClause("id desc");
+//        chapterExample.setOrderByClause("id desc");
         List<Chapter> chapterList = chapterMapper.selectByExample(chapterExample);
         List<ChapterDto> chapterDtoList = new ArrayList<ChapterDto>();
         for (int i = 0; i <chapterList.size(); i++) {
