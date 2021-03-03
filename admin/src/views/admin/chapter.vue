@@ -176,6 +176,11 @@
             //保存大章节
             save() {
                 let _this = this;
+                // 保存时进行校验，检查是输入是否为空，是否符合长度
+                if (!Validator.require(_this.chapter.name,"名称") ||!Validator.require(_this.chapter.courseId,"课程id")||!Validator.length(_this.chapter.courseId,"课程id",1,8)){
+                    return;
+                }
+
                 _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save', _this.chapter).then((response) => {
                     console.log("保存大章节列表结果:", response);
                     let resp = response.data;
