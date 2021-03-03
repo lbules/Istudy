@@ -5,6 +5,7 @@ import com.course.server.dto.ChapterDto;
 import com.course.server.dto.PageDto;
 import com.course.server.dto.ResponseDto;
 import com.course.server.service.ChapterService;
+import com.course.server.util.ValidatorUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,12 @@ public class ChapterController {
      */
     @RequestMapping("/save")
     public ResponseDto save(@RequestBody ChapterDto chapterDto) {
+
+        //保存时进行空、长度校验,有异常时中断线程
+        ValidatorUtil.require(chapterDto.getName(),"名称");
+        ValidatorUtil.require(chapterDto.getCourseId(),"课程ID");
+        ValidatorUtil.length(chapterDto.getCourseId(),"课程ID",1,8);
+
         ResponseDto responseDto = new ResponseDto();
         chapterService.save(chapterDto);
         responseDto.setContent(chapterDto);
@@ -51,7 +58,7 @@ public class ChapterController {
     }
 
     /**删除，@DeleteMapping删除请求,@PathVariable路径变量
-     * @param chapterDto
+     * @param id
      * @return
      */
     @DeleteMapping("/delete/{id}")
