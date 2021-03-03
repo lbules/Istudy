@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 private static final Logger LOG = LoggerFactory.getLogger(ControllerExceptionHandler.class);
+
+
     @ExceptionHandler(value = ValidatorException.class)
     @ResponseBody
     public ResponseDto validatorExceptionHandler(ValidatorException e) {

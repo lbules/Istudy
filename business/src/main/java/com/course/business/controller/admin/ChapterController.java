@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/admin/chapter")
 public class ChapterController {
 
-
+    public static final String BUSINESS_NAME="大章";
 
     @Resource
     private ChapterService chapterService;
