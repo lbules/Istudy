@@ -160,10 +160,12 @@
             //查询大章节记录
             list(page) {
                 let _this = this;
+                Loading.show(); //缓冲提示
                 _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/list', {
                     page: page, //第几页
                     size: _this.$refs.pagination.size, //每页查询多少条记录
                 }).then((response) => {
+                    Loading.hide();
                     console.log("查询大章节列表结果:", response);
                     let resp = response.data;//response.data就相当于responseDto
                     _this.chapters = resp.content.list;
@@ -180,6 +182,7 @@
                     if (resp.success) { //保存成功就将弹出框隐藏
                         $("#form-modal").modal("hide");
                         _this.list(1); //重新刷新
+                        Toast.success("保存成功");
                     }
                 })
             },
@@ -187,33 +190,16 @@
             del(id) {
                 let _this = this;
                 // 确认弹出框
-                Swal.fire({
-                    title: '确认删除', //标题
-                    text: "删除后将无法恢复，请谨慎操作！", //显示内容
-                    confirmButtonColor: '#3085d6',// 确定按钮的 颜色
-                    confirmButtonText: '确定',// 确定按钮的 文字
-                    showCancelButton: true, // 是否显示取消按钮
-                    cancelButtonColor: '#d33', // 取消按钮的 颜色
-                    cancelButtonText: "取消", // 取消按钮的 文字
-
-                    focusCancel: true, // 是否聚焦 取消按钮
-                    reverseButtons: true  // 是否 反转 两个按钮的位置 默认是  左边 确定  右边 取消
-                }).then((isConfirm) => {
-                    if (isConfirm.value) {
-                        _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/'+id).then((response) => {
-                            console.log("删除大章节列表结果:", response);
-                            let resp = response.data;
-                            if (resp.success) {
-                                _this.list(1); //重新刷新
-                                Swal.fire(
-                                    '删除成功！',
-                                    '删除成功！',
-                                    'success'
-                                )
-                            }
-                        })
-                    }
-                })
+                Confirm.show("删除后将无法恢复，请谨慎操作！",function () {
+                    _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/'+id).then((response) => {
+                        console.log("删除大章节列表结果:", response);
+                        let resp = response.data;
+                        if (resp.success) {
+                            _this.list(1); //重新刷新
+                            Toast.success("删除成功！");
+                        }
+                    })
+                });
             }
         }
     }

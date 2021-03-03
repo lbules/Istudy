@@ -1,3 +1,4 @@
+// 操作状态弹出框
 Toast = {
   success: function (message) {
     Swal.fire({
@@ -5,7 +6,7 @@ Toast = {
       icon: 'success',
       title: message,
       showConfirmButton: false,
-      timer: 3000
+      timer: 1500
     })
   },
 
