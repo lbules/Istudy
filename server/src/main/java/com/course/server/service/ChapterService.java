@@ -80,4 +80,12 @@ public class ChapterService {
         chapterMapper.updateByPrimaryKey(chapter);
     }
 
+    /**
+     * 删除章节
+     * @param id
+     */
+    public void delete(String id) {
+        chapterMapper.deleteByPrimaryKey(id);
+    }
+
 }

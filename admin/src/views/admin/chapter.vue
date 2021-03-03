@@ -2,10 +2,12 @@
 
     <div>
         <!--新增章节按钮-->
-        <p><button v-on:click="add()" class="btn btn-white btn-default btn-round">
-            <i class="ace-icon fa fa-edit"></i>
-           新增
-        </button></p>
+        <p>
+            <button v-on:click="add()" class="btn btn-white btn-default btn-round">
+                <i class="ace-icon fa fa-edit"></i>
+                新增
+            </button>
+        </p>
         <!--新增章节按钮--END-->
 
         <!--详细列表-->
@@ -29,12 +31,12 @@
                         <button v-on:click="edit(chapter)" class="btn btn-xs btn-info">
                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                         </button>
-                        <!--删除-->
-                        <button class="btn btn-xs btn-danger">
+                        <!--删除,通过id来删除-->
+                        <button v-on:click="del(chapter.id)" class="btn btn-xs btn-danger">
                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                         </button>
                     </div>
-                        <!--隐藏按钮-->
+                    <!--隐藏按钮-->
                     <div class="hidden-md hidden-lg">
                         <div class="inline pos-rel">
                             <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown"
@@ -83,7 +85,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">表单</h4>
                     </div>
                     <div class="modal-body">
@@ -92,18 +95,18 @@
                         <form class="form-horizontal">
                             <!--名称输入-->
                             <div class="form-group">
-                                <label  class="col-sm-2 control-label">名称</label>
+                                <label class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-10">
-                                    <input v-model="chapter.name" class="form-control"  placeholder="名称">
+                                    <input v-model="chapter.name" class="form-control" placeholder="名称">
                                 </div>
                             </div>
                             <!--名称输入--END-->
 
                             <!--课程id输入-->
                             <div class="form-group">
-                                <label  class="col-sm-2 control-label">课程ID</label>
+                                <label class="col-sm-2 control-label">课程ID</label>
                                 <div class="col-sm-10">
-                                    <input v-model="chapter.courseId" class="form-control"  placeholder="课程ID">
+                                    <input v-model="chapter.courseId" class="form-control" placeholder="课程ID">
                                 </div>
                             </div>
                             <!--课程id输入-->
@@ -123,14 +126,14 @@
 </template>
 
 <script>
-import Pagination from "../../components/pagination.vue"
+    import Pagination from "../../components/pagination.vue"
 
     export default {
-    components: {Pagination},
+        components: {Pagination},
         name: 'chapter',
         data: function () {
             return {
-                chapter:{}, //映射表单数据
+                chapter: {}, //映射表单数据
                 chapters: []
             }
         },
@@ -140,16 +143,16 @@ import Pagination from "../../components/pagination.vue"
         },
         methods: {
             //添加
-            add(){
+            add() {
                 let _this = this;
                 _this.chapter = {}; //清空上一次输入的内容
                 $("#form-modal").modal("show"); //让模态框显示出来
             },
 
             //编辑
-            edit(chapter){
+            edit(chapter) {
                 let _this = this;
-                _this.chapter = $.extend({},chapter); //将传递过来一行数据chapter赋值给_this.chapter
+                _this.chapter = $.extend({}, chapter); //将传递过来一行数据chapter赋值给_this.chapter
                 $("#form-modal").modal("show"); //让模态框显示出来
 
             },
@@ -162,20 +165,31 @@ import Pagination from "../../components/pagination.vue"
                     size: _this.$refs.pagination.size, //每页查询多少条记录
                 }).then((response) => {
                     console.log("查询大章节列表结果:", response);
-                    let resp  = response.data;//response.data就相当于responseDto
+                    let resp = response.data;//response.data就相当于responseDto
                     _this.chapters = resp.content.list;
-                    _this.$refs.pagination.render(page,resp.content.total)
+                    _this.$refs.pagination.render(page, resp.content.total)
                 })
             },
 
             //保存大章节
             save() {
                 let _this = this;
-                _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save',_this.chapter).then((response) => {
+                _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save', _this.chapter).then((response) => {
                     console.log("保存大章节列表结果:", response);
                     let resp = response.data;
                     if (resp.success) { //保存成功就将弹出框隐藏
                         $("#form-modal").modal("hide");
+                        _this.list(1); //重新刷新
+                    }
+                })
+            },
+            //删除,传入参数id
+            del(id) {
+                let _this = this;
+                _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/'+id).then((response) => {
+                    console.log("删除大章节列表结果:", response);
+                    let resp = response.data;
+                    if (resp.success) {
                         _this.list(1); //重新刷新
                     }
                 })
