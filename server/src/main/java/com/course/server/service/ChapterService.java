@@ -5,11 +5,13 @@ import com.course.server.domain.ChapterExample;
 import com.course.server.dto.ChapterDto;
 import com.course.server.dto.PageDto;
 import com.course.server.mapper.ChapterMapper;
+import com.course.server.util.CopyUtil;
 import com.course.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
 import javax.swing.*;
@@ -48,14 +50,34 @@ public class ChapterService {
     }
 
     /**
-     * 新增章节
-     * @param chapterDto 只传进来两个值,名称和课程id.需要添加一个id
+     * 保存章节,编辑保存时根据id是否为空
+     * @param chapterDto
      */
     public void save(ChapterDto chapterDto) {
-        chapterDto.setId(UuidUtil.getShortUuid());
-        Chapter chapter = new Chapter();
-        BeanUtils.copyProperties(chapterDto,chapter);
+        Chapter chapter = CopyUtil.copy(chapterDto, Chapter.class);
+        if (StringUtils.isEmpty(chapterDto.getId())){ //id为空则调用insert方法添加
+            this.insert(chapter);
+        }
+        else { //id不为空
+            this.update(chapter);
+        }
+    }
+
+    /**
+     * 新增章节
+     * @param 利用包装工具类CopyUtil将chapterDto转换成chapter
+     */
+    private void insert(Chapter chapter) {
+        chapter.setId(UuidUtil.getShortUuid());
         chapterMapper.insert(chapter);
+    }
+
+    /**
+     * 更新章节
+     * @param chapter
+     */
+    private void update(Chapter chapter) {
+        chapterMapper.updateByPrimaryKey(chapter);
     }
 
 }

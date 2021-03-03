@@ -16,7 +16,6 @@
                 <th>名称</th>
                 <th>课程</th>
                 <th>操作</th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -26,23 +25,16 @@
                 <td>{{chapter.courseId}}</td>
                 <td>
                     <div class="hidden-sm hidden-xs btn-group">
-                        <button class="btn btn-xs btn-success">
-                            <i class="ace-icon fa fa-check bigger-120"></i>
-                        </button>
-
-                        <button class="btn btn-xs btn-info">
+                        <!--编辑-->
+                        <button v-on:click="edit(chapter)" class="btn btn-xs btn-info">
                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                         </button>
-
+                        <!--删除-->
                         <button class="btn btn-xs btn-danger">
                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                         </button>
-
-                        <button class="btn btn-xs btn-warning">
-                            <i class="ace-icon fa fa-flag bigger-120"></i>
-                        </button>
                     </div>
-
+                        <!--隐藏按钮-->
                     <div class="hidden-md hidden-lg">
                         <div class="inline pos-rel">
                             <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown"
@@ -147,9 +139,19 @@ import Pagination from "../../components/pagination.vue"
             _this.list(1);
         },
         methods: {
+            //添加
             add(){
                 let _this = this;
+                _this.chapter = {}; //清空上一次输入的内容
                 $("#form-modal").modal("show"); //让模态框显示出来
+            },
+
+            //编辑
+            edit(chapter){
+                let _this = this;
+                _this.chapter = $.extend({},chapter); //将传递过来一行数据chapter赋值给_this.chapter
+                $("#form-modal").modal("show"); //让模态框显示出来
+
             },
 
             //查询大章节记录
