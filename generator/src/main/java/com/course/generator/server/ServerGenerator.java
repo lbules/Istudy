@@ -13,7 +13,8 @@ import java.util.Map;
  * @Description:
  */
 public class ServerGenerator {
-    static String toPath = "server\\src\\main\\java\\com\\course\\server\\service\\";
+    static String toServicePath = "server\\src\\main\\java\\com\\course\\server\\service\\";
+    static String toControllerPath = "business\\src\\main\\java\\com\\course\\business\\controller\\admin\\";
 
 
     public static void main(String[] args) throws IOException, TemplateException {
@@ -23,7 +24,12 @@ public class ServerGenerator {
         map.put("Domain",Domain);
         map.put("domain",domain);
 
+        //生成service
         FreemarkerUtil.initConfig("service.ftl");
-        FreemarkerUtil.generator(toPath+Domain+"Service.java",map);
+        FreemarkerUtil.generator(toServicePath+Domain+"Service.java",map);
+
+        //生成controller
+        FreemarkerUtil.initConfig("controller.ftl");
+        FreemarkerUtil.generator(toControllerPath+Domain+"Controller.java",map);
     }
 }
