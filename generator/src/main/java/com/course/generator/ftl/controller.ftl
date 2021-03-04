@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/admin/${domain}")
 public class ${Domain}Controller {
 
-    public static final String BUSINESS_NAME="大章";
+    public static final String BUSINESS_NAME="${tableNameCn}";
 
     @Resource
     private ${Domain}Service ${domain}Service;
