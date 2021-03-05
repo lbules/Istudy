@@ -202,7 +202,7 @@
                 let _this = this;
                 // 确认弹出框
                 Confirm.show("删除后将无法恢复，请谨慎操作！",function () {
-                    _this.$ajax.delete('http://127.0.0.1:9000/business/admin/chapter/delete/'+id).then((response) => {
+                    _this.$ajax.delete(process.env.VUE_APP_SERVER+'/business/admin/chapter/delete/'+id).then((response) => {
                         console.log("删除大章节列表结果:", response);
                         let resp = response.data;
                         if (resp.success) {
