@@ -18,11 +18,6 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Auther: luoss
- * @Date: 2021/2/28 12:20
- * @Description:
- */
 @Service
 public class ${Domain}Service {
 

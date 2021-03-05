@@ -161,7 +161,7 @@
             list(page) {
                 let _this = this;
                 Loading.show(); //缓冲提示
-                _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/list', {
+                _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/chapter/list', {
                     page: page, //第几页
                     size: _this.$refs.pagination.size, //每页查询多少条记录
                 }).then((response) => {
@@ -182,7 +182,7 @@
                     return;
                 }
                 Loading.show();
-                _this.$ajax.post('http://127.0.0.1:9000/business/admin/chapter/save', _this.chapter).then((response) => {
+                _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/chapter/save', _this.chapter).then((response) => {
                     console.log("保存大章节列表结果:", response);
                     Loading.hide();
                     let resp = response.data;

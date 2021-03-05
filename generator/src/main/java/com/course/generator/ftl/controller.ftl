@@ -1,4 +1,4 @@
-package com.course.business.controller.admin;
+package com.course.${module}.controller.admin;
 
 import com.course.server.domain.${Domain};
 import com.course.server.dto.${Domain}Dto;
@@ -12,11 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import java.util.List;
 
-/**
- * @Auther: luoss
- * @Date: 2021/2/28 12:26
- * @Description:
- */
 @RestController
 @RequestMapping("/admin/${domain}")
 public class ${Domain}Controller {
@@ -26,11 +21,8 @@ public class ${Domain}Controller {
     @Resource
     private ${Domain}Service ${domain}Service;
 
-    @PostMapping("/list")
-    /**
-     * pageDto既用来接收参数，也用来返回结果
-     * 前端会传来pageDto的page（当前页码）size（每页条数），
-     */
+    @RequestMapping("/list")
+
     public ResponseDto list(@RequestBody PageDto pageDto) {
         ResponseDto responseDto = new ResponseDto();
         ${domain}Service.list(pageDto);
@@ -39,12 +31,13 @@ public class ${Domain}Controller {
     }
 
     /**
-     * 保存，id有值时更新，无值时新增
+     * 保存
      * @param ${domain}Dto
      * @return
      */
-    @PostMapping("/save")
+    @RequestMapping("/save")
     public ResponseDto save(@RequestBody ${Domain}Dto ${domain}Dto) {
+
 
         ResponseDto responseDto = new ResponseDto();
         ${domain}Service.save(${domain}Dto);
@@ -52,7 +45,7 @@ public class ${Domain}Controller {
         return responseDto;
     }
 
-    /**删除，@DeleteMapping删除请求,@PathVariable路径变量
+    /**删除
      * @param id
      * @return
      */

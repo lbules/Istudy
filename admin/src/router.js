@@ -3,7 +3,8 @@ import Router from "vue-router"
 import Login from "./views/login.vue"
 import Admin from "./views/admin.vue"
 import Welcome from "./views/admin/welcome.vue"
-import Chapter from "./views/admin/chapter"
+import Chapter from "./views/admin/chapter.vue"
+import Section from "./views/admin/section.vue"
 
 Vue.use(Router);
 
@@ -13,22 +14,26 @@ export default new Router({
     routes: [{
         path: "*",
         redirect: "/login",
-    },{
-        path:'/login',
+    }, {
+        path: '/login',
         component: Login
-    },{
+    }, {
         path: '/',
         name: "admin",
         component: Admin,
-        children:[{
+        children: [{
             // 子路由不需要加/
-            path:'welcome',
-            name:"welcome-sidebar",
+            path: 'welcome',
+            name: "welcome-sidebar",
             component: Welcome
-        },{
+        }, {
             path: 'business/chapter',
-            name:"business-chapter-sidebar",
+            name: "business-chapter-sidebar",
             component: Chapter,
+        }, {
+            path: 'business/section',
+            name: "business-section-sidebar",
+            component: Section,
         }]
     }]
 })
