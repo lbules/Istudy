@@ -21,8 +21,8 @@ public class ${Domain}Controller {
     @Resource
     private ${Domain}Service ${domain}Service;
 
+    //列表查询
     @RequestMapping("/list")
-
     public ResponseDto list(@RequestBody PageDto pageDto) {
         ResponseDto responseDto = new ResponseDto();
         ${domain}Service.list(pageDto);
@@ -39,14 +39,14 @@ public class ${Domain}Controller {
     public ResponseDto save(@RequestBody ${Domain}Dto ${domain}Dto) {
         //保存校验
 <#list fieldList as field>
-    <#--<#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt" && field.nameHump!="sort">-->
+    <#if field.name!="id" && field.nameHump!="createAt" && field.nameHump!="updateAt" && field.nameHump!="sort">
         <#if !field.nullAble>
             ValidatorUtil.require(${domain}Dto.get${field.nameBigHump}(), "${field.nameCn}");
         </#if>
         <#if (field.length > 0)>
             ValidatorUtil.length(${domain}Dto.get${field.nameBigHump}(), "${field.nameCn}", 1, ${field.length?c});
         </#if>
-    <#--</#if>-->
+    </#if>
 </#list>
 
         ResponseDto responseDto = new ResponseDto();

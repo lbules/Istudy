@@ -29,7 +29,11 @@ public class ${Domain}Service {
         PageHelper.startPage(pageDto.getPage(),pageDto.getSize());
 
         ${Domain}Example ${domain}Example = new ${Domain}Example();
-//        ${domain}Example.setOrderByClause("id desc");
+        <#list fieldList as field>
+            <#if field.nameHump=='sort'>
+                ${domain}Example.setOrderByClause("sort asc");
+            </#if>
+        </#list>
         List<${Domain}> ${domain}List = ${domain}Mapper.selectByExample(${domain}Example);
         PageInfo<${Domain}> pageInfo = new PageInfo<>(${domain}List);
         pageDto.setTotal(pageInfo.getTotal()); //获取总记录行数
@@ -63,6 +67,20 @@ public class ${Domain}Service {
      * @param 利用包装工具类CopyUtil将${domain}Dto转换成${domain}
      */
     private void insert(${Domain} ${domain}) {
+        <#list typeSet as type>
+            <#if type=='Date'>
+                Date now = new Date();
+            </#if>
+        </#list>
+        <#list fieldList as field>
+            <#if field.nameHump=='createAt'>
+                ${domain}.setCreateAt(now);
+            </#if>
+            <#if field.nameHump=='updateAt'>
+                ${domain}.setUpdateAt(now);
+            </#if>
+        </#list>
+
         ${domain}.setId(UuidUtil.getShortUuid());
         ${domain}Mapper.insert(${domain});
     }
@@ -72,6 +90,12 @@ public class ${Domain}Service {
      * @param ${domain}
      */
     private void update(${Domain} ${domain}) {
+        <#list fieldList as field>
+            <#if field.nameHump=='updateAt'>
+                ${domain}.setUpdateAt(new Date());
+            </#if>
+        </#list>
+
         ${domain}Mapper.updateByPrimaryKey(${domain});
     }
 
