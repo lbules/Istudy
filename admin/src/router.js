@@ -5,6 +5,7 @@ import Admin from "./views/admin.vue"
 import Welcome from "./views/admin/welcome.vue"
 import Chapter from "./views/admin/chapter.vue"
 import Section from "./views/admin/sectionVue.vue"
+import Course from "./views/admin/course.vue"
 
 Vue.use(Router);
 
@@ -34,6 +35,11 @@ export default new Router({
             path: 'business/section',
             name: "business-section-sidebar",
             component: Section,
-        }]
+        },
+            {
+                path: 'business/course',
+                name: "business-course-sidebar",
+                component: Course,
+            }]
     }]
 })
