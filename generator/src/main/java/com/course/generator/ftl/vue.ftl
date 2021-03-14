@@ -14,21 +14,25 @@
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
-              <#list fieldList as field>
-                  <#if field.nameHump!="createAt"&&field.nameHump!="updateAt">
-                      <th>${field.nameCn}</th>
-                  </#if>
-
-              </#list>
-              <th>操作</th>
+                <#list fieldList as field>
+                    <#if field.nameHump!="createAt" && field.nameHump!="updateAt">
+                        <th>${field.nameCn}</th>
+                    </#if>
+                </#list>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="${domain} in ${domain}s">
-              <#list fieldList as field>
-                <td>{{${domain}.${field.nameHump}}}</td>
-              </#list>
-
+                <#list fieldList as field>
+                    <#if field.nameHump!="createAt" && field.nameHump!="updateAt">
+                        <#if field.enums>
+                            <td>{{${field.enumsConst} | optionKV(${domain}.${field.nameHump})}}</td>
+                        <#else>
+                            <td>{{${domain}.${field.nameHump}}}</td>
+                        </#if>
+                    </#if>
+                </#list>
                 <td>
                     <div class="hidden-sm hidden-xs btn-group">
                         <!--编辑-->
@@ -47,20 +51,28 @@
                                     data-position="auto">
                                 <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
                             </button>
+
                             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
                                 <li>
                                     <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-                                      <span class="blue"><i class="ace-icon fa fa-search-plus bigger-120"></i></span>
+																			<span class="blue">
+																				<i class="ace-icon fa fa-search-plus bigger-120"></i>
+																			</span>
                                     </a>
                                 </li>
+
                                 <li>
                                     <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-                                      <span class="green"><i class="ace-icon fa fa-pencil-square-o bigger-120"></i></span>
+																			<span class="green">
+																				<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
+																			</span>
                                     </a>
                                 </li>
+
                                 <li>
                                     <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-                                      <span class="red"><i class="ace-icon fa fa-trash-o bigger-120"></i></span>
+                                        <span class="red">
+																				<i class="ace-icon fa fa-trash-o bigger-120"></i></span>
                                     </a>
                                 </li>
                             </ul>
@@ -88,17 +100,27 @@
 
                         <!--弹出框内容-->
                         <form class="form-horizontal">
-
-                          <#list fieldList as field>
-                              <#if field.name!="id" && field.nameHump!="createAt" && field.nameHump!="updateAt">
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">${field.nameCn}</label>
-                              <div class="col-sm-10">
-                                <input v-model="${domain}.${field.nameHump}" class="form-control">
-                              </div>
-                            </div>
-                              </#if>
-                          </#list>
+                            <#list fieldList as field>
+                                <#if field.name!="id" && field.nameHump!="createdAt" && field.nameHump!="updatedAt">
+                                    <#if field.enums>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">${field.nameCn}</label>
+                                            <div class="col-sm-10">
+                                                <select v-model="${domain}.${field.nameHump}" class="form-control">
+                                                    <option v-for="o in ${field.enumsConst}" v-bind:value="o.key">{{o.value}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    <#else>
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">${field.nameCn}</label>
+                                            <div class="col-sm-10">
+                                                <input v-model="${domain}.${field.nameHump}" class="form-control">
+                                            </div>
+                                        </div>
+                                    </#if>
+                                </#if>
+                            </#list>
                         </form>
                         <!--弹出框内容--END-->
                     </div>
@@ -146,7 +168,7 @@
 
             },
 
-            //查询${tableNameCn}节记录
+            //查询
             list(page) {
                 let _this = this;
                 Loading.show(); //缓冲提示
@@ -155,17 +177,18 @@
                     size: _this.$refs.pagination.size, //每页查询多少条记录
                 }).then((response) => {
                     Loading.hide();
-                    console.log("查询${tableNameCn}列表结果:", response);
+                    console.log("查询结果:", response);
                     let resp = response.data;//response.data就相当于responseDto
                     _this.${domain}s = resp.content.list;
                     _this.$refs.pagination.render(page, resp.content.total)
                 })
             },
 
-            //保存${tableNameCn}
+            //保存
             save() {
                 let _this = this;
 
+                // 保存时进行校验，检查是输入是否为空，是否符合长度
                 // 保存校验
                 if (1 != 1
                     <#list fieldList as field>
@@ -182,9 +205,10 @@
                     return;
                 }
 
+
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER+'/${module}/admin/${domain}/save', _this.${domain}).then((response) => {
-                    console.log("保存${tableNameCn}列表结果:", response);
+                    console.log("保存结果:", response);
                     Loading.hide();
                     let resp = response.data;
                     if (resp.success) { //保存成功就将弹出框隐藏
@@ -204,7 +228,7 @@
                 // 确认弹出框
                 Confirm.show("删除后将无法恢复，请谨慎操作！",function () {
                     _this.$ajax.delete(process.env.VUE_APP_SERVER+'/${module}/admin/${domain}/delete/'+id).then((response) => {
-                        console.log("删除${tableNameCn}列表结果:", response);
+                        console.log("删除结果:", response);
                         let resp = response.data;
                         if (resp.success) {
                             _this.list(1); //重新刷新
