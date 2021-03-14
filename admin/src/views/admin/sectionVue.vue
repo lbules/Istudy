@@ -1,6 +1,13 @@
 <template>
 
     <div>
+        <h4 class="lighter">
+            <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+            <router-link to="/business/course" class="pink"> {{course.name}} </router-link>：
+            <i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>
+            <router-link to="/business/chapter" class="pink"> {{chapter.name}} </router-link>
+        </h4>
+        <hr>
         <!--新增章节按钮-->
         <p>
             <button v-on:click="add()" class="btn btn-white btn-default btn-round">
@@ -16,8 +23,6 @@
             <tr>
                              <th>ID</th>
                <th>标题</th>
-               <th>课程ID</th>
-               <th>大章ID</th>
                <th>视频</th>
                <th>时长</th>
                <th>类型</th>
@@ -29,8 +34,6 @@
             <tr v-for="section in sections">
                 <td>{{section.id}}</td>
                 <td>{{section.title}}</td>
-                <td>{{section.courseId}}</td>
-                <td>{{section.chapterId}}</td>
                 <td>{{section.video}}</td>
                 <td>{{section.time}}</td>
                 <td>{{SECTION_CHARGE | optionKV(section.charge)}}</td>
@@ -108,15 +111,15 @@
                               </div>
                             </div>
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">课程ID</label>
+                              <label class="col-sm-2 control-label">课程</label>
                               <div class="col-sm-10">
-                                <input v-model="section.courseId" class="form-control">
+                                  <p class="form-control-static">{{course.name}}</p>
                               </div>
                             </div>
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">大章ID</label>
+                              <label class="col-sm-2 control-label">大章</label>
                               <div class="col-sm-10">
-                                <input v-model="section.chapterId" class="form-control">
+                                  <p class="form-control-static">{{chapter.name}}</p>
                               </div>
                             </div>
                             <div class="form-group">
@@ -171,10 +174,21 @@
                 section: {}, //映射表单数据
                 sections: [],
                 SECTION_CHARGE: SECTION_CHARGE,
+                course: {},
+                chapter: {},
             }
         },
         mounted: function () {
             let _this = this;
+
+            let course = SessionStorage.get("course") || {};
+            let chapter = SessionStorage.get("chapter") || {};
+            if (Tool.isEmpty(course) || Tool.isEmpty(chapter)) {
+                _this.$router.push("/welcome");
+            }
+            _this.course = course;
+            _this.chapter = chapter;
+
             _this.list(1);
         },
         methods: {
@@ -200,6 +214,8 @@
                 _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/section/list', {
                     page: page, //第几页
                     size: _this.$refs.pagination.size, //每页查询多少条记录
+                    courseId: _this.course.id,
+                    chapterId: _this.chapter.id
                 }).then((response) => {
                     Loading.hide();
                     console.log("查询列表结果:", response);
@@ -221,6 +237,9 @@
                 ) {
                     return;
                 }
+
+                _this.section.courseId = _this.course.id;
+                _this.section.chapterId = _this.chapter.id;
 
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/section/save', _this.section).then((response) => {

@@ -4,6 +4,7 @@ import com.course.server.domain.Section;
 import com.course.server.domain.SectionExample;
 import com.course.server.dto.SectionDto;
 import com.course.server.dto.PageDto;
+import com.course.server.dto.SectionPageDto;
 import com.course.server.enums.SectionChargeEnum;
 import com.course.server.mapper.SectionMapper;
 import com.course.server.util.CopyUtil;
@@ -26,15 +27,23 @@ public class SectionService {
     @Resource
     private SectionMapper sectionMapper;
 
-    public void list(PageDto pageDto) {
+    public void list(SectionPageDto sectionPageDto) {
 
-        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
-
+        PageHelper.startPage(sectionPageDto.getPage(), sectionPageDto.getSize());
         SectionExample sectionExample = new SectionExample();
+
+        SectionExample.Criteria criteria = sectionExample.createCriteria();
+        if (!StringUtils.isEmpty(sectionPageDto.getCourseId())) {
+            criteria.andCourseIdEqualTo(sectionPageDto.getCourseId());
+        }
+        if (!StringUtils.isEmpty(sectionPageDto.getChapterId())) {
+            criteria.andChapterIdEqualTo(sectionPageDto.getChapterId());
+        }
+
         sectionExample.setOrderByClause("sort asc");
         List<Section> sectionList = sectionMapper.selectByExample(sectionExample);
         PageInfo<Section> pageInfo = new PageInfo<>(sectionList);
-        pageDto.setTotal(pageInfo.getTotal()); //获取总记录行数
+        sectionPageDto.setTotal(pageInfo.getTotal()); //获取总记录行数
 
         List<SectionDto> sectionDtoList = new ArrayList<SectionDto>(); //将查到到所有数据转换成sectionDto
         for (int i = 0; i < sectionList.size(); i++) {
@@ -43,7 +52,7 @@ public class SectionService {
             BeanUtils.copyProperties(section, sectionDto);
             sectionDtoList.add(sectionDto);
         }
-        pageDto.setList(sectionDtoList); //将记录存放到pageDto的List
+        sectionPageDto.setList(sectionDtoList); //将记录存放到pageDto的List
     }
 
     /**
