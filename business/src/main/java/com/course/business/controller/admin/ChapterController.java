@@ -2,6 +2,7 @@ package com.course.business.controller.admin;
 
 import com.course.server.domain.Chapter;
 import com.course.server.dto.ChapterDto;
+import com.course.server.dto.ChapterPageDto;
 import com.course.server.dto.PageDto;
 import com.course.server.dto.ResponseDto;
 import com.course.server.service.ChapterService;
@@ -31,16 +32,17 @@ public class ChapterController {
      * pageDto既用来接收参数，也用来返回结果
      * 前端会传来pageDto的page（当前页码）size（每页条数），
      */
-    public ResponseDto list(@RequestBody PageDto pageDto) {
+    public ResponseDto list(@RequestBody ChapterPageDto chapterPageDto) {
         ResponseDto responseDto = new ResponseDto();
-        chapterService.list(pageDto);
-        responseDto.setContent(pageDto);
+        ValidatorUtil.require(chapterPageDto.getCourseId(),"课程ID");
+        chapterService.list(chapterPageDto);
+        responseDto.setContent(chapterPageDto);
         return responseDto;
     }
 
     /**
      * 保存
-     * @param chapterDto
+     * @param
      * @return
      */
     @RequestMapping("/save")

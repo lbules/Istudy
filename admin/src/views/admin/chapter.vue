@@ -115,9 +115,9 @@
 
                             <!--课程id输入-->
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">课程ID</label>
+                                <label class="col-sm-2 control-label">课程</label>
                                 <div class="col-sm-10">
-                                    <input v-model="chapter.courseId" class="form-control" placeholder="课程ID">
+                                    <p class="form-control-static">{{course.name}}</p>
                                 </div>
                             </div>
                             <!--课程id输入-->
@@ -181,6 +181,7 @@
                 _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/chapter/list', {
                     page: page, //第几页
                     size: _this.$refs.pagination.size, //每页查询多少条记录
+                    courseId: _this.course.id //查找对应课程courseId下的大章
                 }).then((response) => {
                     Loading.hide();
                     console.log("查询大章节列表结果:", response);
@@ -194,10 +195,13 @@
             save() {
                 let _this = this;
 
+
                 // 保存时进行校验，检查是输入是否为空，是否符合长度
-                if (!Validator.require(_this.chapter.name,"名称") ||!Validator.require(_this.chapter.courseId,"课程id")||!Validator.length(_this.chapter.courseId,"课程id",1,8)){
+                if (!Validator.require(_this.chapter.name,"名称")||!Validator.length(_this.chapter.courseId,"课程id",1,8)){
                     return;
                 }
+                _this.chapter.courseId = _this.course.id;
+
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/chapter/save', _this.chapter).then((response) => {
                     console.log("保存大章节列表结果:", response);

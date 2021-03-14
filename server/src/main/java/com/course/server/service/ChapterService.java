@@ -3,7 +3,7 @@ package com.course.server.service;
 import com.course.server.domain.Chapter;
 import com.course.server.domain.ChapterExample;
 import com.course.server.dto.ChapterDto;
-import com.course.server.dto.PageDto;
+import com.course.server.dto.ChapterPageDto;
 import com.course.server.mapper.ChapterMapper;
 import com.course.server.util.CopyUtil;
 import com.course.server.util.UuidUtil;
@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,15 +28,20 @@ public class ChapterService {
     @Resource
     private ChapterMapper chapterMapper;
 
-    public void list(PageDto pageDto) {
+    public void list(ChapterPageDto chapterPageDto) {
 
-        PageHelper.startPage(pageDto.getPage(),pageDto.getSize());
-
+        PageHelper.startPage(chapterPageDto.getPage(),chapterPageDto.getSize());
         ChapterExample chapterExample = new ChapterExample();
-//        chapterExample.setOrderByClause("id desc");
+
+        ChapterExample.Criteria criteria = chapterExample.createCriteria();
+        //CourseId不为空的时候查找对应课程下的大章，CourseId为空则查找全部
+        if (!StringUtils.isEmpty(chapterPageDto.getCourseId())) {
+            criteria.andCourseIdEqualTo(chapterPageDto.getCourseId());
+        }
+
         List<Chapter> chapterList = chapterMapper.selectByExample(chapterExample);
         PageInfo<Chapter> pageInfo = new PageInfo<>(chapterList);
-        pageDto.setTotal(pageInfo.getTotal()); //获取总记录行数
+        chapterPageDto.setTotal(pageInfo.getTotal()); //获取总记录行数
 
          List<ChapterDto> chapterDtoList = new ArrayList<ChapterDto>(); //将查到到所有数据转换成chapterDto
         for (int i = 0; i <chapterList.size(); i++) {
@@ -46,12 +50,12 @@ public class ChapterService {
             BeanUtils.copyProperties(chapter,chapterDto);
             chapterDtoList.add(chapterDto);
         }
-        pageDto.setList(chapterDtoList); //将记录存放到pageDto的List
+        chapterPageDto.setList(chapterDtoList); //将记录存放到pageDto的List
     }
 
     /**
      * 保存章节,编辑保存时根据id是否为空
-     * @param chapterDto
+     * @param
      */
     public void save(ChapterDto chapterDto) {
         Chapter chapter = CopyUtil.copy(chapterDto, Chapter.class);
@@ -65,7 +69,7 @@ public class ChapterService {
 
     /**
      * 新增章节
-     * @param 利用包装工具类CopyUtil将chapterDto转换成chapter
+     * @param
      */
     private void insert(Chapter chapter) {
         chapter.setId(UuidUtil.getShortUuid());
