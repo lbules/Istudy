@@ -1,42 +1,69 @@
 <template>
 
     <div>
-        <!--新增按钮-->
+        <!--新增章节按钮-->
         <p>
             <button v-on:click="add()" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon fa fa-edit"></i>
                 新增
             </button>
         </p>
-        <!--新增按钮--END-->
+        <!--新增章节按钮--END-->
 
         <!--详细列表-->
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
-              <#list fieldList as field>
-                  <#if field.nameHump!="createAt"&&field.nameHump!="updateAt">
-                      <th>${field.nameCn}</th>
-                  </#if>
+                                    <th>id</th>
 
-              </#list>
+                      <th>名称</th>
+
+                      <th>概述</th>
+
+                      <th>时长</th>
+
+                      <th>价格</th>
+
+                      <th>封面</th>
+
+                      <th>级别</th>
+
+                      <th>类型</th>
+
+                      <th>状态</th>
+
+                      <th>报名数</th>
+
+                      <th>排序</th>
+
+
+
               <th>操作</th>
             </tr>
             </thead>
             <tbody>
-            <tr v-for="${domain} in ${domain}s">
-              <#list fieldList as field>
-                <td>{{${domain}.${field.nameHump}}}</td>
-              </#list>
+            <tr v-for="course in courses">
+                <td>{{course.id}}</td>
+                <td>{{course.name}}</td>
+                <td>{{course.summary}}</td>
+                <td>{{course.time}}</td>
+                <td>{{course.price}}</td>
+                <td>{{course.image}}</td>
+                <td>{{COURSE_LEVEL| optionKV(course.level)}}</td>
+                <td>{{COURSE_CHARGE| optionKV(course.charge)}}</td>
+                <td>{{COURSE_STATUS| optionKV(course.status)}}</td>
+                <td>{{course.enroll}}</td>
+                <td>{{course.sort}}</td>
+
 
                 <td>
                     <div class="hidden-sm hidden-xs btn-group">
                         <!--编辑-->
-                        <button v-on:click="edit(${domain})" class="btn btn-xs btn-info">
+                        <button v-on:click="edit(course)" class="btn btn-xs btn-info">
                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                         </button>
                         <!--删除,通过id来删除-->
-                        <button v-on:click="del(${domain}.id)" class="btn btn-xs btn-danger">
+                        <button v-on:click="del(course.id)" class="btn btn-xs btn-danger">
                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                         </button>
                     </div>
@@ -89,16 +116,72 @@
                         <!--弹出框内容-->
                         <form class="form-horizontal">
 
-                          <#list fieldList as field>
-                              <#if field.name!="id" && field.nameHump!="createAt" && field.nameHump!="updateAt">
                             <div class="form-group">
-                              <label class="col-sm-2 control-label">${field.nameCn}</label>
+                              <label class="col-sm-2 control-label">名称</label>
                               <div class="col-sm-10">
-                                <input v-model="${domain}.${field.nameHump}" class="form-control">
+                                <input v-model="course.name" class="form-control">
                               </div>
                             </div>
-                              </#if>
-                          </#list>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">概述</label>
+                              <div class="col-sm-10">
+                                <input v-model="course.summary" class="form-control">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">时长</label>
+                              <div class="col-sm-10">
+                                <input v-model="course.time" class="form-control">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">价格</label>
+                              <div class="col-sm-10">
+                                <input v-model="course.price" class="form-control">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">封面</label>
+                              <div class="col-sm-10">
+                                <input v-model="course.image" class="form-control">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">级别</label>
+                              <div class="col-sm-10">
+                                  <select v-model="course.level" class="form-control">
+                                      <option v-for="o in COURSE_LEVEL" v-bind:value="o.key">{{o.value}}</option>
+                                  </select>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">类型</label>
+                              <div class="col-sm-10">
+                                  <select v-model="course.charge" class="form-control">
+                                      <option v-for="o in COURSE_CHARGE" v-bind:value="o.key">{{o.value}}</option>
+                                  </select>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">状态</label>
+                              <div class="col-sm-10">
+                                  <select v-model="course.status" class="form-control">
+                                      <option v-for="o in COURSE_STATUS" v-bind:value="o.key">{{o.value}}</option>
+                                  </select>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">报名数</label>
+                              <div class="col-sm-10">
+                                <input v-model="course.enroll" class="form-control">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label class="col-sm-2 control-label">排序</label>
+                              <div class="col-sm-10">
+                                <input v-model="course.sort" class="form-control">
+                              </div>
+                            </div>
                         </form>
                         <!--弹出框内容--END-->
                     </div>
@@ -119,11 +202,14 @@
 
     export default {
         components: {Pagination},
-        name: '${domain}',
+        name: 'course',
         data: function () {
             return {
-                ${domain}: {}, //映射表单数据
-                ${domain}s: []
+                course: {}, //映射表单数据
+                courses: [],
+                COURSE_LEVEL: COURSE_LEVEL,
+                COURSE_CHARGE: COURSE_CHARGE,
+                COURSE_STATUS: COURSE_STATUS,
             }
         },
         mounted: function () {
@@ -134,57 +220,51 @@
             //添加
             add() {
                 let _this = this;
-                _this.${domain} = {}; //清空上一次输入的内容
+                _this.course = {}; //清空上一次输入的内容
                 $("#form-modal").modal("show"); //让模态框显示出来
             },
 
             //编辑
-            edit(${domain}) {
+            edit(course) {
                 let _this = this;
-                _this.${domain} = $.extend({}, ${domain}); //将传递过来一行数据${domain}赋值给_this.${domain}
+                _this.course = $.extend({}, course); //将传递过来一行数据course赋值给_this.course
                 $("#form-modal").modal("show"); //让模态框显示出来
 
             },
 
-            //查询${tableNameCn}节记录
+            //查询课程表节记录
             list(page) {
                 let _this = this;
                 Loading.show(); //缓冲提示
-                _this.$ajax.post(process.env.VUE_APP_SERVER+'/${module}/admin/${domain}/list', {
+                _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/course/list', {
                     page: page, //第几页
                     size: _this.$refs.pagination.size, //每页查询多少条记录
                 }).then((response) => {
                     Loading.hide();
-                    console.log("查询${tableNameCn}列表结果:", response);
+                    console.log("查询课程表列表结果:", response);
                     let resp = response.data;//response.data就相当于responseDto
-                    _this.${domain}s = resp.content.list;
+                    _this.courses = resp.content.list;
                     _this.$refs.pagination.render(page, resp.content.total)
                 })
             },
 
-            //保存${tableNameCn}
+            //保存课程表
             save() {
                 let _this = this;
 
                 // 保存校验
                 if (1 != 1
-                    <#list fieldList as field>
-                    <#if field.name!="id" && field.nameHump!="createAt" && field.nameHump!="updateAt" && field.nameHump!="sort">
-                    <#if !field.nullAble>
-                    || !Validator.require(_this.${domain}.${field.nameHump}, "${field.nameCn}")
-                    </#if>
-                    <#if (field.length > 0)>
-                    || !Validator.length(_this.${domain}.${field.nameHump}, "${field.nameCn}", 1, ${field.length?c})
-                    </#if>
-                    </#if>
-                    </#list>
+                    || !Validator.require(_this.course.name, "名称")
+                    || !Validator.length(_this.course.name, "名称", 1, 50)
+                    || !Validator.length(_this.course.summary, "概述", 1, 2000)
+                    || !Validator.length(_this.course.image, "封面", 1, 100)
                 ) {
                     return;
                 }
 
                 Loading.show();
-                _this.$ajax.post(process.env.VUE_APP_SERVER+'/${module}/admin/${domain}/save', _this.${domain}).then((response) => {
-                    console.log("保存${tableNameCn}列表结果:", response);
+                _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/course/save', _this.course).then((response) => {
+                    console.log("保存课程表列表结果:", response);
                     Loading.hide();
                     let resp = response.data;
                     if (resp.success) { //保存成功就将弹出框隐藏
@@ -203,8 +283,8 @@
                 let _this = this;
                 // 确认弹出框
                 Confirm.show("删除后将无法恢复，请谨慎操作！",function () {
-                    _this.$ajax.delete(process.env.VUE_APP_SERVER+'/${module}/admin/${domain}/delete/'+id).then((response) => {
-                        console.log("删除${tableNameCn}列表结果:", response);
+                    _this.$ajax.delete(process.env.VUE_APP_SERVER+'/business/admin/course/delete/'+id).then((response) => {
+                        console.log("删除课程表列表结果:", response);
                         let resp = response.data;
                         if (resp.success) {
                             _this.list(1); //重新刷新

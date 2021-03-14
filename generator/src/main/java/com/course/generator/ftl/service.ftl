@@ -49,7 +49,7 @@ public class ${Domain}Service {
     }
 
     /**
-     * 保存章节,编辑保存时根据id是否为空
+     * 保存
      * @param ${domain}Dto
      */
     public void save(${Domain}Dto ${domain}Dto) {
@@ -63,8 +63,8 @@ public class ${Domain}Service {
     }
 
     /**
-     * 新增章节
-     * @param 利用包装工具类CopyUtil将${domain}Dto转换成${domain}
+     * 新增
+     * @param
      */
     private void insert(${Domain} ${domain}) {
         <#list typeSet as type>
@@ -86,7 +86,7 @@ public class ${Domain}Service {
     }
 
     /**
-     * 更新章节
+     * 更新
      * @param ${domain}
      */
     private void update(${Domain} ${domain}) {
@@ -100,7 +100,7 @@ public class ${Domain}Service {
     }
 
     /**
-     * 删除章节
+     * 删除
      * @param id
      */
     public void delete(String id) {
