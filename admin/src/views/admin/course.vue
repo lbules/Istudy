@@ -16,7 +16,7 @@
                     <img v-show="course.image" class="media-object" v-bind:src="course.image" />
                     <div class="caption">
                         <div class="clearfix">
-              <span class="pull-right label label-primary info-label">
+                            <span class="pull-right label label-primary info-label">
                 {{COURSE_LEVEL | optionKV(course.level)}}
               </span>
                             <span class="pull-right label label-primary info-label">
@@ -31,9 +31,7 @@
                             <a href="#" class="blue">{{course.name}}</a>
                         </h3>
 
-                       <!-- <p>
-                            <span class="blue bolder bigger-150">{{course.price}}&nbsp;<i class="fa fa-rmb"></i></span>&nbsp;
-                        </p>-->
+
                         <p>{{course.summary}}</p>
                         <p>
                             <span class="badge badge-info">{{course.id}}</span>
@@ -121,7 +119,7 @@
                                 <label class="col-sm-2 control-label">类型</label>
                                 <div class="col-sm-10">
                                     <select v-model="course.charge" class="form-control">
-                                        <option v-for="o in COURSE_CHRAGE" v-bind:value="o.key">{{o.value}}</option>
+                                        <option v-for="o in COURSE_CHARGE" v-bind:value="o.key">{{o.value}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -181,7 +179,10 @@
         data: function () {
             return {
                 course: {}, //映射表单数据
-                courses: []
+                courses: [],
+                COURSE_LEVEL: COURSE_LEVEL,
+                COURSE_CHARGE: COURSE_CHARGE,
+                COURSE_STATUS: COURSE_STATUS,
             }
         },
         mounted: function () {
@@ -265,7 +266,15 @@
                         }
                     })
                 });
-            }
+            },
+            /**
+             * 点击【大章】
+             */
+            toChapter(course) {
+                let _this = this;
+                SessionStorage.set("course", course);
+                _this.$router.push("/business/chapter");
+            },
         }
     }
 </script>

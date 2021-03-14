@@ -1,8 +1,19 @@
 <template>
 
     <div>
+        <h4 class="lighter">
+            <!--&lt;!&ndash;<i class="ace-icon fa fa-hand-o-right icon-animated-hand-pointer blue"></i>&ndash;&gt;-->
+            <router-link to="/business/course" class="pink"> {{course.name}} </router-link>
+        </h4>
+        <hr>
+
         <!--新增章节按钮-->
         <p>
+            <router-link to="/business/course" class="btn btn-white btn-default btn-round">
+                <i class="ace-icon fa fa-arrow-left"></i>
+                返回课程
+            </router-link>
+            &nbsp;
             <button v-on:click="add()" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon fa fa-edit"></i>
                 新增
@@ -134,11 +145,17 @@
         data: function () {
             return {
                 chapter: {}, //映射表单数据
-                chapters: []
+                chapters: [],
+                course: {},
             }
         },
         mounted: function () {
             let _this = this;
+            let course = SessionStorage.get("course") || {};
+            if (Tool.isEmpty(course)) { //如果是空就跳到欢迎页面
+                _this.$router.push("/welcome");
+            }
+            _this.course = course;
             _this.list(1);
         },
         methods: {

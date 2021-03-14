@@ -145,7 +145,12 @@
         data: function () {
             return {
                 ${domain}: {}, //映射表单数据
-                ${domain}s: []
+                ${domain}s: [],
+            <#list fieldList as field>
+            <#if field.enums>
+            ${field.enumsConst}: ${field.enumsConst},
+            </#if>
+            </#list>
             }
         },
         mounted: function () {
