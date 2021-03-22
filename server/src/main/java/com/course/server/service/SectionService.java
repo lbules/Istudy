@@ -27,6 +27,12 @@ public class SectionService {
     @Resource
     private SectionMapper sectionMapper;
 
+    @Resource
+    //保存时需要调用courseService中的updateTime方法
+    private CourseService courseService;
+
+
+
     public void list(SectionPageDto sectionPageDto) {
 
         PageHelper.startPage(sectionPageDto.getPage(), sectionPageDto.getSize());
@@ -67,6 +73,8 @@ public class SectionService {
         } else { //id不为空
             this.update(section);
         }
+        //更新课程时长
+        courseService.updateTime(sectionDto.getCourseId());
     }
 
     /**
