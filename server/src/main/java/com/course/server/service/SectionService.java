@@ -13,6 +13,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -63,9 +64,10 @@ public class SectionService {
 
     /**
      * 保存章节,编辑保存时根据id是否为空
-     *
+     *@Transactional 添加上事务
      * @param sectionDto
      */
+    @Transactional
     public void save(SectionDto sectionDto) {
         Section section = CopyUtil.copy(sectionDto, Section.class);
         if (StringUtils.isEmpty(sectionDto.getId())) { //id为空则调用insert方法添加
