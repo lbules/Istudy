@@ -193,7 +193,7 @@
         },
         mounted: function () {
             let _this = this;
-
+            _this.allCategory(); //初始时去查所有的课程分类
             _this.list(1);
         },
         methods: {
@@ -283,6 +283,19 @@
                 _this.$router.push("/business/chapter");
             },
 
+            //查找所有的课程分类
+            allCategory() {
+                let _this = this;
+                Loading.show();
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/category/all').then((response)=>{
+                    Loading.hide();
+                    let resp = response.data;
+                    _this.categorys = resp.content;
+
+                    _this.initTree();
+                })
+            },
+
             //初始化树形
             initTree() {
                 let _this = this;
@@ -292,9 +305,9 @@
                     },
                     data: {
                         simpleData: {
-                            idKey: "id",
-                            pIdKey: "parent",
-                            rootPId: "00000000",
+                            idKey: "id",  //当前节点
+                            pIdKey: "parent", //父节点id
+                            rootPId: "00000000",  //根节点id
                             enable: true
                         }
                     }
