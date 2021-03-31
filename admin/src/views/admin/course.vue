@@ -202,6 +202,7 @@
             add() {
                 let _this = this;
                 _this.course = {}; //清空上一次输入的内容
+                _this.tree.checkAllNodes(false);  //不选中节点
                 $("#form-modal").modal("show"); //让模态框显示出来
             },
 
@@ -209,6 +210,7 @@
             edit(course) {
                 let _this = this;
                 _this.course = $.extend({}, course); //将传递过来一行数据course赋值给_this.course
+                _this.listCategory(course.id);  //查找当前节点勾选了那几个节点
                 $("#form-modal").modal("show"); //让模态框显示出来
 
             },
@@ -325,9 +327,28 @@
 
                 //得到当前选择的数据
                 _this.tree = $.fn.zTree.init($("#tree"), setting, zNodes);
+            },
 
-                // 展开所有的节点
-                // _this.tree.expandAll(true);
+            /**
+             * 查找课程下所有分类
+             * @param courseId
+             */
+            listCategory(courseId) {
+                let _this = this;
+                Loading.show();
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/course/list-category/' + courseId).then((res)=>{
+                    Loading.hide();
+                    console.log("查找课程下所有分类结果：", res);
+                    let response = res.data;
+                    let categorys = response.content;
+
+                    // 勾选查询到的分类
+                    _this.tree.checkAllNodes(false);
+                    for (let i = 0; i < categorys.length; i++) {
+                        let node = _this.tree.getNodeByParam("id", categorys[i].categoryId);
+                        _this.tree.checkNode(node, true);
+                    }
+                })
             },
         }
     }
