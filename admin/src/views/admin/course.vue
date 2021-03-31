@@ -78,6 +78,12 @@
                         <!--弹出框内容-->
                         <form class="form-horizontal">
                             <div class="form-group">
+                                <label class="col-sm-2 control-label">分类</label>
+                                <div class="col-sm-10">
+                                    <ul id="tree" class="ztree"></ul>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.name" class="form-control">
@@ -187,6 +193,7 @@
         },
         mounted: function () {
             let _this = this;
+
             _this.list(1);
         },
         methods: {
@@ -274,6 +281,31 @@
                 let _this = this;
                 SessionStorage.set("course", course);
                 _this.$router.push("/business/chapter");
+            },
+
+            //初始化树形
+            initTree() {
+                let _this = this;
+                let setting = {
+                    check: {
+                        enable: true
+                    },
+                    data: {
+                        simpleData: {
+                            idKey: "id",
+                            pIdKey: "parent",
+                            rootPId: "00000000",
+                            enable: true
+                        }
+                    }
+                };
+
+                let zNodes = _this.categorys;
+
+                _this.tree = $.fn.zTree.init($("#tree"), setting, zNodes);
+
+                // 展开所有的节点
+                // _this.tree.expandAll(true);
             },
         }
     }
