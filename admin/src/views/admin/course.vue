@@ -189,6 +189,7 @@
                 COURSE_LEVEL: COURSE_LEVEL,
                 COURSE_CHARGE: COURSE_CHARGE,
                 COURSE_STATUS: COURSE_STATUS,
+                tree: {},
             }
         },
         mounted: function () {
@@ -242,6 +243,13 @@
                 ) {
                     return;
                 }
+
+                let categorys = _this.tree.getCheckedNodes();  //在保存时获取课程的分类
+                if (Tool.isEmpty(categorys)) {
+                    Toast.warning("请选择分类！");
+                    return;
+                }
+                _this.course.categorys = categorys;
 
 
                 Loading.show();
@@ -315,6 +323,7 @@
 
                 let zNodes = _this.categorys;
 
+                //得到当前选择的数据
                 _this.tree = $.fn.zTree.init($("#tree"), setting, zNodes);
 
                 // 展开所有的节点

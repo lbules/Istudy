@@ -29,6 +29,9 @@ public class CourseService {
     @Resource
     private MyCourseMapper myCourseMapper;
 
+    @Resource
+    private CourseCategoryService courseCategoryService;
+
     public void list(PageDto pageDto) {
 
         PageHelper.startPage(pageDto.getPage(),pageDto.getSize());
@@ -61,6 +64,9 @@ public class CourseService {
         else { //id不为空
             this.update(course);
         }
+
+        //批量保存课程对应的分类
+        courseCategoryService.saveBatch(course.getId(), courseDto.getCategorys());
     }
 
     /**
