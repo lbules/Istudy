@@ -25,14 +25,14 @@
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>名称</th>
+                <!--<th>ID</th>-->
+                <th>大章节名称</th>
                 <th>操作</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="chapter in chapters">
-                <td>{{chapter.id}}</td>
+                <!--<td>{{chapter.id}}</td>-->
                 <td>{{chapter.name}}</td>
                 <td>
                     <div class="hidden-sm hidden-xs btn-group">
@@ -105,7 +105,7 @@
                         <form class="form-horizontal">
                             <!--名称输入-->
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">名称</label>
+                                <label class="col-sm-2 control-label">大章节名称</label>
                                 <div class="col-sm-10">
                                     <input v-model="chapter.name" class="form-control" placeholder="名称">
                                 </div>

@@ -21,8 +21,8 @@
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
-                             <th>ID</th>
-               <th>标题</th>
+                             <!--<th>ID</th>-->
+               <th>小节名称</th>
                <th>视频</th>
                <th>时长</th>
                <th>类型</th>
@@ -32,7 +32,7 @@
             </thead>
             <tbody>
             <tr v-for="section in sections">
-                <td>{{section.id}}</td>
+                <!--<td>{{section.id}}</td>-->
                 <td>{{section.title}}</td>
                 <td>{{section.video}}</td>
                 <td>{{section.time}}</td>
@@ -98,12 +98,6 @@
                         <!--弹出框内容-->
                         <form class="form-horizontal">
 
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">ID</label>
-                              <div class="col-sm-10">
-                                <input v-model="section.id" class="form-control">
-                              </div>
-                            </div>
                             <div class="form-group">
                               <label class="col-sm-2 control-label">标题</label>
                               <div class="col-sm-10">
