@@ -184,6 +184,11 @@
                         <form class="form-horizontal">
                             <div class="form-group">
                                 <div class="col-lg-12">
+                                   {{saveContentLabel}}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-12">
                                     <div id="content"></div>
                                 </div>
                             </div>
@@ -222,6 +227,8 @@
                 COURSE_CHARGE: COURSE_CHARGE,
                 COURSE_STATUS: COURSE_STATUS,
                 tree: {},
+                saveContentLabel:"",
+
             }
         },
         mounted: function () {
@@ -398,7 +405,7 @@
 
                 // 先清空历史文本
                 $("#content").summernote('code', '');
-                // _this.saveContentLabel = "";
+                _this.saveContentLabel = "";
 
                 // 加载内容文件列表
                 // _this.listContentFiles();
@@ -415,9 +422,13 @@
                         }
 
                         // 定时自动保存
-                        /*_this.saveContentInterval = setInterval(function() {
-                            _this.saveContent();
-                        }, 5000);*/
+                        _this.saveContentInterval = setInterval(function() {
+                            _this.saveContent();  //每五秒自动保存
+                        }, 5000);
+                        //关闭内容框时，清空自动保存任务
+                        $('#course-content-modal').on('hidden.bs.modal',function (e) {
+                            clearInterval(saveContentInterval);
+                        })
                     } else {
                         Toast.warning(resp.message);
                     }
@@ -440,8 +451,8 @@
                     if (resp.success) {
                         Toast.success("内容保存成功");
                         // let now = Tool.dateFormat("yyyy-MM-dd hh:mm:ss");
-                        // let now = Tool.dateFormat("mm:ss");
-                        // _this.saveContentLabel = "最后保存时间：" + now;
+                        let now = Tool.dateFormat("mm:ss");
+                        _this.saveContentLabel = "最后保存时间：" + now;
                     } else {
                         Toast.warning(resp.message);
                     }
