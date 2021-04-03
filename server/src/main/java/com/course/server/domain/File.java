@@ -19,6 +19,9 @@ public class File {
 
     private Date updateAt;
 
+    public File(String fullpath) {
+    }
+
     public String getId() {
         return id;
     }
