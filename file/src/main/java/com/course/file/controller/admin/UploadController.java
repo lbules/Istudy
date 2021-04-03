@@ -5,6 +5,7 @@ import com.course.server.service.TeacherService;
 import com.course.server.util.UuidUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,11 +21,18 @@ public class UploadController {
 
     public static final String BUSINESS_NAME = "文件上传";
 
+    @Value("${file.domain}")
+    private String FILE_DOMAIN;
+
+    @Value("${file.path}")
+    private String FILE_PATH;
+
     @Resource
     private TeacherService teacherService;
 
     @RequestMapping("/upload")
     public ResponseDto upload(@RequestParam MultipartFile file) throws IOException {
+
         LOG.info("上传文件开始");
         LOG.info(file.getOriginalFilename());
         LOG.info(String.valueOf(file.getSize()));
@@ -32,12 +40,12 @@ public class UploadController {
         //保存文件
         String fileName = file.getOriginalFilename();
         String key = UuidUtil.getShortUuid();
-        String fullpath = "D:/file/imooc/course/teacher/"+key+"-"+fileName;
+        String fullpath = FILE_PATH+"teacher/"+key+"-"+fileName;
         File dest = new File(fullpath);
         file.transferTo(dest);
 
        ResponseDto responseDto= new ResponseDto();
-       responseDto.setContent("http://127.0.0.1:9003/file/f/teacher/"+key+"-"+fileName);
+       responseDto.setContent(FILE_DOMAIN+"f/teacher/"+key+"-"+fileName);
        return responseDto;
     }
 }
