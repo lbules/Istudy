@@ -32,11 +32,12 @@ public class UploadController {
         //保存文件
         String fileName = file.getOriginalFilename();
         String key = UuidUtil.getShortUuid();
-        String fullpath = "D:/log/imooc/teacher"+key+"-"+fileName;
+        String fullpath = "D:/file/imooc/course/teacher/"+key+"-"+fileName;
         File dest = new File(fullpath);
         file.transferTo(dest);
 
        ResponseDto responseDto= new ResponseDto();
+       responseDto.setContent("http://127.0.0.1:9003/file/f/teacher/"+key+"-"+fileName);
        return responseDto;
     }
 }
