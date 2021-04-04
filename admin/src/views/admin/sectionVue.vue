@@ -129,7 +129,7 @@
                                   </file>
                                   <div v-show="section.image" class="row">
                                       <div class="col-md-6">
-                                          <video v-bind:src="section.video" controls="controls"></video>
+                                          <video id="video" v-bind:src="section.video" controls="controls"></video>
                                       </div>
                                   </div>
 
@@ -287,6 +287,16 @@
                 let _this = this;
                 let video = resp.content;
                 _this.section.video = video;
+                _this.getTime();
+            },
+
+            //自动获取视频的时长
+            getTime() {
+                let _this = this;
+                setTimeout(function () {
+                    let ele = document.getElementById("video");
+                    _this.section.time = parseInt(ele.duration, 10);
+                }, 1000);
             },
 
         }
