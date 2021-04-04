@@ -119,7 +119,20 @@
                             <div class="form-group">
                               <label class="col-sm-2 control-label">视频</label>
                               <div class="col-sm-10">
-                                <input v-model="section.video" class="form-control">
+
+                                  <file
+                                          v-bind:suffixs="['mp4']"
+                                          v-bind:use="FILE_USE.COURSE.key"
+                                          v-bind:id="'video-upload'"
+                                          v-bind:text="'上传视频'"
+                                          v-bind:after-upload="afterUpload">
+                                  </file>
+                                  <div v-show="section.image" class="row">
+                                      <div class="col-md-6">
+                                          <video v-bind:src="section.video" controls="controls"></video>
+                                      </div>
+                                  </div>
+
                               </div>
                             </div>
                             <div class="form-group">
@@ -158,10 +171,11 @@
 </template>
 
 <script>
-    import Pagination from "../../components/pagination.vue"
+    import Pagination from "../../components/pagination.vue";
+    import File from "../../components/file";
 
     export default {
-        components: {Pagination},
+        components: {Pagination,File},
         name: 'section',
         data: function () {
             return {
@@ -170,6 +184,7 @@
                 SECTION_CHARGE: SECTION_CHARGE,
                 course: {},
                 chapter: {},
+                FILE_USE: FILE_USE,
             }
         },
         mounted: function () {
@@ -265,7 +280,15 @@
                         }
                     })
                 });
-            }
+            },
+
+            //回调函数
+            afterUpload(resp) {
+                let _this = this;
+                let video = resp.content;
+                _this.section.video = video;
+            },
+
         }
     }
 </script>

@@ -73,6 +73,7 @@ public class UploadController {
         fileService.save(fileDto);
 
        ResponseDto responseDto= new ResponseDto();
+       //将路径返回给前端页面
        responseDto.setContent(FILE_DOMAIN+path);
        return responseDto;
     }

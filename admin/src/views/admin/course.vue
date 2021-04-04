@@ -12,8 +12,8 @@
         <div class="row">
             <div v-for="course in courses" class="col-md-4">
                 <div class="thumbnail search-thumbnail">
-                    <img v-show="!course.image" class="media-object" src="/static/image/demo-course.jpg" />
-                    <img v-show="course.image" class="media-object" v-bind:src="course.image" />
+                    <img v-show="!course.image" class="media-object" src="/static/image/demo-course.jpg"/>
+                    <img v-show="course.image" class="media-object" v-bind:src="course.image"/>
                     <div class="caption">
                         <div class="clearfix">
                             <span class="pull-right label label-primary info-label">
@@ -107,12 +107,25 @@
                                     <input v-model="course.price" class="form-control">
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">封面</label>
                                 <div class="col-sm-10">
-                                    <input v-model="course.image" class="form-control">
+                                    <file
+                                            v-bind:suffixs="['jpg', 'jpeg', 'png']"
+                                            v-bind:use="FILE_USE.COURSE.key"
+                                            v-bind:id="'image-upload'"
+                                            v-bind:text="'上传封面'"
+                                            v-bind:after-upload="afterUpload">
+                                    </file>
+                                    <div v-show="course.image" class="row">
+                                        <div class="col-md-4">
+                                            <img v-bind:src="course.image" class="img-responsive">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">级别</label>
                                 <div class="col-sm-10">
@@ -185,7 +198,7 @@
                         <form class="form-horizontal">
                             <div class="form-group">
                                 <div class="col-lg-12">
-                                   {{saveContentLabel}}
+                                    {{saveContentLabel}}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -201,7 +214,7 @@
                             取消
                         </button>
 
-                        <button type="button" class="btn btn-white btn-info btn-round" v-on:click="saveContent()" >
+                        <button type="button" class="btn btn-white btn-info btn-round" v-on:click="saveContent()">
                             <i class="ace-icon fa fa-plus blue"></i>
                             保存
                         </button>
@@ -216,7 +229,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">排序</h4>
                     </div>
                     <div class="modal-body">
@@ -256,20 +270,22 @@
 </template>
 
 <script>
-    import Pagination from "../../components/pagination.vue"
+    import Pagination from "../../components/pagination.vue";
+    import File from "../../components/file";
 
     export default {
-        components: {Pagination},
+        components: {Pagination,File},
         name: 'course',
         data: function () {
             return {
                 course: {}, //映射表单数据
                 courses: [],
+                FILE_USE: FILE_USE,
                 COURSE_LEVEL: COURSE_LEVEL,
                 COURSE_CHARGE: COURSE_CHARGE,
                 COURSE_STATUS: COURSE_STATUS,
                 tree: {},
-                saveContentLabel:"",
+                saveContentLabel: "",
                 sort: {
                     id: "",  //变更课程id
                     oldSort: 0,  //旧排序
@@ -385,7 +401,7 @@
             allCategory() {
                 let _this = this;
                 Loading.show();
-                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/category/all').then((response)=>{
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/category/all').then((response) => {
                     Loading.hide();
                     let resp = response.data;
                     _this.categorys = resp.content;
@@ -424,7 +440,7 @@
             listCategory(courseId) {
                 let _this = this;
                 Loading.show();
-                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/course/list-category/' + courseId).then((res)=>{
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/course/list-category/' + courseId).then((res) => {
                     Loading.hide();
                     console.log("查找课程下所有分类结果：", res);
                     let response = res.data;
@@ -460,22 +476,22 @@
                 // _this.listContentFiles();
 
                 Loading.show();
-                _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/admin/course/find-content/' + id).then((response)=>{
+                _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/admin/course/find-content/' + id).then((response) => {
                     Loading.hide();
                     let resp = response.data;
 
                     if (resp.success) {
-                        $("#course-content-modal").modal({backdrop:'static',keyboard:false});
+                        $("#course-content-modal").modal({backdrop: 'static', keyboard: false});
                         if (resp.content) {
                             $("#content").summernote('code', resp.content.content);
                         }
 
                         // 定时自动保存
-                        _this.saveContentInterval = setInterval(function() {
+                        _this.saveContentInterval = setInterval(function () {
                             _this.saveContent();  //每五秒自动保存
                         }, 5000);
                         //关闭内容框时，清空自动保存任务
-                        $('#course-content-modal').on('hidden.bs.modal',function (e) {
+                        $('#course-content-modal').on('hidden.bs.modal', function (e) {
                             clearInterval(saveContentInterval);
                         })
                     } else {
@@ -488,13 +504,13 @@
             /**
              * 保存内容
              */
-            saveContent () {
+            saveContent() {
                 let _this = this;
                 let content = $("#content").summernote("code");
                 _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/course/save-content', {
                     id: _this.course.id,
                     content: content
-                }).then((response)=>{
+                }).then((response) => {
                     Loading.hide();
                     let resp = response.data;
                     if (resp.success) {
@@ -542,7 +558,12 @@
                 });
             },
 
-
+            //回调函数
+            afterUpload(resp) {
+                let _this = this;
+                let image = resp.content;
+                _this.course.image = image;
+            }
 
 
         }
