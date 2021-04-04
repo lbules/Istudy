@@ -1,6 +1,8 @@
 package com.course.file.controller.admin;
 
+import com.course.server.dto.FileDto;
 import com.course.server.dto.ResponseDto;
+import com.course.server.service.FileService;
 import com.course.server.service.TeacherService;
 import com.course.server.util.UuidUtil;
 import org.slf4j.Logger;
@@ -30,6 +32,10 @@ public class UploadController {
     @Resource
     private TeacherService teacherService;
 
+
+    @Resource
+    private FileService fileService;
+
     @RequestMapping("/upload")
     public ResponseDto upload(@RequestParam MultipartFile file) throws IOException {
 
@@ -40,12 +46,24 @@ public class UploadController {
         //保存文件
         String fileName = file.getOriginalFilename();
         String key = UuidUtil.getShortUuid();
-        String fullpath = FILE_PATH+"teacher/"+key+"-"+fileName;
+        String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+        String path = "teacher"+key+"."+suffix;
+        String fullpath = FILE_PATH+path;
         File dest = new File(fullpath);
         file.transferTo(dest);
 
+        //保存文件记录
+        FileDto fileDto = new FileDto();
+        fileDto.setPath(path);
+        fileDto.setName(fileName);
+        fileDto.setSize(Math.toIntExact(file.getSize()));
+        fileDto.setSuffix(suffix);
+        fileDto.setUse("");
+        //保存进数据库
+        fileService.save(fileDto);
+
        ResponseDto responseDto= new ResponseDto();
-       responseDto.setContent(FILE_DOMAIN+"f/teacher/"+key+"-"+fileName);
+       responseDto.setContent(FILE_DOMAIN+path);
        return responseDto;
     }
 }
