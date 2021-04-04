@@ -20,8 +20,8 @@
                 <td>{{file.suffix}}</td>
                 <td>{{file.path}}</td>
                 <td>{{file.name}}</td>
-                <td>{{file.size}}</td>
-                <td>{{file.use}}</td>
+                <td>{{file.size | formatFileSize}}</td>
+                <td>{{FILE_USE | optionKV(file.use)}}</td>
             </tr>
             </tbody>
         </table>
@@ -43,6 +43,7 @@
             return {
                 file: {}, //映射表单数据
                 files: [],
+                FILE_USE: FILE_USE,
             }
         },
         mounted: function () {

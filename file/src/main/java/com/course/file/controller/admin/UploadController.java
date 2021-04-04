@@ -2,6 +2,7 @@ package com.course.file.controller.admin;
 
 import com.course.server.dto.FileDto;
 import com.course.server.dto.ResponseDto;
+import com.course.server.enums.FileUseEnum;
 import com.course.server.service.FileService;
 import com.course.server.service.TeacherService;
 import com.course.server.util.UuidUtil;
@@ -37,17 +38,26 @@ public class UploadController {
     private FileService fileService;
 
     @RequestMapping("/upload")
-    public ResponseDto upload(@RequestParam MultipartFile file) throws IOException {
+    public ResponseDto upload(@RequestParam MultipartFile file,String use) throws IOException {
 
         LOG.info("上传文件开始");
         LOG.info(file.getOriginalFilename());
         LOG.info(String.valueOf(file.getSize()));
 
         //保存文件
+        FileUseEnum useEnum = FileUseEnum.getByCode(use);
         String fileName = file.getOriginalFilename();
         String key = UuidUtil.getShortUuid();
         String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
-        String path = "teacher"+key+"."+suffix;
+
+        //如果文件夹不存在则创建
+        String dir = useEnum.name().toLowerCase();
+        File fullDir = new File(FILE_PATH+dir);
+        if (!fullDir.exists()) {
+            fullDir.mkdir();
+        }
+
+        String path = dir+File.separator+key+"."+suffix;
         String fullpath = FILE_PATH+path;
         File dest = new File(fullpath);
         file.transferTo(dest);
@@ -58,7 +68,7 @@ public class UploadController {
         fileDto.setName(fileName);
         fileDto.setSize(Math.toIntExact(file.getSize()));
         fileDto.setSuffix(suffix);
-        fileDto.setUse("");
+        fileDto.setUse(use);
         //保存进数据库
         fileService.save(fileDto);
 
