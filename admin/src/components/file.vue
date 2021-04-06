@@ -71,12 +71,14 @@
                     let image = resp.content; //取出照片
 
                     _this.afterUpload(resp);
+                    $("#"+_this.inputId + "-input").val("");
 
                 });
             },
 
             selectFile() {
-                $("#file-upload-input").trigger("click");
+                let _this = this;
+                $("#"+_this.inputId + "-input").trigger("click");
             },
         }
     }

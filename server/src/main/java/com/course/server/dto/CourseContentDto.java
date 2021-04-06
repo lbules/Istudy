@@ -11,7 +11,7 @@ public class CourseContentDto {
     /**
      * 课程内容
      */
-    private Integer content;
+    private String content;
 
     public String getId() {
         return id;
@@ -21,11 +21,11 @@ public class CourseContentDto {
         this.id = id;
     }
 
-    public Integer getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(Integer content) {
+    public void setContent(String content) {
         this.content = content;
     }
 

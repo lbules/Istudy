@@ -114,7 +114,7 @@
                                     <file
                                             v-bind:suffixs="['jpg', 'jpeg', 'png']"
                                             v-bind:use="FILE_USE.COURSE.key"
-                                            v-bind:id="'image-upload'"
+                                            v-bind:input-id="'image-upload'"
                                             v-bind:text="'上传封面'"
                                             v-bind:after-upload="afterUpload">
                                     </file>
@@ -489,7 +489,7 @@
                         // 定时自动保存
                         _this.saveContentInterval = setInterval(function () {
                             _this.saveContent();  //每五秒自动保存
-                        }, 5000);
+                        }, 60000);
                         //关闭内容框时，清空自动保存任务
                         $('#course-content-modal').on('hidden.bs.modal', function (e) {
                             clearInterval(saveContentInterval);

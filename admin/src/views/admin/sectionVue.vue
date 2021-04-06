@@ -123,7 +123,7 @@
                                   <file
                                           v-bind:suffixs="['mp4']"
                                           v-bind:use="FILE_USE.COURSE.key"
-                                          v-bind:id="'video-upload'"
+                                          v-bind:input-id="'video-upload'"
                                           v-bind:text="'上传视频'"
                                           v-bind:after-upload="afterUpload">
                                   </file>
