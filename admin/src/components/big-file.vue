@@ -44,6 +44,13 @@
                 let formData = new window.FormData();
                 let file = _this.$refs.file.files[0];
 
+                //生成文件标识
+                let key = hex_md5(file);
+                let key10 = parseInt(key, 16);
+                let key62 = Tool._10to62(key10);
+                console.log(key, key10,key62);
+
+
                 // 判断文件格式
                 let suffixs =_this.suffixs;
                 let fileName = file.name;
@@ -61,16 +68,27 @@
                     return;
                 }
 
-
                 //文件分片
                 let shardSize = 20*1024*1024; //每个分片大小为20mb
                 let shardIndex = 0; // 分片索引
                 let start = shardIndex ; //当前分片的索引位置
                 let end = Math.min(file.size,start+shardSize); // 当前分片的结束位置
                 let fileShard  = file.slice(start,end); // 从文件中截取当前分片数据
+                let size = file.size;
+                let shardToal = Math.ceil(size/shardSize);
 
+                formData.append('shard',fileShard);
+                formData.append('shardIndex',shardIndex);
+                formData.append('shardSize',shardSize);
+                formData.append('shardTotal',shardToal);
+                formData.append('name',file.name);
+                formData.append('suffix',suffix);
+                formData.append('size',size);
                 formData.append('file',fileShard);
                 formData.append('use',_this.use);
+                formData.append('key',key62);
+
+
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER+'/file/admin/upload',formData).then((response)=>{
                     Loading.hide();

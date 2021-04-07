@@ -38,17 +38,24 @@ public class UploadController {
     private FileService fileService;
 
     @RequestMapping("/upload")
-    public ResponseDto upload(@RequestParam MultipartFile file,String use) throws IOException {
+    public ResponseDto upload(@RequestParam MultipartFile shard,
+                                String use,
+                                String name,
+                                String suffix,
+                                Integer size,
+                                Integer shardIndex,
+                                Integer shardSize,
+                                Integer shardTotal,
+                                String key) throws IOException {
 
         LOG.info("上传文件开始");
-        LOG.info(file.getOriginalFilename());
-        LOG.info(String.valueOf(file.getSize()));
+
 
         //保存文件
         FileUseEnum useEnum = FileUseEnum.getByCode(use);
-        String fileName = file.getOriginalFilename();
-        String key = UuidUtil.getShortUuid();
-        String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
+//        String fileName = file.getOriginalFilename();
+//        String key = UuidUtil.getShortUuid();
+//        String suffix = fileName.substring(fileName.lastIndexOf(".")+1).toLowerCase();
 
         //如果文件夹不存在则创建
         String dir = useEnum.name().toLowerCase();
@@ -60,15 +67,19 @@ public class UploadController {
         String path = dir+File.separator+key+"."+suffix;
         String fullpath = FILE_PATH+path;
         File dest = new File(fullpath);
-        file.transferTo(dest);
+        shard.transferTo(dest);
 
         //保存文件记录
         FileDto fileDto = new FileDto();
         fileDto.setPath(path);
-        fileDto.setName(fileName);
-        fileDto.setSize(Math.toIntExact(file.getSize()));
+        fileDto.setName(name);
+        fileDto.setSize(size);
         fileDto.setSuffix(suffix);
         fileDto.setUse(use);
+        fileDto.setShardIndex(shardIndex);
+        fileDto.setShardSize(shardSize);
+        fileDto.setShardTotal(shardTotal);
+        fileDto.setKey(key);
         //保存进数据库
         fileService.save(fileDto);
 
@@ -77,4 +88,9 @@ public class UploadController {
        responseDto.setContent(FILE_DOMAIN+path);
        return responseDto;
     }
+
+    /*@GetMapping("/merge")
+    public ResponseDto merge() {
+
+    }*/
 }
