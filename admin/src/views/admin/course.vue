@@ -42,7 +42,7 @@
                             <button v-on:click="toChapter(course)" class="btn btn-white btn-xs btn-info btn-round">
                                 大章
                             </button>&nbsp;
-                            <button v-on:click="editContent(course)" class="btn btn-white btn-xs btn-info btn-round">
+                            <button v-on:click="toContent(course)" class="btn btn-white btn-xs btn-info btn-round">
                                 内容
                             </button>&nbsp;
                             <button v-on:click="openSortModal(course)" class="btn btn-white btn-xs btn-info btn-round">
@@ -186,43 +186,7 @@
         </div><!-- /.modal -->
         <!--模态框--END-->
 
-        <!--内容编辑模态框-->
-        <div id="course-content-modal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
-                        <h4 class="modal-title">内容编辑</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <div class="col-lg-12">
-                                    {{saveContentLabel}}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-lg-12">
-                                    <div id="content"></div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-white btn-default btn-round" data-dismiss="modal">
-                            <i class="ace-icon fa fa-times"></i>
-                            取消
-                        </button>
 
-                        <button type="button" class="btn btn-white btn-info btn-round" v-on:click="saveContent()">
-                            <i class="ace-icon fa fa-plus blue"></i>
-                            保存
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--内容编辑模态框END-->
 
         <!--排序模态框-->
         <div id="course-sort-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -291,7 +255,6 @@
                     oldSort: 0,  //旧排序
                     newSort: 0   //新排序
                 },
-
             }
         },
         mounted: function () {
@@ -455,51 +418,6 @@
                 })
             },
 
-            /**
-             * 打开内容编辑框
-             */
-            editContent(course) {
-                let _this = this;
-                let id = course.id;
-                _this.course = course;
-
-                $("#content").summernote({
-                    focus: true,
-                    height: 300
-                });
-
-                // 先清空历史文本
-                $("#content").summernote('code', '');
-                _this.saveContentLabel = "";
-
-                // 加载内容文件列表
-                // _this.listContentFiles();
-
-                Loading.show();
-                _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/admin/course/find-content/' + id).then((response) => {
-                    Loading.hide();
-                    let resp = response.data;
-
-                    if (resp.success) {
-                        $("#course-content-modal").modal({backdrop: 'static', keyboard: false});
-                        if (resp.content) {
-                            $("#content").summernote('code', resp.content.content);
-                        }
-
-                        // 定时自动保存
-                        _this.saveContentInterval = setInterval(function () {
-                            _this.saveContent();  //每五秒自动保存
-                        }, 60000);
-                        //关闭内容框时，清空自动保存任务
-                        $('#course-content-modal').on('hidden.bs.modal', function (e) {
-                            clearInterval(saveContentInterval);
-                        })
-                    } else {
-                        Toast.warning(resp.message);
-                    }
-                });
-            },
-
 
             /**
              * 保存内容
@@ -563,9 +481,16 @@
                 let _this = this;
                 let image = resp.content;
                 _this.course.image = image;
-            }
+            },
 
-
+            /**
+             * 点击【内容】
+             */
+            toContent(course) {
+                let _this = this;
+                SessionStorage.set(SESSION_KEY_COURSE, course);
+                _this.$router.push("/business/content");
+            },
         }
     }
 </script>
