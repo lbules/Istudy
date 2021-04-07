@@ -11,6 +11,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -49,11 +50,13 @@ public class FileService {
      */
     public void save(FileDto fileDto) {
         File file = CopyUtil.copy(fileDto, File.class);
-        if (StringUtils.isEmpty(fileDto.getId())){ //id为空则调用insert方法添加
+        File fileDb = selectByKey(fileDto.getKey());
+        if (fileDb==null){ //id为空则调用insert方法添加
             this.insert(file);
         }
-        else { //id不为空
-            this.update(file);
+        else {
+            fileDb.setShardIndex(fileDto.getShardIndex());
+            this.update(fileDb);
         }
     }
 
@@ -87,5 +90,24 @@ public class FileService {
     public void delete(String id) {
         fileMapper.deleteByPrimaryKey(id);
     }
+
+    public File selectByKey(String key) {
+        FileExample example = new FileExample();
+        example.createCriteria().andKeyEqualTo(key);
+        List<File> fileList = fileMapper.selectByExample(example);
+        if (CollectionUtils.isEmpty(fileList)) {
+            return null;
+        } else {
+            return fileList.get(0);
+        }
+    }
+
+    /**
+     * 根据文件标识查询数据库记录
+     */
+    public FileDto findByKey(String key) {
+        return CopyUtil.copy(selectByKey(key), FileDto.class);
+    }
+
 
 }

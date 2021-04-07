@@ -38,7 +38,7 @@ public class SectionController {
      * @param sectionDto
      * @return
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
     public ResponseDto save(@RequestBody SectionDto sectionDto) {
         //保存校验
             ValidatorUtil.require(sectionDto.getTitle(), "标题");
