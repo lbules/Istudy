@@ -140,7 +140,6 @@
         Progress.show(parseInt((shardIndex - 1) * 100 / shardTotal));
         fileReader.onload = function (e) {
           let base64 = e.target.result;
-          // console.log("base64:", base64);
 
           param.shard = base64;
 

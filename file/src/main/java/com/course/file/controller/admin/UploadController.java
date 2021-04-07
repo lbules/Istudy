@@ -75,6 +75,7 @@ public class UploadController {
        ResponseDto responseDto= new ResponseDto();
        //将路径返回给前端页面
         fileDto.setPath(FILE_DOMAIN + path);
+        LOG.info("返回前端页面的路径为："+fileDto.getPath());
         responseDto.setContent(fileDto);
 
        //判断是否为最后一个分片
