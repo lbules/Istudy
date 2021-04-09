@@ -28,14 +28,16 @@
                                             <fieldset>
                                                 <label class="block clearfix">
   														<span class="block input-icon input-icon-right">
-  															<input v-model="user.loginName" type="text" class="form-control" placeholder="用户名"/>
+  															<input v-model="user.loginName" type="text"
+                                                                   class="form-control" placeholder="用户名"/>
   															<i class="ace-icon fa fa-user"></i>
   														</span>
                                                 </label>
 
                                                 <label class="block clearfix">
   														<span class="block input-icon input-icon-right">
-  															<input v-model="user.password" type="password" class="form-control"
+  															<input v-model="user.password" type="password"
+                                                                   class="form-control"
                                                                    placeholder="密码"/>
   															<i class="ace-icon fa fa-lock"></i>
   														</span>
@@ -227,6 +229,7 @@
             let _this = this;
             $('body').remove('no-skin');
             $('body').attr('class', 'login-layout light-login');
+            //获取记住的用户信息（账号密码）
             let rememberUser = LocalStorage.get("loginUser");
             if (rememberUser) {
                 //有缓存则说明已记住
@@ -236,12 +239,16 @@
         methods: {
             login() {
                 let _this = this;
-                //勾选了记住我，先将明文显示的密码保存防止进行多次加密
-                let passwordShow = _this.user.password;
+
                 //判断用户名和密码是否未输入
-                if (_this.user.loginName!=null&&_this.user.password!=null) {
-                    //对密码进行加密
-                    _this.user.password = hex_md5(_this.user.password + KEY);
+                if (_this.user.loginName != null && _this.user.password != null) {
+                    //如果缓存中已有密码，就不需要对密码进行加密
+                    let md5 = hex_md5(_this.user.password);
+                    let rememberUser = LocalStorage.get("loginUser")||{};
+                    if (md5 !== rememberUser.md5) {
+                        //如果md5的值和rememberUser中不一样时，才进行加密
+                        _this.user.password = hex_md5(_this.user.password + KEY);
+                    }
 
                     _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', _this.user).then((response) => {
                         console.log("登录成功:", response);
@@ -253,13 +260,16 @@
                             Tool.setLoginUser(resp.content);
                             //记住我
                             if (_this.remember) {
-                                LocalStorage.set("loginUser",{
-                                    loginName : loginUser.loginName,
-                                    password : passwordShow
+                                //勾选记住我，将用户名和密码保存到本地缓存，md5用于检测是否被重新输入过
+                                let md5 = hex_md5(_this.user.password);
+                                LocalStorage.set("loginUser", {
+                                    loginName: loginUser.loginName,
+                                    password: _this.user.password,
+                                    md5: md5
                                 })
                             } else {
                                 //清空本地缓存
-                                LocalStorage.set("loginUser",null);
+                                LocalStorage.set("loginUser", null);
                             }
 
                             this.$router.push("/welcome")
@@ -272,7 +282,6 @@
                 }
             },
 
-            
 
         }
     }
