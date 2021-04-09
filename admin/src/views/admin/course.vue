@@ -111,13 +111,13 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">封面</label>
                                 <div class="col-sm-10">
-                                    <file
+                                    <big-file
                                             v-bind:suffixs="['jpg', 'jpeg', 'png']"
                                             v-bind:use="FILE_USE.COURSE.key"
                                             v-bind:input-id="'image-upload'"
                                             v-bind:text="'上传封面'"
                                             v-bind:after-upload="afterUpload">
-                                    </file>
+                                    </big-file>
                                     <div v-show="course.image" class="row">
                                         <div class="col-md-4">
                                             <img v-bind:src="course.image" class="img-responsive">
@@ -236,9 +236,10 @@
 <script>
     import Pagination from "../../components/pagination.vue";
     import File from "../../components/file";
+    import BigFile from "../../components/big-file";
 
     export default {
-        components: {Pagination,File},
+        components: {Pagination,File,BigFile},
         name: 'course',
         data: function () {
             return {
@@ -479,7 +480,7 @@
             //回调函数
             afterUpload(resp) {
                 let _this = this;
-                let image = resp.content;
+                let image = resp.content.path;
                 _this.course.image = image;
             },
 
