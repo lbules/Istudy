@@ -509,27 +509,10 @@ export default {
 		let _this = this;
 		$('body').remove('login-layout light-login');
 		$('body').attr('class','no-skin');
-		// _this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
+		// 初始化时重新加载一遍ace的js，否则从登陆界面跳转到admin页面时会出现侧边栏无法点击的情况
+		$.getScript('/ace/assets/js/ace.min.js');
 	},
-	/*watch: {
-		// 监听路由的变换
-		$route: {
-			handler:function(val, oldVal){
-				// sidebar激活样式方法二
-				console.log("---->页面跳转：", val, oldVal);
-				let _this = this;
 
-				if (!_this.hasResourceRouter(val.name)) {
-					_this.$router.push("/login");
-					return;
-				}
-
-				_this.$nextTick(function(){  //页面加载完成后执行
-					_this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
-				})
-			}
-		}
-	},*/
 	methods: {
 		login() {
 			this.$router.push("/admin")

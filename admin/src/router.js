@@ -21,10 +21,15 @@ export default new Router({
         path: "*",
         redirect: "/login",
     }, {
-        path: '/login',
+        path: "/login",
         component: Login
-    }, {
-        path: '/',
+    },
+        {
+            path: "",
+            component: Login
+        },
+        {
+        path: "/",
         name: "admin",
         component: Admin,
         children: [{

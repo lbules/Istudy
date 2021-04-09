@@ -14,7 +14,7 @@ import org.springframework.web.util.pattern.PathPatternParser;
 
 @SpringBootApplication
 @EnableEurekaClient //将服务注册到注册中心
-public class GatewayApplication {
+public class   GatewayApplication {
 
 	private static final Logger LOG = LoggerFactory.getLogger(GatewayApplication.class);
 
