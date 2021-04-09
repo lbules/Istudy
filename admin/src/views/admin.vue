@@ -280,11 +280,7 @@
 
         						<li class="light-blue dropdown-modal">
         							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
-        								<img class="nav-user-photo" src="../../public/ace/assets/images/avatars/user.jpg" alt="Jason's Photo" />
-        								<span class="user-info">
-        									<small>Welcome,</small>
-        									Jason
-        								</span>
+        								<!--<img class="nav-user-photo" src="../../public/ace/assets/images/avatars/user.jpg" alt="Jason's Photo" />-->
 
         								<i class="ace-icon fa fa-caret-down"></i>
         							</a>
@@ -505,12 +501,21 @@
 
 export default {
 	name: 'admin',
+	data:function() {
+		return {
+			loginUser: {},
+		}
+
+	},
 	mounted: function() {
 		let _this = this;
 		$('body').remove('login-layout light-login');
 		$('body').attr('class','no-skin');
 		// 初始化时重新加载一遍ace的js，否则从登陆界面跳转到admin页面时会出现侧边栏无法点击的情况
 		$.getScript('/ace/assets/js/ace.min.js');
+		//获取登录的用户信息
+		// _this.loginUser = SessionStorage.get("USER")
+		_this.loginUser = Tool.getLoginUser()
 	},
 
 	methods: {
@@ -518,24 +523,7 @@ export default {
 			this.$router.push("/admin")
 		}
 	},
-	/**
-	 * 菜单激活样式，id是当前点击的菜单的id
-	 * @param id
-	 */
-	/*activeSidebar: function (id) {
-		// 兄弟菜单去掉active样式，自身增加active样式
-		$("#" + id).siblings().removeClass("active");
-		$("#" + id).siblings().find("li").removeClass("active");
-		$("#" + id).addClass("active");
 
-		// 如果有父菜单，父菜单的兄弟菜单去掉open active，父菜单增加open active
-		let parentLi = $("#" + id).parents("li");
-		if (parentLi) {
-			parentLi.siblings().removeClass("open active");
-			parentLi.siblings().find("li").removeClass("active");
-			parentLi.addClass("open active");
-		}
-	}*/
 }
 
 </script>

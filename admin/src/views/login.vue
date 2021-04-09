@@ -234,10 +234,13 @@
                     _this.user.password = hex_md5(_this.user.password + KEY);
 
                     _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', _this.user).then((response) => {
-                        console.log("登录结果:", response);
+                        console.log("登录成功:", response);
                         let resp = response.data;
                         if (resp.success) { //保存成功就将弹出框隐藏
                             console.log(resp.content);
+                            //保存登录信息
+                            // SessionStorage.set("USER",resp.content);
+                            Tool.setLoginUser(resp.content);
                             this.$router.push("/welcome")
                         } else {
                             Toast.warning(resp.message);
