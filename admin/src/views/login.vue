@@ -45,7 +45,7 @@
 
                                                 <div class="clearfix">
                                                     <label class="inline">
-                                                        <input type="checkbox" class="ace"/>
+                                                        <input v-model="remember" type="checkbox" class="ace"/>
                                                         <span class="lbl"> 记住我</span>
                                                     </label>
 
@@ -219,15 +219,25 @@
         data: function () {
             return {
                 user: {},
+                remember: true, //记住登录信息
+
             }
         },
         mounted: function () {
+            let _this = this;
             $('body').remove('no-skin');
             $('body').attr('class', 'login-layout light-login');
+            let rememberUser = LocalStorage.get("loginUser");
+            if (rememberUser) {
+                //有缓存则说明已记住
+                _this.user = rememberUser;
+            }
         },
         methods: {
             login() {
                 let _this = this;
+                //勾选了记住我，先将明文显示的密码保存防止进行多次加密
+                let passwordShow = _this.user.password;
                 //判断用户名和密码是否未输入
                 if (_this.user.loginName!=null&&_this.user.password!=null) {
                     //对密码进行加密
@@ -238,9 +248,20 @@
                         let resp = response.data;
                         if (resp.success) { //保存成功就将弹出框隐藏
                             console.log(resp.content);
+                            let loginUser = resp.content;
                             //保存登录信息
-                            // SessionStorage.set("USER",resp.content);
                             Tool.setLoginUser(resp.content);
+                            //记住我
+                            if (_this.remember) {
+                                LocalStorage.set("loginUser",{
+                                    loginName : loginUser.loginName,
+                                    password : passwordShow
+                                })
+                            } else {
+                                //清空本地缓存
+                                LocalStorage.set("loginUser",null);
+                            }
+
                             this.$router.push("/welcome")
                         } else {
                             Toast.warning(resp.message);
