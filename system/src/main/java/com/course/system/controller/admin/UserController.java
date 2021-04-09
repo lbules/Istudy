@@ -66,4 +66,16 @@ public class UserController {
 
 
 
+    /**
+     * 重置密码
+     */
+    @PostMapping("/save-password")
+    public ResponseDto savePassword(@RequestBody UserDto userDto) {
+        userDto.setPassword(DigestUtils.md5DigestAsHex(userDto.getPassword().getBytes()));
+        ResponseDto responseDto = new ResponseDto();
+        userService.savePassword(userDto);
+        responseDto.setContent(userDto);
+        return responseDto;
+    }
+
 }

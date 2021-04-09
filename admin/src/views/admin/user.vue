@@ -33,6 +33,10 @@
                         <button v-on:click="edit(user)" class="btn btn-xs btn-info">
                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                         </button>
+                        <!--编辑-->
+                        <button v-on:click="editPassword(user)" class="btn btn-xs btn-info">
+                            <i class="ace-icon fa fa-key bigger-120"></i>
+                        </button>
                         <!--删除,通过id来删除-->
                         <button v-on:click="del(user.id)" class="btn btn-xs btn-danger">
                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
@@ -95,7 +99,7 @@
                         <!--弹出框内容-->
                         <form class="form-horizontal">
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">登录名</label>
+                                <label class="col-sm-2 control-label">账号</label>
                                 <div class="col-sm-10">
                                     <!--v-bind:aria-disabled="user.id" user.id有值，说明是编辑，编辑时不能改动登录名。没有值既是新增用户-->
                                     <input v-model="user.loginName" class="form-control" v-bind:aria-disabled="user.id">
@@ -107,14 +111,17 @@
                                     <input v-model="user.name" class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div v-show="!user.id" class="form-group">
                                 <label class="col-sm-2 control-label">密码</label>
                                 <div class="col-sm-10">
-                                    <input v-model="user.password" class="form-control">
+                                    <input  type="password " v-model="user.password" class="form-control">
                                 </div>
                             </div>
                         </form>
                         <!--弹出框内容--END-->
+
+
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -125,6 +132,33 @@
         </div><!-- /.modal -->
         <!--模态框--END-->
 
+        <!--修改密码-->
+        <div id="edit-password-modal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">修改密码</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" v-model="user.password" class="form-control">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button v-on:click="savePassword()" type="button" class="btn btn-primary">保存密码</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!--模态框--END-->
     </div>
 </template>
 
@@ -158,6 +192,14 @@
                 _this.user = $.extend({}, user); //将传递过来一行数据user赋值给_this.user
                 $("#form-modal").modal("show"); //让模态框显示出来
 
+            },
+
+            //修改密码
+            editPassword(user) {
+                let _this = this;
+                _this.user = $.extend({},user);
+                _this.user.password = null; //打开模态框时就清空输入框
+                $("#edit-password-modal").modal("show");
             },
 
             //查询
@@ -223,7 +265,29 @@
                         }
                     })
                 });
-            }
+            },
+
+            //保存密码修改
+            savePassword() {
+                let _this = this;
+                //将密码转成md5加密,KEY是盐值
+                _this.user.password = hex_md5(_this.user.password + KEY);
+
+                Loading.show();
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/user/save-password', _this.user).then((response) => {
+                    console.log("保存结果:", response);
+                    Loading.hide();
+                    let resp = response.data;
+                    if (resp.success) { //保存成功就将弹出框隐藏
+                        $("#edit-password-modal").modal("hide");
+
+                        _this.list(1); //重新刷新
+                        Toast.success("保存成功");
+                    } else {
+                        Toast.warning(resp.message);
+                    }
+                })
+            },
         }
     }
 </script>
