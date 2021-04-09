@@ -278,34 +278,26 @@
         							</ul>
         						</li>
 
+								<!--右侧退出登录-->
         						<li class="light-blue dropdown-modal">
         							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
         								<!--<img class="nav-user-photo" src="../../public/ace/assets/images/avatars/user.jpg" alt="Jason's Photo" />-->
-
+										<span>{{loginUser.name}}</span>
         								<i class="ace-icon fa fa-caret-down"></i>
         							</a>
 
         							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+										<li>
+											<a v-on:click="changeUser(user)">
+												<i class="ace-icon fa fa-user"></i>
+												切换用户
+											</a>
+										</li>
+										<li class="divider"></li>
         								<li>
-        									<a href="#">
-        										<i class="ace-icon fa fa-cog"></i>
-        										Settings
-        									</a>
-        								</li>
-
-        								<li>
-        									<a href="profile.html">
-        										<i class="ace-icon fa fa-user"></i>
-        										Profile
-        									</a>
-        								</li>
-
-        								<li class="divider"></li>
-
-        								<li>
-        									<a href="#">
+        									<a v-on:click="loginout()" href="#">
         										<i class="ace-icon fa fa-power-off"></i>
-        										Logout
+        										退出登录
         									</a>
         								</li>
         							</ul>
@@ -494,6 +486,44 @@
         			</a>
         		</div>
         		<!-- /.main-container -->
+
+		<!--模态框-->
+		<div id="change-user-modal" class="modal fade" tabindex="-1" role="dialog">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+								aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">切换用户</h4>
+					</div>
+					<div class="modal-body">
+
+						<!--弹出框内容-->
+						<form class="form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-2 control-label">账号</label>
+								<div class="col-sm-10">
+									<input v-model="user.loginName" class="form-control" >
+								</div>
+							</div>
+
+							<div v-show="!user.id" class="form-group">
+								<label class="col-sm-2 control-label">密码</label>
+								<div class="col-sm-10">
+									<input  type="password " v-model="user.password" class="form-control">
+								</div>
+							</div>
+						</form>
+						<!--弹出框内容--END-->
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+						<button v-on:click="save()" type="button" class="btn btn-primary">登录</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<!--模态框--END-->
     </div>
 </template>
 
@@ -504,6 +534,7 @@ export default {
 	data:function() {
 		return {
 			loginUser: {},
+			user: {}
 		}
 
 	},
@@ -521,6 +552,30 @@ export default {
 	methods: {
 		login() {
 			this.$router.push("/admin")
+		},
+
+		loginout() {
+			let _this = this;
+
+			_this.$ajax.get(process.env.VUE_APP_SERVER + '/system/admin/user/logout').then((response) => {
+				console.log("退出登录:", response);
+				let resp = response.data;
+				if (resp.success) {
+					Tool.setLoginUser(null);
+					this.$router.push("/login")
+				} else {
+					Toast.warning(resp.message);
+				}
+			});
+		},
+
+		//切换用户
+		changeUser(user) {
+			let _this = this;
+				_this.user = $.extend({}, user); //将传递过来一行数据user赋值给_this.user
+				$("#change-user-modal").modal("show"); //让模态框显示出来
+
+
 		}
 	},
 
