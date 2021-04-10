@@ -23,16 +23,16 @@ public class UserDto {
      */
     private String password;
 
-   /* *//**
+    /**
      * 验证码
-     *//*
+     */
     private String imageCode;
 
-    *//**
+    /**
      * 图片验证码token
-     *//*
+     */
     private String imageCodeToken;
-*/
+
     public String getId() {
         return id;
     }
@@ -65,7 +65,7 @@ public class UserDto {
         this.password = password;
     }
 
-   /* public String getImageCode() {
+    public String getImageCode() {
         return imageCode;
     }
 
@@ -79,7 +79,7 @@ public class UserDto {
 
     public void setImageCodeToken(String imageCodeToken) {
         this.imageCodeToken = imageCodeToken;
-    }*/
+    }
 
     @Override
     public String toString() {
@@ -88,8 +88,8 @@ public class UserDto {
         sb.append(", loginName='").append(loginName).append('\'');
         sb.append(", name='").append(name).append('\'');
         sb.append(", password='").append(password).append('\'');
-//        sb.append(", imageCode='").append(imageCode).append('\'');
-//        sb.append(", imageCodeToken='").append(imageCodeToken).append('\'');
+        sb.append(", imageCode='").append(imageCode).append('\'');
+        sb.append(", imageCodeToken='").append(imageCodeToken).append('\'');
         sb.append('}');
         return sb.toString();
     }

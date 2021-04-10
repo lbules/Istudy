@@ -434,7 +434,7 @@
 
 								<ul class="submenu">
 									<li class="" id="file-file-sidebar">
-										<router-link to="file/file">
+										<router-link to="/file/file">
 											<i class="menu-icon fa fa-caret-right"></i>
 											文件管理
 										</router-link>

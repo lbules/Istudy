@@ -43,16 +43,16 @@
   														</span>
                                                 </label>
 
-                                               <!-- <label class="block clearfix">
+                                                <label class="block clearfix">
   														<span class="block input-icon input-icon-right">
                                                             <div class="input-group">
-                                                                <input type="text" class="form-control" placeholder="验证码">
+                                                                <input v-model="user.imageCode" type="text" class="form-control" placeholder="验证码">
                                                                 <span class="input-group-addon" id="basic-addon2">
                                                                     <img v-on:click="loadImageCode()" id="image-code" alt="验证码">
                                                                 </span>
                                                             </div>
   														</span>
-                                                </label>-->
+                                                </label>
 
                                                 <div class="space"></div>
 
@@ -233,7 +233,7 @@
             return {
                 user: {},
                 remember: true, //记住登录信息
-                // imageCodeToken:"",
+                imageCodeToken: ""
 
             }
         },
@@ -248,13 +248,11 @@
                 _this.user = rememberUser;
             }
             //加载初始化的验证码图片
-            // _this.loadImageCode();
+            _this.loadImageCode();
         },
         methods: {
             login() {
                 let _this = this;
-
-                // _this.user.imageCodeToken = _this.imageCodeToken;
 
                 //判断用户名和密码是否未输入
                 if (_this.user.loginName != null && _this.user.password != null) {
@@ -265,6 +263,8 @@
                         //如果md5的值和rememberUser中不一样时，才进行加密
                         _this.user.password = hex_md5(_this.user.password + KEY);
                     }
+
+                    _this.user.imageCodeToken = _this.imageCodeToken;
 
                     _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', _this.user).then((response) => {
 
@@ -292,23 +292,24 @@
                             this.$router.push("/welcome")
                         } else {
                             Toast.warning(resp.message);
-                            // _this.user.password = "";
-                            // _this.loadImageCode();
+                            _this.user.password = "";
+                            _this.loadImageCode();
                         }
                     })
-                } else {
+                }
+                else {
                     Toast.warning("请先输入用户名和密码！");
                 }
             },
 
-            /*/!**
+            /**
              * 加载图形验证码
-             *!/
+             */
             loadImageCode: function () {
                 let _this = this;
                 _this.imageCodeToken = Tool.uuid(8);
                 $('#image-code').attr('src', process.env.VUE_APP_SERVER + '/system/admin/kaptcha/image-code/' + _this.imageCodeToken);
-            },*/
+            },
 
         }
     }

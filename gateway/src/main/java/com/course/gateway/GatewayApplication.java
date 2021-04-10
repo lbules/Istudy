@@ -35,9 +35,9 @@ public class   GatewayApplication {
 
 		config.setAllowCredentials(Boolean.TRUE);
 		config.addAllowedMethod("*");
-//		config.addAllowedOriginPattern("*");
-		config.addAllowedOrigin("http://localhost:8080");
-		config.addAllowedHeader("http://localhost:8080");
+		config.addAllowedOriginPattern("*");
+//		config.addAllowedOrigin("http://localhost:8080");
+		config.addAllowedHeader("*");
 		config.setMaxAge(3600L);
 
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource(new PathPatternParser());
