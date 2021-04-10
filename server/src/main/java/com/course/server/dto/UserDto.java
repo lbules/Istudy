@@ -29,7 +29,7 @@ public class UserDto {
     private String imageCode;
 
     /**
-     * 图片验证码token
+     * 图片验证码标识
      */
     private String imageCodeToken;
 

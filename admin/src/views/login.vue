@@ -49,6 +49,7 @@
                                                                 <input v-model="user.imageCode" type="text" class="form-control" placeholder="验证码">
                                                                 <span class="input-group-addon" id="basic-addon2">
                                                                     <img v-on:click="loadImageCode()" id="image-code" alt="验证码">
+
                                                                 </span>
                                                             </div>
   														</span>

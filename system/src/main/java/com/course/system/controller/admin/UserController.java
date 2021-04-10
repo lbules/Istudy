@@ -122,10 +122,10 @@ public class UserController {
         }
 
         LoginUserDto loginUserDto = userService.login(userDto);
-//        String token = UuidUtil.getShortUuid();
-//        loginUserDto.setToken(token);
-        request.getSession().setAttribute(Constants.LOGIN_USER, loginUserDto);
-//        redisTemplate.opsForValue().set(token, JSON.toJSONString(loginUserDto), 3600, TimeUnit.SECONDS);
+        //登录凭证token
+        String token = UuidUtil.getShortUuid();
+        loginUserDto.setToken(token);
+        redisTemplate.opsForValue().set(token, JSON.toJSONString(loginUserDto), 3600, TimeUnit.SECONDS);
         responseDto.setContent(loginUserDto);
         return responseDto;
     }
@@ -133,10 +133,11 @@ public class UserController {
     /**
      * 退出登录
      */
-    @GetMapping("/logout")
-    public ResponseDto login(HttpServletRequest request) {
+    @GetMapping("/logout/{token}")
+    public ResponseDto logout(@PathVariable String token) {
         ResponseDto responseDto = new ResponseDto();
-        request.getSession().removeAttribute(Constants.LOGIN_USER);
+        redisTemplate.delete(token);
+        LOG.info("从redis中删除token:{}", token);
         return responseDto;
     }
 
