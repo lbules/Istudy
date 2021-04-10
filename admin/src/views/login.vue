@@ -43,7 +43,7 @@
   														</span>
                                                 </label>
 
-                                                <label class="block clearfix">
+                                               <!-- <label class="block clearfix">
   														<span class="block input-icon input-icon-right">
                                                             <div class="input-group">
                                                                 <input type="text" class="form-control" placeholder="验证码">
@@ -52,7 +52,7 @@
                                                                 </span>
                                                             </div>
   														</span>
-                                                </label>
+                                                </label>-->
 
                                                 <div class="space"></div>
 
@@ -233,7 +233,7 @@
             return {
                 user: {},
                 remember: true, //记住登录信息
-                imageCodeToken:"",
+                // imageCodeToken:"",
 
             }
         },
@@ -248,11 +248,13 @@
                 _this.user = rememberUser;
             }
             //加载初始化的验证码图片
-            _this.loadImageCode();
+            // _this.loadImageCode();
         },
         methods: {
             login() {
                 let _this = this;
+
+                // _this.user.imageCodeToken = _this.imageCodeToken;
 
                 //判断用户名和密码是否未输入
                 if (_this.user.loginName != null && _this.user.password != null) {
@@ -265,9 +267,10 @@
                     }
 
                     _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', _this.user).then((response) => {
-                        console.log("登录成功:", response);
+
                         let resp = response.data;
-                        if (resp.success) { //保存成功就将弹出框隐藏
+                        if (resp.success) {
+                            console.log("登录成功:", resp.content);
                             console.log(resp.content);
                             let loginUser = resp.content;
                             //保存登录信息
@@ -289,6 +292,8 @@
                             this.$router.push("/welcome")
                         } else {
                             Toast.warning(resp.message);
+                            // _this.user.password = "";
+                            // _this.loadImageCode();
                         }
                     })
                 } else {
@@ -296,12 +301,14 @@
                 }
             },
 
-            //生成验证码图片
-            loadImageCode:function() {
+            /*/!**
+             * 加载图形验证码
+             *!/
+            loadImageCode: function () {
                 let _this = this;
                 _this.imageCodeToken = Tool.uuid(8);
                 $('#image-code').attr('src', process.env.VUE_APP_SERVER + '/system/admin/kaptcha/image-code/' + _this.imageCodeToken);
-            },
+            },*/
 
         }
     }
