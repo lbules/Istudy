@@ -29,58 +29,62 @@ export default new Router({
             component: Login
         },
         {
-        path: "/",
-        name: "admin",
-        component: Admin,
-        children: [{
-            // 子路由不需要加/
-            path: 'welcome',
-            name: "welcome-sidebar",
-            component: Welcome
-        }, {
-            path: 'business/chapter',
-            name: "business-chapter-sidebar",
-            component: Chapter,
-        },
-            {
-                path: 'business/category',
-                name: "business-category-sidebar",
-                component: Category,
+            path: "/",
+            name: "admin",
+            component: Admin,
+            // 登录拦截
+            meta: {
+                loginRequire: true
             },
-            {
-            path: 'business/section',
-            name: "business-section-sidebar",
-            component: Section,
-        },
-            {
-                path: 'business/course',
-                name: "business-course-sidebar",
-                component: Course,
+            children: [{
+                // 子路由不需要加/
+                path: 'welcome',
+                name: "welcome-sidebar",
+                component: Welcome
+            }, {
+                path: 'business/chapter',
+                name: "business-chapter-sidebar",
+                component: Chapter,
             },
+                {
+                    path: 'business/category',
+                    name: "business-category-sidebar",
+                    component: Category,
+                },
+                {
+                    path: 'business/section',
+                    name: "business-section-sidebar",
+                    component: Section,
+                },
+                {
+                    path: 'business/course',
+                    name: "business-course-sidebar",
+                    component: Course,
+                },
 
-            {
-                path: 'business/teacher',
-                name: "business/teacher",
-                component: Teacher,
-            },
+                {
+                    path: 'business/teacher',
+                    name: "business/teacher",
+                    component: Teacher,
+                },
 
-            {
-                path: 'file/file',
-                name: "file/file",
-                component: File,
-            },
+                {
+                    path: 'file/file',
+                    name: "file/file",
+                    component: File,
+                },
 
-            {
-                path: "business/content",
-                name: "business/content",
-                component: Content,
-            },
-            {
-                path: "system/user",
-                name: "system/user",
-                component: User,
-            }
+                {
+                    path: "business/content",
+                    name: "business/content",
+                    component: Content,
+                },
+                {
+                    path: "system/user",
+                    name: "system/user",
+                    component: User,
+                }
 
-        ]
-    }]
+            ]
+        }]
 })
