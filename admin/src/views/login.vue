@@ -43,6 +43,17 @@
   														</span>
                                                 </label>
 
+                                                <label class="block clearfix">
+  														<span class="block input-icon input-icon-right">
+                                                            <div class="input-group">
+                                                                <input type="text" class="form-control" placeholder="验证码">
+                                                                <span class="input-group-addon" id="basic-addon2">
+                                                                    <img v-on:click="loadImageCode()" id="image-code" alt="验证码">
+                                                                </span>
+                                                            </div>
+  														</span>
+                                                </label>
+
                                                 <div class="space"></div>
 
                                                 <div class="clearfix">
@@ -222,6 +233,7 @@
             return {
                 user: {},
                 remember: true, //记住登录信息
+                imageCodeToken:"",
 
             }
         },
@@ -235,6 +247,8 @@
                 //有缓存则说明已记住
                 _this.user = rememberUser;
             }
+            //加载初始化的验证码图片
+            _this.loadImageCode();
         },
         methods: {
             login() {
@@ -282,8 +296,20 @@
                 }
             },
 
+            //生成验证码图片
+            loadImageCode:function() {
+                let _this = this;
+                _this.imageCodeToken = Tool.uuid(8);
+                $('#image-code').attr('src', process.env.VUE_APP_SERVER + '/system/admin/kaptcha/image-code/' + _this.imageCodeToken);
+            },
 
         }
     }
 </script>
+
+<style scoped>
+    .input-group-addon {
+        padding: 0;
+    }
+</style>
 
