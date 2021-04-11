@@ -386,7 +386,16 @@
                             <li class="" id="system-resources-sidebar">
                                 <router-link to="/system/resources" href="jqgrid.html">
                                     <i class="menu-icon fa fa-caret-right"></i>
-                                    权限管理
+                                    资源管理
+                                </router-link>
+
+                                <b class="arrow"></b>
+                            </li>
+
+                            <li class="" id="system-role-sidebar">
+                                <router-link to="/system/role" href="jqgrid.html">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    角色管理
                                 </router-link>
 
                                 <b class="arrow"></b>
