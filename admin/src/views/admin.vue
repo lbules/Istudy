@@ -383,11 +383,11 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="">
-                                <a href="jqgrid.html">
+                            <li class="" id="system-resources-sidebar">
+                                <router-link to="/system/resources" href="jqgrid.html">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     权限管理
-                                </a>
+                                </router-link>
 
                                 <b class="arrow"></b>
                             </li>
