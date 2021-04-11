@@ -52,6 +52,7 @@
         <!--<table tableName="course_content_file" domainObjectName="CourseContentFile"/>-->
         <!--<table tableName="user" domainObjectName="User"/>-->
         <!--<table tableName="resources" domainObjectName="Resources"/>-->
-        <table tableName="role" domainObjectName="Role"/>
+        <!--<table tableName="role" domainObjectName="Role"/>-->
+        <table tableName="role_resources" domainObjectName="RoleResources"/>
     </context>
 </generatorConfiguration>
