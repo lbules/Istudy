@@ -22,6 +22,16 @@ public class RoleDto {
 
     private List<String> resourceIds;
 
+    private List<String> userIds;
+
+    public List<String> getUserIds() {
+        return userIds;
+    }
+
+    public void setUserIds(List<String> userIds) {
+        this.userIds = userIds;
+    }
+
     public List<String> getResourceIds() {
         return resourceIds;
     }
@@ -65,6 +75,7 @@ public class RoleDto {
         sb.append(", name=").append(name);
         sb.append(", desc=").append(desc);
         sb.append(", resourceIds=").append(resourceIds);
+        sb.append(", userIds=").append(userIds);
         sb.append("]");
         return sb.toString();
     }
