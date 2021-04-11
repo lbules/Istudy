@@ -21,49 +21,18 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">表单</h4>
+                        <h4 class="modal-title">添加资源配置</h4>
                     </div>
                     <div class="modal-body">
-
-                        <!--弹出框内容-->
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">id</label>
-                                <div class="col-sm-10">
-                                    <input v-model="resources.id" class="form-control">
-                                </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <textarea id="resources-textarea" class="form-control" v-model="resourceStr" name="resource" rows="5"></textarea>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">名称</label>
-                                <div class="col-sm-10">
-                                    <input v-model="resources.name" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">页面</label>
-                                <div class="col-sm-10">
-                                    <input v-model="resources.page" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">请求</label>
-                                <div class="col-sm-10">
-                                    <input v-model="resources.request" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">父id</label>
-                                <div class="col-sm-10">
-                                    <input v-model="resources.parent" class="form-control">
-                                </div>
-                            </div>
-                        </form>
-                        <!--弹出框内容--END-->
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
+                        <button v-on:click="save()" type="button" class="btn btn-primary">添加</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
@@ -82,6 +51,7 @@
                 resources: {}, //映射表单数据
                 resourcess: [],
                 tree: {},
+                resourceStr:"",
             }
         },
         mounted: function () {
@@ -96,13 +66,7 @@
                 $("#form-modal").modal("show"); //让模态框显示出来
             },
 
-            //编辑
-            edit(resources) {
-                let _this = this;
-                _this.resources = $.extend({}, resources); //将传递过来一行数据resources赋值给_this.resources
-                $("#form-modal").modal("show"); //让模态框显示出来
 
-            },
 
             //查询
             list() {
@@ -122,19 +86,15 @@
             save() {
                 let _this = this;
 
-                // 保存时进行校验，检查是输入是否为空，是否符合长度
                 // 保存校验
-                if (1 != 1
-                    || !Validator.length(_this.resources.name, "名称", 1, 100)
-                    // || !Validator.length(_this.resources.page, "页面", 1, 50)
-                    // || !Validator.length(_this.resources.request, "请求", 1, 200)
-                ) {
+                if (Tool.isEmpty(_this.resourceStr)) {
+                    Toast.warning("输入不能为空！");
                     return;
                 }
-
+                let json = JSON.parse(_this.resourceStr);
 
                 Loading.show();
-                _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/resources/save', _this.resources).then((response) => {
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/resources/save', json).then((response) => {
                     console.log("保存结果:", response);
                     Loading.hide();
                     let resp = response.data;
@@ -142,7 +102,7 @@
                         $("#form-modal").modal("hide");
 
                         _this.list(); //重新刷新
-                        Toast.success("保存成功");
+                        Toast.success("添加成功");
                     } else {
                         Toast.warning(resp.message);
                     }

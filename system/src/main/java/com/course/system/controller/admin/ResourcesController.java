@@ -31,20 +31,15 @@ public class ResourcesController {
     }
 
     /**
-     * 保存
-     * @param resourcesDto
-     * @return
+     * 保存，id有值时更新，无值时新增
      */
-    @RequestMapping("/save")
-    public ResponseDto save(@RequestBody ResourcesDto resourcesDto) {
-        //保存校验
-            ValidatorUtil.length(resourcesDto.getName(), "名称", 1, 100);
-            ValidatorUtil.length(resourcesDto.getPage(), "页面", 1, 50);
-            ValidatorUtil.length(resourcesDto.getRequest(), "请求", 1, 200);
+    @PostMapping("/save")
+    public ResponseDto save(@RequestBody String jsonStr) {
+        // 保存校验
+        ValidatorUtil.require(jsonStr, "资源");
 
         ResponseDto responseDto = new ResponseDto();
-        resourcesService.save(resourcesDto);
-        responseDto.setContent(resourcesDto);
+        resourcesService.saveJson(jsonStr);
         return responseDto;
     }
 
