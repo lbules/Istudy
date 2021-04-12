@@ -27,14 +27,32 @@ public class LoginUserDto {
     private String token;
 
     /**
-     * 所有资源，用于前端界面控制
-     */
-//    private List<ResourceDto> resources;
-
-    /**
-     * 所有资源中的请求，用于后端接口拦截
+     * 所有资源中的请求
      */
     private HashSet<String> requests;
+
+
+    /**
+     * 所有的资源，用于前端页面控制
+     */
+    private List<ResourcesDto> resources;
+
+
+    public HashSet<String> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(HashSet<String> requests) {
+        this.requests = requests;
+    }
+
+    public List<ResourcesDto> getResources() {
+        return resources;
+    }
+
+    public void setResources(List<ResourcesDto> resources) {
+        this.resources = resources;
+    }
 
     public String getId() {
         return id;
@@ -68,33 +86,16 @@ public class LoginUserDto {
         this.token = token;
     }
 
-   /* public List<ResourceDto> getResources() {
-        return resources;
-    }
-
-    public void setResources(List<ResourceDto> resources) {
-        this.resources = resources;
-    }*/
-
-    public HashSet<String> getRequests() {
-        return requests;
-    }
-
-    public void setRequests(HashSet<String> requests) {
-        this.requests = requests;
-    }
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("LoginUserDto{");
-        sb.append("id='").append(id).append('\'');
-        sb.append(", loginName='").append(loginName).append('\'');
-        sb.append(", name='").append(name).append('\'');
-        sb.append(", token='").append(token).append('\'');
-//        sb.append(", resources=").append(resources);
-        sb.append(", requests=").append(requests);
-        sb.append('}');
-        return sb.toString();
+        return "LoginUserDto{" +
+                "id='" + id + '\'' +
+                ", loginName='" + loginName + '\'' +
+                ", name='" + name + '\'' +
+                ", token='" + token + '\'' +
+                ", requests=" + requests +
+                ", resources=" + resources +
+                '}';
     }
-
 }
