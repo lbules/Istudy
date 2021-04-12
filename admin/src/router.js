@@ -41,26 +41,26 @@ export default new Router({
             children: [{
                 // 子路由不需要加/
                 path: 'welcome',
-                name: "welcome-sidebar",
+                name: "welcome",
                 component: Welcome
             }, {
                 path: 'business/chapter',
-                name: "business-chapter-sidebar",
+                name: "business/chapter",
                 component: Chapter,
             },
                 {
                     path: 'business/category',
-                    name: "business-category-sidebar",
+                    name: "business/category",
                     component: Category,
                 },
                 {
                     path: 'business/section',
-                    name: "business-section-sidebar",
+                    name: "business/section",
                     component: Section,
                 },
                 {
                     path: 'business/course',
-                    name: "business-course-sidebar",
+                    name: "business/course",
                     component: Course,
                 },
 
