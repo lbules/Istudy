@@ -124,7 +124,9 @@ Tool = {
    */
   hasResource: function (id) {
     let _this = this;
+    //获取当前用户所有的资源访问权限
     let resources = _this.getLoginUser().resources;
+    // 没有资源
     if (_this.isEmpty(resources)) {
       return false;
     }

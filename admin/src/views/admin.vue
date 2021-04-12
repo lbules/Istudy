@@ -363,7 +363,7 @@
                     </li>
 
                     <!--table-->
-                    <li class="">
+                    <li class="" v-show="hasResources('01')">
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-list"></i>
                             <span class="menu-text"> 系统管理 </span>
@@ -374,7 +374,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="" id="system-user-sidebar">
+                            <li v-show="hasResources('0101')" class="" id="system-user-sidebar" >
                                 <router-link to="/system/user">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     用户管理
@@ -383,7 +383,7 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="" id="system-resources-sidebar">
+                            <li v-show="hasResources('0102')" class="" id="system-resources-sidebar">
                                 <router-link to="/system/resources" href="jqgrid.html">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     资源管理
@@ -392,7 +392,7 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="" id="system-role-sidebar">
+                            <li v-show="hasResources('0103')" class="" id="system-role-sidebar">
                                 <router-link to="/system/role" href="jqgrid.html">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     角色管理
@@ -403,7 +403,7 @@
                         </ul>
                     </li>
 
-                    <li class="active open">
+                    <li class="active open" v-show="hasResources('02')">
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-list"></i>
                             <span class="menu-text"> 业务管理 </span>
@@ -414,7 +414,7 @@
                         <b class="arrow"></b>
 
                         <ul class="submenu">
-                            <li class="" id="business-category-sidebar">
+                            <li class="" id="business-category-sidebar" v-show="hasResources('0201')">
                                 <router-link to="/business/category">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     课程分类
@@ -422,7 +422,7 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="" id="business-course-sidebar">
+                            <li class="" id="business-course-sidebar" v-show="hasResources('0202')">
                                 <router-link to="/business/course">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     课程管理
@@ -430,7 +430,7 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li class="" id="business-teacher-sidebar">
+                            <li class="" id="business-teacher-sidebar" v-show="hasResources('0203')">
                                 <router-link to="/business/teacher">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     讲师管理
@@ -568,6 +568,15 @@
         },
 
         methods: {
+            /**
+             * 查找是否有对应的资源权限
+             * @param id
+             * @returns {*|boolean}
+             */
+            hasResources(id) {
+                return Tool.hasResource(id);
+            },
+
             login() {
                 this.$router.push("/admin")
             },
@@ -592,10 +601,17 @@
                 let _this = this;
                 _this.user = $.extend({}, user); //将传递过来一行数据user赋值给_this.user
                 $("#change-user-modal").modal("show"); //让模态框显示出来
-
-
             }
         },
+
+        /**
+         * 查找是否有对应的资源权限
+         * @param id
+         * @returns {*|boolean}
+         */
+        hasResource(id) {
+            return Tool.hasResource(id);
+        }
 
     }
 

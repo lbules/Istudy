@@ -3,7 +3,7 @@
     <div>
         <!--新增按钮-->
         <p>
-            <button v-on:click="add()" class="btn btn-white btn-default btn-round">
+            <button v-on:click="add()" v-show="hasResources('010101')" class="btn btn-white btn-default btn-round">
                 <i class="ace-icon fa fa-edit"></i>
                 新增
             </button>
@@ -30,15 +30,15 @@
                 <td>
                     <div class="hidden-sm hidden-xs btn-group">
                         <!--编辑-->
-                        <button v-on:click="edit(user)" class="btn btn-xs btn-info">
+                        <button v-on:click="edit(user)" v-show="hasResources('010101')" class="btn btn-xs btn-info">
                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                         </button>
-                        <!--编辑-->
-                        <button v-on:click="editPassword(user)" class="btn btn-xs btn-info">
+                        <!--重置密码-->
+                        <button v-on:click="editPassword(user)" v-show="hasResources('010103')" class="btn btn-xs btn-info">
                             <i class="ace-icon fa fa-key bigger-120"></i>
                         </button>
                         <!--删除,通过id来删除-->
-                        <button v-on:click="del(user.id)" class="btn btn-xs btn-danger">
+                        <button v-on:click="del(user.id)" v-show="hasResources('010102')" class="btn btn-xs btn-danger">
                             <i class="ace-icon fa fa-trash-o bigger-120"></i>
                         </button>
                     </div>
@@ -174,6 +174,7 @@
         mounted: function () {
             let _this = this;
             _this.list(1);
+            _this.$refs.pagination.size = 5;
         },
         methods: {
             //添加
@@ -284,6 +285,15 @@
                         Toast.warning(resp.message);
                     }
                 })
+            },
+
+            /**
+             * 查找是否有对应的资源权限
+             * @param id
+             * @returns {*|boolean}
+             */
+            hasResources(id) {
+                return Tool.hasResource(id);
             },
         }
     }
