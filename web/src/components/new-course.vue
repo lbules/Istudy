@@ -6,8 +6,7 @@
             <p class="card-text">{{newcourse.summary}}</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                    <!--<router-link v-bind:to="'/detail?id=' + course.id" class="btn btn-outline-secondary">课程详情</router-link>-->
-                    <button type="button" class="btn btn-sm btn-outline-secondary">课程详情</button>
+                    <router-link v-bind:to="'/courseDetail?id=' + newcourse.id" class="btn btn-outline-secondary">课程详情</router-link>
                 </div>
                 <div class="text-muted">
                     <span class="badge badge-info"><i class="fa fa-yen" aria-hidden="true"></i>&nbsp;{{newcourse.price}}</span>&nbsp;

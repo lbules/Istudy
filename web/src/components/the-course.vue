@@ -5,9 +5,9 @@
             <h4 class="">{{course.name}}</h4>
             <p class="card-text">{{course.summary}}</p>
             <div class="d-flex justify-content-between align-items-center">
-                <!--<div class="btn-group">-->
-                    <!--<router-link v-bind:to="'/detail?id=' + course.id" class="btn btn-outline-secondary">课程详情</router-link>-->
-                <!--</div>-->
+                <div class="btn-group">
+                    <router-link v-bind:to="'/courseDetail?id=' + course.id" class="btn btn-outline-secondary">课程详情</router-link>
+                </div>
                 <div class="text-muted">
                     <span class="badge badge-info"><i class="fa fa-yen" aria-hidden="true"></i>&nbsp;{{course.price}}</span>&nbsp;
                     <span class="badge badge-info"><i class="fa fa-user" aria-hidden="true"></i>&nbsp;{{course.enroll}}</span>&nbsp;

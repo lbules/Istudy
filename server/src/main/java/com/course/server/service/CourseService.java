@@ -37,6 +37,15 @@ public class CourseService {
     @Resource
     private CourseContentMapper courseContentMapper;
 
+    @Resource
+    private TeacherService teacherService;
+
+    @Resource
+    private ChapterService chapterService;
+
+    @Resource
+    private SectionService sectionService;
+
     public void list(CoursePageDto pageDto) {
         PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
         List<CourseDto> courseDtoList = myCourseMapper.listCourse(pageDto);
@@ -167,4 +176,39 @@ public class CourseService {
         List<Course> courseList = courseMapper.selectByExample(courseExample);
         return CopyUtil.copyList(courseList, CourseDto.class);
     }
+
+
+    /**
+     * 查找某一课程，包括该课程的大章、小节、讲师等信息，只能查已发布的
+     * @param id
+     * @return
+     */
+    public CourseDto findCourse(String id) {
+        Course course = courseMapper.selectByPrimaryKey(id);
+        if (course == null || !CourseStatusEnum.PUBLISH.getCode().equals(course.getStatus())) {
+            return null;
+        }
+        CourseDto courseDto = CopyUtil.copy(course, CourseDto.class);
+
+        // 查询内容
+        CourseContent content = courseContentMapper.selectByPrimaryKey(id);
+        if (content != null) {
+            courseDto.setContent(content.getContent());
+        }
+
+        // 查找讲师信息
+        TeacherDto teacherDto = teacherService.findById(courseDto.getTeacherId());
+        courseDto.setTeacher(teacherDto);
+
+        // 查找章信息
+        List<ChapterDto> chapterDtoList = chapterService.listByCourse(id);
+        courseDto.setChapters(chapterDtoList);
+
+        // 查找节信息
+        List<SectionDto> sectionDtoList = sectionService.listByCourse(id);
+        courseDto.setSections(sectionDtoList);
+
+        return courseDto;
+    }
+
 }
