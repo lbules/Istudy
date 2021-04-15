@@ -39,27 +39,12 @@ public class CourseService {
 
     public void list(CoursePageDto pageDto) {
         PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
-        CourseExample courseExample = new CourseExample();
-        CourseExample.Criteria criteria = courseExample.createCriteria();
-        if (!StringUtils.isEmpty(pageDto.getStatus())){
-            criteria.andStatusEqualTo(pageDto.getStatus());
-        }
-
-        courseExample.setOrderByClause("sort asc");
-        List<Course> courseList = courseMapper.selectByExample(courseExample);
-        PageInfo<Course> pageInfo = new PageInfo<>(courseList);
-        pageDto.setTotal(pageInfo.getTotal()); //获取总记录行数
-
-
-        List<CourseDto> courseDtoList = new ArrayList<CourseDto>(); //将查到到所有数据转换成courseDto
-        for (int i = 0; i < courseList.size(); i++) {
-            Course course = courseList.get(i);
-            CourseDto courseDto = new CourseDto();
-            BeanUtils.copyProperties(course, courseDto);
-            courseDtoList.add(courseDto);
-        }
-        pageDto.setList(courseDtoList); //将记录存放到pageDto的List
+        List<CourseDto> courseDtoList = myCourseMapper.listCourse(pageDto);
+        PageInfo<CourseDto> pageInfo = new PageInfo<>(courseDtoList);
+        pageDto.setTotal(pageInfo.getTotal());
+        pageDto.setList(courseDtoList);
     }
+
 
     /**
      * 保存章节,编辑保存时根据id是否为空

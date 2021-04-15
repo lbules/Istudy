@@ -43,4 +43,9 @@
     .course .text-muted .badge {
         font-size: 1rem;
     }
+
+    .course {
+        border-bottom-right-radius:25px;
+        border-bottom-left-radius:25px;
+    }
 </style>

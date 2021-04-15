@@ -7,7 +7,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <a v-on:click="onClickLevel1('00000000')" id="category-00000000" href="javascript:;" class="cur">全部</a>
+                            <a v-on:click="onClickLevel1('00000000')" id="category-00000000" href="javascript:;" class="cur">全部课程</a>
                             <a v-for="o in level1" v-on:click="onClickLevel1(o.id)" v-bind:id="'category-' + o.id" href="javascript:;">{{o.name}}</a>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                 _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/course/list', {
                     page: page,
                     size:_this.$refs.pagination.size,
-                    // categoryId: _this.level2Id || _this.level1Id || "", // 优先取level2Id
+                    categoryId: _this.level2Id || _this.level1Id || "", // 优先取level2Id
                 }).then((response) => {
                     console.log("查询所有课程的结果：", response);
                     let resp = response.data;
@@ -122,11 +122,66 @@
             onClickLevel1(level1Id) {
                 let _this = this;
 
+                // 点击一级分类时，设置变量，用于课程筛选
+                // 二级分类id为空，
+                // 如果点击的是【全部】，则一级分类id为空
+                _this.level2Id = null;
+                _this.level1Id = level1Id;
+                if (level1Id === "00000000") {
+                    _this.level1Id = null;
+                }
+
+                // 点击一级分类时，显示激活状态
+                $("#category-" + level1Id).siblings("a").removeClass("cur");
+                $("#category-" + level1Id).addClass("cur");
+
+                // 点击一级分类时，二级分类【无限】按钮要设置激活状态
+                $("#category-11111111").siblings("a").removeClass("on");
+                $("#category-11111111").addClass("on");
+
+                // 注意：要先把level2中所有的值清空，再往里放
+                _this.level2 = [];
+                let categorys = _this.categorys;
+                // 如果点击的是【全部】，则显示所有的二级分类
+                if (level1Id === '00000000') {
+                    for (let i = 0; i < categorys.length; i++) {
+                        let c = categorys[i];
+                        if (c.parent !== "00000000") {
+                            _this.level2.push(c);
+                        }
+                    }
+                }
+                // 如果点击的是某个一级分类，则显示该一级分类下的二级分类
+                if (level1Id !== '00000000') {
+                    for (let i = 0; i < categorys.length; i++) {
+                        let c = categorys[i];
+                        if (c.parent === level1Id) {
+                            _this.level2.push(c);
+                        }
+                    }
+                }
+
+                // 重新加载课程列表
+                _this.listAllCourse(1);
             },
 
             // 点击二级分类
             onClickLevel2(level2Id) {
                 let _this = this;
+
+                $("#category-" + level2Id).siblings("a").removeClass("on");
+                $("#category-" + level2Id).addClass("on");
+
+                // 点击二级分类时，设置变量，用于课程筛选
+                // 如果点击的是【无限】，则二级分类id为空
+                if (level2Id === "11111111") {
+                    _this.level2Id = null;
+                } else {
+                    _this.level2Id = level2Id;
+                }
+
+                // 重新加载课程列表
+                _this.listAllCourse(1);
             }
 
         }
@@ -162,6 +217,7 @@
         position: relative;
         margin-right: 46px;
         font-weight: 700;
+        text-decoration:none
     }
     .header-nav a:hover {
         color: #c80;
@@ -178,7 +234,7 @@
         position: absolute;
         bottom: 0;
         background: #c80;
-        width: 16px;
+        width: 24px;
         height: 3px;
         left: 50%;
         margin-left: -8px;

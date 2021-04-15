@@ -4,6 +4,7 @@ public class CoursePageDto extends PageDto {
 
     private String status;
 
+//    分类id
     private String categoryId;
 
     public String getStatus() {

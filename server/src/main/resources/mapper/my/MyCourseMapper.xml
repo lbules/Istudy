@@ -23,4 +23,24 @@
         ]]>
     </update>
 
+
+    <!-- web端”所有课程“页面，查询课程列表 -->
+    <select id="listCourse" resultType="com.course.server.dto.CourseDto">
+        select c.id, c.name, c.summary, time, price, image, level,
+        charge, status, enroll, sort, create_at as createAt,
+        update_at as updateAt, teacher_id as teacherId
+        from `course` c
+        <if test="pageDto.categoryId != null and pageDto.categoryId != ''">
+            , course_category cc
+        </if>
+        where 1 = 1
+        <if test="pageDto.categoryId != null and pageDto.categoryId != ''">
+            and c.id = cc.course_id
+            and cc.category_id = #{pageDto.categoryId}
+        </if>
+        <if test="pageDto.status != null and pageDto.status != ''">
+            and c.status = #{pageDto.status}
+        </if>
+        order by c.sort asc
+    </select>
 </mapper>
