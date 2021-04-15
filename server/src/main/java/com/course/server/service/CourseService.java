@@ -3,10 +3,8 @@ package com.course.server.service;
 import com.course.server.domain.Course;
 import com.course.server.domain.CourseContent;
 import com.course.server.domain.CourseExample;
-import com.course.server.dto.CourseContentDto;
-import com.course.server.dto.CourseDto;
-import com.course.server.dto.PageDto;
-import com.course.server.dto.SortDto;
+import com.course.server.dto.*;
+import com.course.server.enums.CourseStatusEnum;
 import com.course.server.mapper.CourseContentMapper;
 import com.course.server.mapper.CourseMapper;
 import com.course.server.mapper.my.MyCourseMapper;
@@ -20,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,21 +37,25 @@ public class CourseService {
     @Resource
     private CourseContentMapper courseContentMapper;
 
-    public void list(PageDto pageDto) {
-
-        PageHelper.startPage(pageDto.getPage(),pageDto.getSize());
-
+    public void list(CoursePageDto pageDto) {
+        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
         CourseExample courseExample = new CourseExample();
-                courseExample.setOrderByClause("sort asc");
+        CourseExample.Criteria criteria = courseExample.createCriteria();
+        if (!StringUtils.isEmpty(pageDto.getStatus())){
+            criteria.andStatusEqualTo(pageDto.getStatus());
+        }
+
+        courseExample.setOrderByClause("sort asc");
         List<Course> courseList = courseMapper.selectByExample(courseExample);
         PageInfo<Course> pageInfo = new PageInfo<>(courseList);
         pageDto.setTotal(pageInfo.getTotal()); //获取总记录行数
 
-         List<CourseDto> courseDtoList = new ArrayList<CourseDto>(); //将查到到所有数据转换成courseDto
-        for (int i = 0; i <courseList.size(); i++) {
+
+        List<CourseDto> courseDtoList = new ArrayList<CourseDto>(); //将查到到所有数据转换成courseDto
+        for (int i = 0; i < courseList.size(); i++) {
             Course course = courseList.get(i);
             CourseDto courseDto = new CourseDto();
-            BeanUtils.copyProperties(course,courseDto);
+            BeanUtils.copyProperties(course, courseDto);
             courseDtoList.add(courseDto);
         }
         pageDto.setList(courseDtoList); //将记录存放到pageDto的List
@@ -62,15 +63,15 @@ public class CourseService {
 
     /**
      * 保存章节,编辑保存时根据id是否为空
+     *
      * @param courseDto
      */
     @Transactional
     public void save(CourseDto courseDto) {
         Course course = CopyUtil.copy(courseDto, Course.class);
-        if (StringUtils.isEmpty(courseDto.getId())){ //id为空则调用insert方法添加
+        if (StringUtils.isEmpty(courseDto.getId())) { //id为空则调用insert方法添加
             this.insert(course);
-        }
-        else { //id不为空
+        } else { //id不为空
             this.update(course);
         }
 
@@ -80,12 +81,13 @@ public class CourseService {
 
     /**
      * 新增章节
+     *
      * @param
      */
     private void insert(Course course) {
-                Date now = new Date();
-                course.setCreateAt(now);
-                course.setUpdateAt(now);
+        Date now = new Date();
+        course.setCreateAt(now);
+        course.setUpdateAt(now);
 
         course.setId(UuidUtil.getShortUuid());
         courseMapper.insert(course);
@@ -93,16 +95,18 @@ public class CourseService {
 
     /**
      * 更新章节
+     *
      * @param course
      */
     private void update(Course course) {
-                course.setUpdateAt(new Date());
+        course.setUpdateAt(new Date());
 
         courseMapper.updateByPrimaryKey(course);
     }
 
     /**
      * 删除章节
+     *
      * @param id
      */
     public void delete(String id) {
@@ -111,12 +115,12 @@ public class CourseService {
 
     /**
      * 更新课程的时长
+     *
      * @param courseId
      */
     public void updateTime(String courseId) {
         myCourseMapper.updateTime(courseId);
     }
-
 
 
     /**
@@ -145,6 +149,7 @@ public class CourseService {
 
     /**
      * 排序
+     *
      * @param sortDto
      */
     @Transactional
@@ -162,5 +167,19 @@ public class CourseService {
         if (sortDto.getNewSort() < sortDto.getOldSort()) {
             myCourseMapper.moveSortsBackward(sortDto);
         }
+    }
+
+    /**
+     * 新课列表查询，只查询已发布的，按创建日期倒序
+     */
+    public List<CourseDto> listNew(PageDto pageDto) {
+        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
+        CourseExample courseExample = new CourseExample();
+        //只有已发布的才会显示，课程有草稿和已发布两种状态
+        courseExample.createCriteria().andStatusEqualTo(CourseStatusEnum.PUBLISH.getCode());
+        //时间倒叙排序
+        courseExample.setOrderByClause("create_at desc");
+        List<Course> courseList = courseMapper.selectByExample(courseExample);
+        return CopyUtil.copyList(courseList, CourseDto.class);
     }
 }
