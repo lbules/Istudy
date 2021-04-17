@@ -127,8 +127,34 @@
                     _this.teacher = _this.course.teacher || {};
                     _this.chapters = _this.course.chapters || [];
                     _this.sections = _this.course.sections || [];
+
+                    // 将所有的节放入对应的章中
+                    for (let i = 0; i < _this.chapters.length; i++) {
+                        let c = _this.chapters[i];
+                        c.sections = [];
+                        for (let j = 0; j < _this.sections.length; j++) {
+                            let s = _this.sections[j];
+                            if (c.id === s.chapterId) {
+                                c.sections.push(s);
+                            }
+                        }
+
+                        // Tool.sortAsc(c.sections, "sort");
+                    }
                 })
             },
+
+            /**
+             * 展开/收缩一个章节
+             * @param chapter
+             */
+            doFolded (chapter, i) {
+                let _this = this;
+                chapter.folded = !chapter.folded;
+                // 在v-for里写v-show，只修改属性不起作用，需要$set
+                _this.$set(_this.chapters, i, chapter);
+            },
+
 
         }
     }

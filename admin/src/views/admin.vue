@@ -460,6 +460,27 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="active open">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-list"></i>
+                            <span class="menu-text"> 运维管理 </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
+                            <li class="" id="business-member-sidebar">
+                                <router-link to="/business/member">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    会员管理
+                                </router-link>
+                                <b class="arrow"></b>
+                            </li>
+                        </ul>
+                    </li>
                 </ul><!-- /.nav-list -->
 
                 <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
