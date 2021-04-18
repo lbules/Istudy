@@ -69,54 +69,7 @@
               <a href="javascript:;" v-on:click="toLoginDiv()">返回登录</a>
             </div>
           </div>
-          <!--忘记密码-->
-          <!--<div class="forget-div" v-show="MODAL_STATUS === STATUS_FORGET">
-            <h3>忘记密码</h3>
-            <div class="form-group">
-              <input v-on:blur="onForgetMobileBlur()"
-                     v-bind:class="forgetMobileValidateClass"
-                     id="forget-mobile" v-model="memberForget.mobile"
-                     class="form-control" placeholder="手机号">
-              <span v-show="forgetMobileValidate === false" class="text-danger">手机号11位数字，且必须已注册</span>
-            </div>
-            <div class="form-group">
-              <div class="input-group">
-                <input v-on:blur="onForgetMobileCodeBlur()"
-                       v-bind:class="forgetMobileCodeValidateClass"
-                       id="forget-mobile-code" class="form-control"
-                       placeholder="手机验证码" v-model="memberForget.smsCode">
-                <div class="input-group-append">
-                  <button v-on:click="sendSmsForForget()"
-                          class="btn btn-outline-secondary" id="forget-send-code-btn">
-                    发送验证码
-                  </button>
-                </div>
-              </div>
-              <span v-show="forgetMobileCodeValidate === false" class="text-danger">请输入短信6位验证码</span>
-            </div>
-            <div class="form-group">
-              <input v-on:blur="onForgetPasswordBlur()"
-                     v-bind:class="forgetPasswordValidateClass"
-                     id="forget-password" v-model="memberForget.passwordOriginal"
-                     class="form-control" placeholder="密码" type="password">
-              <span v-show="forgetPasswordValidate === false" class="text-danger">密码最少6位，包含至少1字母和1个数字</span>
-            </div>
-            <div class="form-group">
-              <input v-on:blur="onForgetConfirmPasswordBlur()"
-                     v-bind:class="forgetConfirmPasswordValidateClass"
-                     id="forget-confirm-password" v-model="memberForget.confirm"
-                     class="form-control" placeholder="确认密码" type="password">
-              <span v-show="forgetConfirmPasswordValidate === false" class="text-danger">确认密码和密码一致</span>
-            </div>
-            <div class="form-group">
-              <button v-on:click="resetPassword()" class="btn btn-primary btn-block submit-button">
-                重&nbsp;&nbsp;置
-              </button>
-            </div>
-            <div class="form-group to-login-div">
-              <a href="javascript:;" v-on:click="toLoginDiv()">我要登录</a>
-            </div>
-          </div>-->
+
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -173,18 +126,31 @@
         _this.MODAL_STATUS = _this.STATUS_FORGET
       },*/
 
+      // 注册
       register() {
         let _this = this;
-        _this.memberRegister.password = hex_md5(_this.memberRegister.passwordOriginal + KEY);
-        // 调服务端注册接口
-        _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/register', _this.memberRegister).then((response) => {
-          let resp = response.data;
-          if (resp.success) {
-            Toast.success("注册成功");
-          } else {
-            Toast.warning(resp.message);
+        // 先判断手机号是否已经被注册过了
+        this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/member/is-mobile-exist/' + _this.memberRegister.mobile).then((res)=>{
+          let response = res.data;
+          if (response.success) { //已经被注册过了
+            Toast.warning("手机号已被注册");
+          } else {  //手机号未被注册
+
+            _this.memberRegister.password = hex_md5(_this.memberRegister.passwordOriginal + KEY);
+            // 调服务端注册接口
+            _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/register', _this.memberRegister).then((response) => {
+              let resp = response.data;
+              if (resp.success) {
+                Toast.success("注册成功");
+              } else {
+                Toast.warning(resp.message);
+              }
+            })
           }
         })
+
+
+
       },
 
 
