@@ -173,6 +173,17 @@
             // 注册
             register() {
                 let _this = this;
+                //注册信息提交前先进行校验
+                // 注意：当有一个文本框校验为false时，其它不校验
+                let validateResult = _this.onRegisterMobileBlur() &&
+                    _this.onRegisterMobileCodeBlur() &&
+                    _this.onRegisterNameBlur() &&
+                    _this.onRegisterPasswordBlur() &&
+                    _this.onRegisterConfirmPasswordBlur();
+                if (!validateResult) {
+                    return;
+                }
+
                 // 先判断手机号是否已经被注册过了
                 this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/member/is-mobile-exist/' + _this.memberRegister.mobile).then((res) => {
                     let response = res.data;
@@ -188,6 +199,12 @@
                             let resp = response.data;
                             if (resp.success) {
                                 Toast.success("注册成功");
+                                _this.memberRegister.mobile='';
+                                _this.memberRegister.name='';
+                                _this.memberRegister.passwordOriginal='';
+                                _this.memberRegister.confirm='';
+                                //切换到登录状态框
+                                _this.toLoginDiv();
                             } else {
                                 Toast.warning(resp.message);
                             }
