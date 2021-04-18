@@ -480,6 +480,16 @@
                                 <b class="arrow"></b>
                             </li>
                         </ul>
+
+                        <ul class="submenu">
+                            <li class="" id="business-sms-sidebar">
+                                <router-link to="/business/sms">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    短信管理
+                                </router-link>
+                                <b class="arrow"></b>
+                            </li>
+                        </ul>
                     </li>
                 </ul><!-- /.nav-list -->
 
