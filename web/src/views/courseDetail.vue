@@ -18,8 +18,10 @@
                             <span class="price-now text-danger"><i class="fa fa-yen"></i>&nbsp;{{course.price}}&nbsp;&nbsp;</span>
                         </p>
                         <p class="course-head-button-links">
-                            <a v-show="!memberCourse.id" v-on:click="enroll()" class="btn btn-lg btn-primary btn-shadow" href="javascript:;">立即报名</a>
-                            <a v-show="memberCourse.id" href="#" class="btn btn-lg btn-success btn-shadow disabled">已报名</a>
+                            <a v-show="!memberCourse.id" v-on:click="enroll()" class="btn btn-lg btn-primary btn-shadow"
+                               href="javascript:;">立即报名</a>
+                            <a v-show="memberCourse.id" href="#"
+                               class="btn btn-lg btn-success btn-shadow disabled">已报名</a>
                         </p>
                     </div>
                 </div>
@@ -36,22 +38,26 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#chapter" data-toggle="tab">章节目录</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#comment" data-toggle="tab">评论</a>
+                            </li>
                         </ul>
 
                         <br>
 
-                        <!-- Tab panes -->
+                        <!-- 课程页面切换显示Tab panes -->
                         <div class="tab-content">
-                            <div class="tab-pane active" id="info" v-html="course.content">
-                            </div>
+                            <!--课程介绍-->
+                            <div class="tab-pane active" id="info" v-html="course.content"></div>
+                            <!--章节-->
                             <div class="tab-pane" id="chapter">
                                 <div v-for="(chapter, i) in chapters" class="chapter">
                                     <div v-on:click="doFolded(chapter, i)" class="chapter-chapter">
                                         <span>{{chapter.name}}</span>
                                         <span class="pull-right">
-                      <i v-show="chapter.folded" class="fa fa-plus-square" aria-hidden="true"></i>
-                      <i v-show="!chapter.folded" class="fa fa-minus-square" aria-hidden="true"></i>
-                    </span>
+                                        <i v-show="chapter.folded" class="fa fa-plus-square" aria-hidden="true"></i>
+                                        <i v-show="!chapter.folded" class="fa fa-minus-square" aria-hidden="true"></i>
+                                        </span>
                                     </div>
                                     <div v-show="!chapter.folded">
                                         <table class="table table-striped">
@@ -73,6 +79,34 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--评论-->
+                            <div class="tab-pane" id="comment" >
+                                <!--发表评论-->
+                                <div>
+                                    <form role="form">
+                                        <div class="form-group">
+                                            <label>写评论</label>
+                                            <input v-model="newComment"type="text" class="form-control" placeholder="写下您的评论....">
+                                        </div>
+                                        <button v-on:click="submitComment()" type="button" class="btn btn-info" style="margin-left: 735px">评论一下</button>
+                                    </form>
+                                    <hr>
+                                </div>
+                                <!--显示评论-->
+                                <div v-for="commentItem in courseComment">
+                                    <div class="comment clearfix">
+                                        <div class="comment-header"><img class="lecturer-uimg" src="../../public/static/image/header.jpg"></div>
+                                        <div class="comment-main">
+                                            <div class="user-name">{{commentItem.memberName}}</div>
+                                            <div class="comment-content">{{commentItem.comment}}</div>
+                                            <div class="comment-footer">{{commentItem.createTime}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
                         </div>
 
                     </div>
@@ -106,6 +140,8 @@
                 teacher: {},
                 chapters: [],
                 sections: [],
+                courseComment:{}, //评论
+                newComment:"",
                 memberCourse: {},
                 COURSE_LEVEL: COURSE_LEVEL,
                 SECTION_CHARGE: SECTION_CHARGE
@@ -116,6 +152,8 @@
             // 从地址栏中取出id
             _this.id = _this.$route.query.id;
             _this.CourseDetail();
+            //获取课程评论
+            _this.commentList();
         },
 
         methods: {
@@ -172,7 +210,7 @@
                 _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/memberCourse/enroll', {
                     courseId: _this.course.id,
                     memberId: loginMember.id
-                }).then((response)=>{
+                }).then((response) => {
                     let resp = response.data;
                     if (resp.success) {
                         _this.memberCourse = resp.content;
@@ -196,7 +234,7 @@
                 _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/memberCourse/get-enroll', {
                     courseId: _this.course.id,
                     memberId: loginMember.id
-                }).then((response)=>{
+                }).then((response) => {
                     let resp = response.data;
                     if (resp.success) {
                         _this.memberCourse = resp.content || {};
@@ -211,7 +249,7 @@
              */
             play(section) {
                 let _this = this;
-                if (section.charge === _this.SECTION_CHARGE.CHARGE.key ) {
+                if (section.charge === _this.SECTION_CHARGE.CHARGE.key) {
                     //取出已经登录的会员
                     let loginMember = Tool.getLoginMember();
                     if (Tool.isEmpty(loginMember)) {
@@ -225,6 +263,55 @@
                     }
                 }
                 _this.$refs.modalPlayer.playVod(section.vod);
+            },
+
+            //获取课程评论
+            commentList() {
+                let _this = this;
+                _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/courseComment/comment-list/' + _this.id).then((response) => {
+                    let resp = response.data;
+                    _this.courseComment = resp.content;
+                })
+            },
+
+            //发表评论
+            submitComment() {
+              let _this = this;
+                //取出登录的会员
+                let loginMember = Tool.getLoginMember();
+                //登录且报名课程后才能发表评论
+                if (Tool.isEmpty(loginMember)) {
+                    Toast.warning("请先登录");
+                    return;
+                }
+                else if (Tool.isEmpty(_this.memberCourse)) {
+                    Toast.warning("请先报名");
+                    return;
+                }
+                else{
+                    //判断评论内容是否为空
+                        if (_this.newComment===null) {
+                            return
+                        } else {
+                            //前端校验通过，发送请求
+                            _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/web/courseComment/save',{
+                                courseId:_this.course.id,
+                                memberId:loginMember.id,
+                                memberName:loginMember.name,
+                                comment:_this.newComment
+                            }).then((response) => {
+                                console.log("评论结果:", response);
+                                let resp = response.data;
+                                if (resp.success) { //保存成功就将弹出框隐藏
+                                    _this.commentList() //重新刷新评论
+                                    Toast.success("评论成功");
+                                }
+                                else {
+                                    Toast.warning("评论不能为空");
+                                }
+                            })
+                        }
+                    }
             },
 
 
@@ -311,4 +398,49 @@
             font-size: 0.9rem;
         }
     }
+
+    /**
+*评论-start
+**/
+    .comment{
+        padding: 0px 10px 20px 10px;
+        border-bottom: 2px solid #eeeab6;
+        margin: 20px 0px;
+        min-height: 120px;
+    }
+    .comment-header{
+        float: left;
+        width: 70px;
+    }
+    .comment-main{
+        float: right;
+        width: 730px;
+    }
+    .comment-header img{
+        width: 40px;
+        height: 40px;
+        border-radius:50%;
+    }
+    .comment-main .user-name{
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .comment-main .comment-content{
+        margin-top: 20px;
+        width:100%;
+    }
+    .comment-main .comment-footer{
+        margin-top: 20px;
+    }
+    .comment-main .comment-footer a{
+        margin-left: 50px;
+        display: inline-block;
+        color: #93999f;
+    }
+    .comment-main .comment-footer a:hover{
+        color: #0089D2;
+    }
+    /**
+    *评论-end
+    **/
 </style>
