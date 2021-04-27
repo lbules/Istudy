@@ -17,6 +17,11 @@
             <li class="nav-item active">
               <router-link class="nav-link" to="/list">课程</router-link>
             </li>
+            <!--登录账号后才会显示-->
+            <li v-show="loginMember.id" class="nav-item active">
+              <router-link class="nav-link" to="/home">个人中心</router-link>
+            </li>
+
             <li class="nav-item dropdown active">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 更多

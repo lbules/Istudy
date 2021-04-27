@@ -106,7 +106,7 @@
                 memberForget: {}, //忘记密码
                 memberRegister: {}, //注册
 
-                remember: true, // 记住密码
+                remember: false, // 记住密码
                 imageCodeToken: "",
 
                 //========注册框的错误信息提示=======
@@ -274,6 +274,13 @@
                 _this.registerMobileValidate = Pattern.validateMobile(_this.memberRegister.mobile);
                 return _this.registerMobileValidate;
             },
+
+            onRegisterMobileCodeBlur () {
+                let _this = this;
+                _this.registerMobileCodeValidate = Pattern.validateMobileCode(_this.memberRegister.smsCode);
+                return _this.registerMobileValidate;
+            },
+
             onRegisterNameBlur () {
                 let _this = this;
                 _this.registerNameValidate = Pattern.validateName(_this.memberRegister.name);

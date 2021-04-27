@@ -58,6 +58,7 @@
         <!--<table tableName="member" domainObjectName="Member"/>-->
         <!--<table tableName="sms" domainObjectName="Sms"/>-->
         <!--<table tableName="member_course" domainObjectName="MemberCourse"/>-->
-        <table tableName="course_comment" domainObjectName="CourseComment"/>
+        <!--<table tableName="course_comment" domainObjectName="CourseComment"/>-->
+        <table tableName="collection" domainObjectName="Collection"/>
     </context>
 </generatorConfiguration>

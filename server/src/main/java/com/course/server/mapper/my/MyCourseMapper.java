@@ -19,6 +19,8 @@ public interface MyCourseMapper {
 
     List<CourseDto> listCourse(@Param("pageDto") CoursePageDto pageDto);
 
+    List<String> listCollection(@Param("memberId") String memberId);
+
 }
 
 

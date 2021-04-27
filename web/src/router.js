@@ -3,6 +3,7 @@ import Router from "vue-router"
 import Index from "./views/index.vue"
 import List from "./views/allCourse.vue"
 import CourseDetail from "./views/courseDetail.vue"
+import Home from "./views/home"
 
 Vue.use(Router);
 
@@ -21,10 +22,21 @@ export default new Router({
             path:"/list",
             component: List
         },
-
         {
             path:"/courseDetail",
             component: CourseDetail
-        }
+        },
+        {
+            path:"/home",
+            component: Home,
+            children:[
+                {
+                    path:"list",
+                    name:"list",
+                    component: List
+                }
+            ]
+        },
+
     ]
 })

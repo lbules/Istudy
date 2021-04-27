@@ -1,6 +1,5 @@
 <template>
     <main role="main">
-
         <section class="jumbotron text-center">
             <div class="container">
                 <h1>在线视频课程平台</h1>

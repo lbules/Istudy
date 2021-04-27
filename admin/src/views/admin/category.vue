@@ -250,14 +250,13 @@
                 _this.category = {
                     parent: _this.active.id
                 };
-                $(".modal").modal("show");
+                $("#form-modal").modal("show");
             },
             //编辑
             edit(category) {
                 let _this = this;
                 _this.category = $.extend({}, category); //将传递过来一行数据category赋值给_this.category
                 $("#form-modal").modal("show"); //让模态框显示出来
-
             },
 
             //查询
