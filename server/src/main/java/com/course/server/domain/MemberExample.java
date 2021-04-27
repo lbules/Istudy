@@ -514,6 +514,146 @@ public class MemberExample {
             addCriterion("register_time not between", value1, value2, "registerTime");
             return (Criteria) this;
         }
+
+        public Criteria andSexIsNull() {
+            addCriterion("sex is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexIsNotNull() {
+            addCriterion("sex is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexEqualTo(String value) {
+            addCriterion("sex =", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexNotEqualTo(String value) {
+            addCriterion("sex <>", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexGreaterThan(String value) {
+            addCriterion("sex >", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexGreaterThanOrEqualTo(String value) {
+            addCriterion("sex >=", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexLessThan(String value) {
+            addCriterion("sex <", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexLessThanOrEqualTo(String value) {
+            addCriterion("sex <=", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexLike(String value) {
+            addCriterion("sex like", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexNotLike(String value) {
+            addCriterion("sex not like", value, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexIn(List<String> values) {
+            addCriterion("sex in", values, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexNotIn(List<String> values) {
+            addCriterion("sex not in", values, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexBetween(String value1, String value2) {
+            addCriterion("sex between", value1, value2, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andSexNotBetween(String value1, String value2) {
+            addCriterion("sex not between", value1, value2, "sex");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionIsNull() {
+            addCriterion("introduction is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionIsNotNull() {
+            addCriterion("introduction is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionEqualTo(String value) {
+            addCriterion("introduction =", value, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionNotEqualTo(String value) {
+            addCriterion("introduction <>", value, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionGreaterThan(String value) {
+            addCriterion("introduction >", value, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionGreaterThanOrEqualTo(String value) {
+            addCriterion("introduction >=", value, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionLessThan(String value) {
+            addCriterion("introduction <", value, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionLessThanOrEqualTo(String value) {
+            addCriterion("introduction <=", value, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionLike(String value) {
+            addCriterion("introduction like", value, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionNotLike(String value) {
+            addCriterion("introduction not like", value, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionIn(List<String> values) {
+            addCriterion("introduction in", values, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionNotIn(List<String> values) {
+            addCriterion("introduction not in", values, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionBetween(String value1, String value2) {
+            addCriterion("introduction between", value1, value2, "introduction");
+            return (Criteria) this;
+        }
+
+        public Criteria andIntroductionNotBetween(String value1, String value2) {
+            addCriterion("introduction not between", value1, value2, "introduction");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

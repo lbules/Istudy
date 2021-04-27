@@ -67,73 +67,73 @@
 
         <!--模态框-->
         <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                                aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">表单</h4>
-                    </div>
-                    <div class="modal-body">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">表单</h4>
+                </div>
+                <div class="modal-body">
 
-                        <!--弹出框内容-->
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">姓名</label>
-                                <div class="col-sm-10">
-                                    <input v-model="teacher.name" class="form-control">
-                                </div>
+                    <!--弹出框内容-->
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">姓名</label>
+                            <div class="col-sm-10">
+                                <input v-model="teacher.name" class="form-control">
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">昵称</label>
-                                <div class="col-sm-10">
-                                    <input v-model="teacher.nickname" class="form-control">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">昵称</label>
+                            <div class="col-sm-10">
+                                <input v-model="teacher.nickname" class="form-control">
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">头像</label>
-                                <div class="col-sm-10">
-                                    <file
-                                            v-bind:suffixs="['jpg', 'jpeg', 'png']"
-                                            v-bind:use="FILE_USE.TEACHER.key"
-                                            v-bind:input-id="'image-upload'"
-                                            v-bind:text="'上传头像'"
-                                            v-bind:after-upload="afterUpload"></file>
-                                    <div v-show="teacher.image" class="row">
-                                        <div class="col-md-4">
-                                            <img v-bind:src="teacher.image" class="img-responsive">
-                                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">头像</label>
+                            <div class="col-sm-10">
+                                <big-file
+                                        v-bind:suffixs="['jpg', 'jpeg', 'png']"
+                                        v-bind:use="FILE_USE.TEACHER.key"
+                                        v-bind:input-id="'image-upload'"
+                                        v-bind:text="'上传头像'"
+                                        v-bind:after-upload="afterUpload"></big-file>
+                                <div v-show="teacher.image" class="row">
+                                    <div class="col-md-4">
+                                        <img v-bind:src="teacher.image" class="img-responsive">
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">职位</label>
-                                <div class="col-sm-10">
-                                    <input v-model="teacher.position" class="form-control">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">职位</label>
+                            <div class="col-sm-10">
+                                <input v-model="teacher.position" class="form-control">
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">座右铭</label>
-                                <div class="col-sm-10">
-                                    <input v-model="teacher.motto" class="form-control">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">座右铭</label>
+                            <div class="col-sm-10">
+                                <input v-model="teacher.motto" class="form-control">
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">简介</label>
-                                <div class="col-sm-10">
-                                    <input v-model="teacher.intro" class="form-control">
-                                </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">简介</label>
+                            <div class="col-sm-10">
+                                <input v-model="teacher.intro" class="form-control">
                             </div>
-                        </form>
-                        <!--弹出框内容--END-->
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                        <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
+                        </div>
+                    </form>
+                    <!--弹出框内容--END-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
         <!--模态框--END-->
 
     </div>
@@ -142,9 +142,10 @@
 <script>
     import Pagination from "../../components/pagination.vue"
     import File from "../../components/file";
+    import BigFile from "../../components/big-file";
 
     export default {
-        components: {File, Pagination},
+        components: {BigFile, File, Pagination},
         name: 'teacher',
         data: function () {
             return {

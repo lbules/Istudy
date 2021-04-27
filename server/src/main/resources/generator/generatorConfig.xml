@@ -55,10 +55,10 @@
         <!--<table tableName="role" domainObjectName="Role"/>-->
         <!--<table tableName="role_resources" domainObjectName="RoleResources"/>-->
         <!--<table tableName="role_user" domainObjectName="RoleUser"/>-->
-        <!--<table tableName="member" domainObjectName="Member"/>-->
+        <table tableName="member" domainObjectName="Member"/>
         <!--<table tableName="sms" domainObjectName="Sms"/>-->
         <!--<table tableName="member_course" domainObjectName="MemberCourse"/>-->
         <!--<table tableName="course_comment" domainObjectName="CourseComment"/>-->
-        <table tableName="collection" domainObjectName="Collection"/>
+        <!--<table tableName="collection" domainObjectName="Collection"/>-->
     </context>
 </generatorConfiguration>

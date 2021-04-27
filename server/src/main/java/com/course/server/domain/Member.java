@@ -15,6 +15,10 @@ public class Member {
 
     private Date registerTime;
 
+    private String sex;
+
+    private String introduction;
+
     public String getId() {
         return id;
     }
@@ -63,6 +67,22 @@ public class Member {
         this.registerTime = registerTime;
     }
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -75,6 +95,8 @@ public class Member {
         sb.append(", name=").append(name);
         sb.append(", photo=").append(photo);
         sb.append(", registerTime=").append(registerTime);
+        sb.append(", sex=").append(sex);
+        sb.append(", introduction=").append(introduction);
         sb.append("]");
         return sb.toString();
     }
