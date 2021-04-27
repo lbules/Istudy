@@ -36,6 +36,10 @@ public class MemberDto {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date registerTime;
 
+    private String sex;
+
+    private String introduction;
+
     private String imageCode;
 
     private String imageCodeToken;
@@ -105,6 +109,22 @@ public class MemberDto {
     }
 
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getIntroduction() {
+        return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
+    }
+
     @Override
     public String toString() {
         return "MemberDto{" +
@@ -114,6 +134,8 @@ public class MemberDto {
                 ", name='" + name + '\'' +
                 ", photo='" + photo + '\'' +
                 ", registerTime=" + registerTime +
+                ", sex='" + sex + '\'' +
+                ", introduction='" + introduction + '\'' +
                 ", imageCode='" + imageCode + '\'' +
                 ", imageCodeToken='" + imageCodeToken + '\'' +
                 '}';

@@ -160,4 +160,17 @@ public class MemberService {
         }
     }
 
+    /*
+    * 查找会员信息
+    * */
+    public Member findMember(String memberId) {
+        MemberExample memberExample = new MemberExample();
+        memberExample.createCriteria().andIdEqualTo(memberId);
+        List<Member> memberList = memberMapper.selectByExample(memberExample);
+        if (memberList == null || memberList.size() == 0) {
+            return null;
+        } else {
+            return memberList.get(0);
+        }
+    }
 }

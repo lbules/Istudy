@@ -1,6 +1,8 @@
 package com.course.business.controller.web;
 
 import com.alibaba.fastjson.JSON;
+import com.course.server.domain.Member;
+import com.course.server.dto.CourseDto;
 import com.course.server.dto.LoginMemberDto;
 import com.course.server.dto.MemberDto;
 import com.course.server.dto.ResponseDto;
@@ -16,6 +18,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -127,4 +130,19 @@ public class WebMemberController {
 
         return responseDto;
     }
+
+
+    //    查找会员的信息
+    @GetMapping("/findMember/{memberId}")
+    public ResponseDto findCourse(@PathVariable String memberId) {
+        LOG.info("查找会员信息开始：{}", memberId);
+        ResponseDto responseDto = new ResponseDto();
+        Member member = memberService.findMember(memberId);
+        responseDto.setContent(member);
+
+        LOG.info("查找会员信息结束：{}", responseDto);
+        return responseDto;
+    }
+
+
 }

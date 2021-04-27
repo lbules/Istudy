@@ -33,17 +33,33 @@
                     </div>
 
                     <!--测试个人信息-->
-                    <!--<div id="form-modal" class="modal fade" tabindex="-1" role="dialog">-->
                     <div class="col-md-9" style="float: left">
                         <div class="modal-content">
                             <div class="modal-body">
 
-                                <!--弹出框内容-->
                                 <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <!--<label class="col-sm-2 control-label">头像</label>-->
+                                        <div class="col-sm-10">
+                                            <big-file
+                                                    v-bind:suffixs="['jpg', 'jpeg', 'png']"
+                                                    v-bind:use="FILE_USE.MEMBER.key"
+                                                    v-bind:input-id="'image-upload'"
+                                                    v-bind:text="'上传头像'"
+                                                    v-bind:after-upload="afterUpload"></big-file>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <img v-bind:src="memberInfo.photo" class="img-responsive" style="width: 100px;height: 100px;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                     <div class="form-group">
                                     <label class="col-sm-2 control-label">昵称</label>
                                     <div class="col-sm-10">
-                                        <input class="form-control">
+                                        <input v-model="memberInfo.name" class="form-control">
                                     </div>
                                 </div>
 
@@ -56,35 +72,19 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">头像</label>
-                                        <div class="col-sm-10">
-                                            <file
-                                                    v-bind:suffixs="['jpg', 'jpeg', 'png']"
-                                                    v-bind:use="FILE_USE.MEMBER.key"
-                                                    v-bind:input-id="'image-upload'"
-                                                    v-bind:text="'上传头像'"
-                                                    v-bind:after-upload="afterUpload"></file>
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <img src="../../public/static/image/header.jpg"
-                                                         class="img-responsive">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">个人简介</label>
                                         <div class="col-sm-10">
-                                            <input class="form-control">
+                                            <input v-model="memberInfo.introduction" class="form-control">
                                         </div>
                                     </div>
                                 </form>
                                 <!--弹出框内容--END-->
                             </div>
                             <div class="modal-footer">
-                                <button v-on:click="save()" type="button" class="btn btn-primary">保存</button>
+                                <button v-on:click="saveMember()" type="button" class="btn btn-primary">保存</button>
                             </div>
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
@@ -99,7 +99,7 @@
 
 <script type="text/javascript">
     import TheCollection from "../components/the-collection";
-    import File from "../components/file";
+    import BigFile from "../components/big-file";
 
     $(function () {
         $('.user-menu-nav').hover(function () {
@@ -109,13 +109,13 @@
         });
     });
     export default {
-        components: {TheCollection,File},
+        components: {TheCollection,BigFile},
         data: function () {
             return {
                 collection: [], //收藏课程
-
                 FILE_USE: FILE_USE, //上传文件
                 SEX:SEX, //性别选项
+                memberInfo:{},
             }
         },
 
@@ -123,7 +123,9 @@
             let _this = this;
 
             //测试获取用户报名的课程
-            _this.listMemberCourse();
+            // _this.listMemberCourse();
+
+            _this.memberinfo();
 
         },
         methods: {
@@ -151,6 +153,7 @@
                 _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/home/listMemberCourse/' + loginMember.id).then((response) => {
                     console.log("查询我的课程结果：", response);
                     let resp = response.data;
+
                     if (resp.success) {
                         _this.collection = resp.content;
                     }
@@ -159,11 +162,39 @@
                 })
             },
 
+           memberinfo() {
+               let _this = this;
+               //获取登录会员的信息
+               let loginMember = Tool.getLoginMember();
+               _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/member/findMember/' + loginMember.id).then((response) => {
+                    let resp = response.data;
+                    if (resp.success) {
+                        console.log("查询会员成功",resp.content);
+                        _this.memberInfo = resp.content;
+                        console.log("查询member成功",_this.memberInfo);
+                    }
+               });
+           },
+
+            saveMember() {
+                let _this = this;
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/save', _this.memberInfo).then((response) => {
+                    console.log("保存结果:", response);
+                    let resp = response.data;
+                    if (resp.success) { //保存成功就将弹出框隐藏
+                        _this.memberinfo(); //重新刷新
+                        Toast.success("保存成功");
+                    } else {
+                        Toast.warning(resp.message);
+                    }
+                })
+            },
+
             //回调函数
             afterUpload(resp) {
                 let _this = this;
-                let image = resp.content;
-                // _this.teacher.image = image;
+                let image = resp.content.path;
+                _this.memberInfo.photo = image;
             },
 
         }
