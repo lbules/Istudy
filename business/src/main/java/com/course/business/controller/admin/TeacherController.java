@@ -38,7 +38,7 @@ public class TeacherController {
             ValidatorUtil.require(teacherDto.getName(), "");
             ValidatorUtil.length(teacherDto.getName(), "", 1, 50);
             ValidatorUtil.length(teacherDto.getNickname(), "", 1, 50);
-            ValidatorUtil.length(teacherDto.getImage(), "", 1, 100);
+//            ValidatorUtil.length(teacherDto.getImage(), "", 1, 100);
             ValidatorUtil.length(teacherDto.getPosition(), "", 1, 50);
             ValidatorUtil.length(teacherDto.getMotto(), "", 1, 50);
             ValidatorUtil.length(teacherDto.getIntro(), "", 1, 500);
