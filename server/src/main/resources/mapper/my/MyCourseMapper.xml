@@ -49,4 +49,10 @@
         from collection
         where member_id = #{memberId}
     </select>
+
+    <select id="listMemberCourse" resultType="String">
+        select course_id
+        from member_course
+        where member_id = #{memberId}
+    </select>
 </mapper>

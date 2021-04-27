@@ -6,6 +6,7 @@ import com.course.server.dto.PageDto;
 import com.course.server.dto.ResponseDto;
 import com.course.server.enums.CourseStatusEnum;
 import com.course.server.service.CourseService;
+import com.course.server.service.MemberCourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +28,21 @@ public class WebHomeController {
     @Resource
     private CourseService courseService;
 
+    @Resource
+    private MemberCourseService memberCourseService;
 
+
+    //    查找会员的收藏课程
+    @GetMapping("/listMemberCourse/{memberId}")
+    public ResponseDto findCourse(@PathVariable String memberId) {
+        LOG.info("查找报名课程开始：{}", memberId);
+        ResponseDto responseDto = new ResponseDto();
+        List<CourseDto> courseDtoList = memberCourseService.listMemberCourse(memberId);
+        responseDto.setContent(courseDtoList);
+
+        LOG.info("查找收藏课程结束：{}", responseDto);
+        return responseDto;
+    }
 
 
 }

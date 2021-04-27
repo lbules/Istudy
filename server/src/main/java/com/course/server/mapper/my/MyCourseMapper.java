@@ -21,6 +21,8 @@ public interface MyCourseMapper {
 
     List<String> listCollection(@Param("memberId") String memberId);
 
+    List<String> listMemberCourse(@Param("memberId") String memberId);
+
 }
 
 

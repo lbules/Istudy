@@ -48,8 +48,9 @@
         mounted() {
             let _this = this;
 
-            //测试收藏课程功能
-            _this.listCollection();
+            //测试获取用户报名的课程
+            _this.listMemberCourse();
+
         },
         methods: {
             /*获取会员所有的收藏课程*/
@@ -59,6 +60,22 @@
                 let loginMember = Tool.getLoginMember();
                 _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/courseCollection/listCollection/'+loginMember.id).then((response) => {
                     console.log("查询收藏的结果：", response);
+                    let resp = response.data;
+                    if (resp.success) {
+                        _this.collection = resp.content;
+                    }
+                }).catch((response) => {
+                    console.log("error：", response);
+                })
+            },
+
+            /*获取会员已报名的所有课程*/
+            listMemberCourse() {
+                let _this = this;
+                //获取登录会员的信息
+                let loginMember = Tool.getLoginMember();
+                _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/home/listMemberCourse/'+loginMember.id).then((response) => {
+                    console.log("查询我的课程结果：", response);
                     let resp = response.data;
                     if (resp.success) {
                         _this.collection = resp.content;

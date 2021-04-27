@@ -1,10 +1,14 @@
 package com.course.server.service;
 
+import com.course.server.domain.Course;
 import com.course.server.domain.MemberCourse;
 import com.course.server.domain.MemberCourseExample;
+import com.course.server.dto.CourseDto;
 import com.course.server.dto.MemberCourseDto;
 import com.course.server.dto.PageDto;
+import com.course.server.mapper.CourseMapper;
 import com.course.server.mapper.MemberCourseMapper;
+import com.course.server.mapper.my.MyCourseMapper;
 import com.course.server.util.CopyUtil;
 import com.course.server.util.UuidUtil;
 import com.github.pagehelper.PageHelper;
@@ -24,6 +28,12 @@ public class MemberCourseService {
 
     @Resource
     private MemberCourseMapper memberCourseMapper;
+
+    @Resource
+    private CourseMapper courseMapper;
+
+    @Resource
+    private MyCourseMapper myCourseMapper;
 
     public void list(PageDto pageDto) {
 
@@ -126,5 +136,23 @@ public class MemberCourseService {
     public MemberCourseDto getEnroll(MemberCourseDto memberCourseDto) {
         MemberCourse memberCourse = this.select(memberCourseDto.getMemberId(), memberCourseDto.getCourseId());
         return CopyUtil.copy(memberCourse, MemberCourseDto.class);
+    }
+
+    /*
+    * 获取会员报名的课程信息
+    * */
+    public List<CourseDto> listMemberCourse(String memberId) {
+        //查找出收藏课程对应的课程id，去收藏表查
+        List<String> courseId = myCourseMapper.listMemberCourse(memberId);
+        //根据课程id去查找课程详情
+        List<CourseDto> courseDtoList = new ArrayList<>();
+
+        for (int i=0;i<courseId.size();i++){
+            Course course = courseMapper.selectByPrimaryKey(courseId.get(i));
+            CourseDto courseDto = CopyUtil.copy(course,CourseDto.class);
+            courseDtoList.add(courseDto);
+        }
+
+        return courseDtoList;
     }
 }
