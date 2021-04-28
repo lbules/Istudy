@@ -16,5 +16,5 @@ FILE_USE_ARRAY=[{key:"C", value:"课程"},{key:"T", value:"讲师"}];
 SMS_USE_ARRAY=[{key:"R", value:"注册"},{key:"F", value:"忘记密码"}];
 SMS_STATUS_ARRAY=[{key:"U", value:"已使用"},{key:"N", value:"未使用"}];
 
-SEX=[{key:"1", value:"男"},{key:"2", value:"女"}];
+SEX=[{key:"1", value:"男"},{key:"0", value:"女"}];
 

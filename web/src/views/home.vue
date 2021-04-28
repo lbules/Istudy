@@ -2,8 +2,8 @@
     <div class="row">
         <div class="f-main clearfix">
             <div class="setting-left col-md-2">
-                <img class="setting-header" src="../../public/static/image/header.jpg">
-                <div>牛氓gadfly</div>
+                <img class="setting-header" v-bind:src="memberInfo.photo">
+                <div>{{memberInfo.name}}</div>
 
                 <div class="split-line" style="margin-bottom: 20px;"></div>
 
@@ -49,7 +49,7 @@
                                                     v-bind:after-upload="afterUpload"></big-file>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <img v-bind:src="memberInfo.photo" class="img-responsive" style="width: 100px;height: 100px;">
+                                                    <!--<img v-bind:src="memberInfo.photo" class="img-responsive" style="width: 100px;height: 100px;">-->
                                                 </div>
                                             </div>
                                         </div>
@@ -66,7 +66,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">性别</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control">
+                                            <select v-model="memberInfo.sex" class="form-control">
                                                 <option v-for="o in SEX" v-bind:value="o.key">{{o.value}}</option>
                                             </select>
                                         </div>
