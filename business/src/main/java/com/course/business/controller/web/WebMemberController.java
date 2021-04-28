@@ -145,4 +145,17 @@ public class WebMemberController {
     }
 
 
+    //保存会员信息
+    @RequestMapping("/save")
+    public ResponseDto save(@RequestBody MemberDto memberDto) {
+        ValidatorUtil.length(memberDto.getName(), "昵称", 1, 50);
+
+        ResponseDto responseDto = new ResponseDto();
+        memberService.save(memberDto);
+        responseDto.setContent(memberDto);
+        return responseDto;
+
+    }
+
+
 }
