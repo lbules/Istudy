@@ -121,6 +121,9 @@
             let _this = this;
             //初始时显示登录模态框
             _this.toLoginDiv();
+
+            //初始化验证码
+            _this.loadImageCode();
         },
 
         computed: {

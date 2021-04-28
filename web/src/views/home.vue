@@ -17,8 +17,8 @@
                     <a href="#">
                         <li class="user-menu-nav">个人信息</li>
                     </a>
-                    <a href="">
-                        <li class="user-menu-nav">修改密码</li>
+                    <a href="#">
+                        <li v-on:click="openPassword()" class="user-menu-nav">修改密码</li>
                     </a>
                 </ul>
             </div>
@@ -36,7 +36,6 @@
                     <div class="col-md-9" style="float: left">
                         <div class="modal-content">
                             <div class="modal-body">
-
                                 <form class="form-horizontal">
                                     <div class="form-group">
                                         <!--<label class="col-sm-2 control-label">头像</label>-->
@@ -54,8 +53,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                     <div class="form-group">
                                     <label class="col-sm-2 control-label">昵称</label>
                                     <div class="col-sm-10">
@@ -71,9 +68,6 @@
                                             </select>
                                         </div>
                                     </div>
-
-
-
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">个人简介</label>
                                         <div class="col-sm-10">
@@ -87,13 +81,47 @@
                                 <button v-on:click="saveMember()" type="button" class="btn btn-primary">保存</button>
                             </div>
                         </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                    <!--</div>-->
+                    </div>
+                    </div>
                     <!--测试个人信息-END-->
+
+                    <!--测试修改密码-->
+                    <div id="resetPassword-modal" class="modal fade" tabindex="-1" role="dialog">
+                        <div class="modal-dialog modal-login" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="register-div">
+                                        <h3 style="text-align: center">修改密码</h3>
+                                        <div class="form-group">
+                                            <input v-on:blur="onPasswordBlur()"
+                                                   v-bind:class="PasswordValidateClass"
+                                                   id="password" v-model="memberInfo.password"
+                                                   class="form-control" placeholder="原密码" type="password">
+                                            <span v-show="PasswordValidate === false" class="text-danger">密码最少6位，必须包含字母和数字</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <input v-on:blur="onConfirmPasswordBlur()"
+                                                   v-bind:class="ConfirmPasswordValidateClass"
+                                                   id="confirm-password" v-model="memberInfo.password"
+                                                   class="form-control" placeholder="新密码"
+                                                   name="memberRegisterConfirm" type="password">
+                                            <span v-show="ConfirmPasswordValidate === false" class="text-danger">确认两次密码一致</span>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary btn-block submit-button" v-on:click="resetPassword()">
+                                                确认
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--测试修改密码-END-->
                 </div>
             </div>
         </div>
-    </div>
 
 </template>
 
@@ -116,6 +144,9 @@
                 FILE_USE: FILE_USE, //上传文件
                 SEX:SEX, //性别选项
                 memberInfo:{},
+
+                PasswordValidate:null,
+                ConfirmPasswordValidate:null,
             }
         },
 
@@ -128,6 +159,22 @@
             _this.memberinfo();
 
         },
+        computed:{
+            PasswordValidateClass: function () {
+                return {
+                    'border-success': this.PasswordValidate === true,
+                    'border-danger': this.PasswordValidate === false,
+                }
+            },
+
+            ConfirmPasswordValidateClass: function () {
+                return {
+                    'border-success': this.ConfirmPasswordValidate === true,
+                    'border-danger': this.ConfirmPasswordValidate === false,
+                }
+            },
+        },
+
         methods: {
             /*获取会员所有的收藏课程*/
             listCollection() {
@@ -189,6 +236,35 @@
                     }
                 })
             },
+
+            //打开修改密码模态框
+            openPassword() {
+                let _this = this;
+                $("#resetPassword-modal").modal("show");
+            },
+
+            //修改密码
+            resetPassword() {
+
+            },
+
+
+            // ==================重置密码校验============
+            onPasswordBlur () {
+                let _this = this;
+                _this.PasswordValidate = Pattern.validatePasswordWeak(_this.memberInfo.password);
+                return _this.registerMobileValidate;
+            },
+            onConfirmPasswordBlur () {
+                let _this = this;
+                let confirmPassword = $("#confirm-password").val();
+                if (Tool.isEmpty(confirmPassword)) {
+                    return _this.ConfirmPasswordValidate = false;
+                }
+                return _this.ConfirmPasswordValidate = (confirmPassword === _this.memberInfo.password);
+            },
+
+
 
             //回调函数
             afterUpload(resp) {
