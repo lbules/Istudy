@@ -69,7 +69,7 @@
         mounted() {
             let _this = this;
             //每页显示的记录条数
-            _this.$refs.pagination.size = 1;
+            _this.$refs.pagination.size = 6;
             // 查询所有的课程
             _this.listAllCourse(1)
             //查询所有的课程分类

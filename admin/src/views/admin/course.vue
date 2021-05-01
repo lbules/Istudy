@@ -10,7 +10,7 @@
         <!--新增按钮--END-->
 
         <div class="row">
-            <div v-for="course in courses" class="col-md-4">
+            <div v-for="course in courses" class="col-md-4" style="height: 400px;">
                 <div class="thumbnail search-thumbnail">
                     <img v-show="!course.image" class="media-object" src="/static/image/demo-course.jpg"/>
                     <img v-show="course.image" class="media-object" v-bind:src="course.image"/>
@@ -71,7 +71,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">表单</h4>
+                        <h4 class="modal-title">新增课程</h4>
                     </div>
                     <div class="modal-body">
 
@@ -95,12 +95,12 @@
                                     <input v-model="course.summary" class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="col-sm-2 control-label">时长</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.time" class="form-control">
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">价格</label>
                                 <div class="col-sm-10">
@@ -150,12 +150,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="col-sm-2 control-label">报名数</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.enroll" class="form-control">
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">排序</label>
                                 <div class="col-sm-10">
@@ -163,18 +163,18 @@
                                     <input v-model="course.sort" class="form-control" disabled>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                                 <label class="col-sm-2 control-label">创建时间</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.createAt" class="form-control">
                                 </div>
-                            </div>
-                            <div class="form-group">
+                            </div>-->
+                            <!--<div class="form-group">
                                 <label class="col-sm-2 control-label">修改时间</label>
                                 <div class="col-sm-10">
                                     <input v-model="course.updateAt" class="form-control">
                                 </div>
-                            </div>
+                            </div>-->
                         </form>
                     </div>
                     <div class="modal-footer">

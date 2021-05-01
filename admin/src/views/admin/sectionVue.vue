@@ -91,7 +91,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">表单</h4>
+                        <h4 class="modal-title">新增小节</h4>
                     </div>
                     <div class="modal-body">
 
@@ -135,12 +135,12 @@
 
                               </div>
                             </div>
-                            <div class="form-group">
+                            <!--<div class="form-group">
                               <label class="col-sm-2 control-label">时长</label>
                               <div class="col-sm-10">
                                 <input v-model="section.time" class="form-control">
                               </div>
-                            </div>
+                            </div>-->
                             <div class="form-group">
                               <label class="col-sm-2 control-label">类型</label>
                               <div class="col-sm-10">

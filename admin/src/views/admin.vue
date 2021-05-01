@@ -24,7 +24,7 @@
 
                 <div class="navbar-buttons navbar-header pull-right" role="navigation">
                     <ul class="nav ace-nav">
-                        <li class="grey dropdown-modal">
+<!--                        <li class="grey dropdown-modal">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <i class="ace-icon fa fa-tasks"></i>
                                 <span class="badge badge-grey">4</span>
@@ -285,7 +285,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>-->
 
                         <!--右侧退出登录-->
                         <li class="light-blue dropdown-modal">
@@ -366,7 +366,7 @@
                     <li class="" v-show="hasResources('01')">
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-list"></i>
-                            <span class="menu-text"> 系统管理 </span>
+                            <span class="menu-text"> 权限管理 </span>
 
                             <b class="arrow fa fa-angle-down"></b>
                         </a>
@@ -383,14 +383,14 @@
                                 <b class="arrow"></b>
                             </li>
 
-                            <li v-show="hasResources('0102')" class="" id="system-resources-sidebar">
+                            <!--<li v-show="hasResources('0102')" class="" id="system-resources-sidebar">
                                 <router-link to="/system/resources" href="jqgrid.html">
                                     <i class="menu-icon fa fa-caret-right"></i>
                                     资源管理
                                 </router-link>
 
                                 <b class="arrow"></b>
-                            </li>
+                            </li>-->
 
                             <li v-show="hasResources('0103')" class="" id="system-role-sidebar">
                                 <router-link to="/system/role" href="jqgrid.html">
@@ -403,7 +403,7 @@
                         </ul>
                     </li>
 
-                    <li class="active open" v-show="hasResources('02')">
+                    <li class="" v-show="hasResources('02')">
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-list"></i>
                             <span class="menu-text"> 业务管理 </span>
@@ -430,6 +430,20 @@
                                 <b class="arrow"></b>
                             </li>
 
+                        </ul>
+                    </li>
+
+                    <li class="">
+                        <a href="#" class="dropdown-toggle">
+                            <i class="menu-icon fa fa-list"></i>
+                            <span class="menu-text"> 讲师管理 </span>
+
+                            <b class="arrow fa fa-angle-down"></b>
+                        </a>
+
+                        <b class="arrow"></b>
+
+                        <ul class="submenu">
                             <li class="" id="business-teacher-sidebar" v-show="hasResources('0203')">
                                 <router-link to="/business/teacher">
                                     <i class="menu-icon fa fa-caret-right"></i>
@@ -440,28 +454,7 @@
                         </ul>
                     </li>
 
-                    <li class="active open">
-                        <a href="#" class="dropdown-toggle">
-                            <i class="menu-icon fa fa-list"></i>
-                            <span class="menu-text"> 文件管理 </span>
-
-                            <b class="arrow fa fa-angle-down"></b>
-                        </a>
-
-                        <b class="arrow"></b>
-
-                        <ul class="submenu">
-                            <li class="" id="file-file-sidebar">
-                                <router-link to="/file/file">
-                                    <i class="menu-icon fa fa-caret-right"></i>
-                                    文件管理
-                                </router-link>
-                                <b class="arrow"></b>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="active open">
+                    <li class="">
                         <a href="#" class="dropdown-toggle">
                             <i class="menu-icon fa fa-list"></i>
                             <span class="menu-text"> 运维管理 </span>
@@ -475,13 +468,23 @@
                             <li class="" id="business-member-sidebar">
                                 <router-link to="/business/member">
                                     <i class="menu-icon fa fa-caret-right"></i>
-                                    会员管理
+                                    统计分析
                                 </router-link>
                                 <b class="arrow"></b>
                             </li>
                         </ul>
 
                         <ul class="submenu">
+                            <li class="" id="business-member-sidebar">
+                                <router-link to="/business/member">
+                                    <i class="menu-icon fa fa-caret-right"></i>
+                                    会员管理
+                                </router-link>
+                                <b class="arrow"></b>
+                            </li>
+                        </ul>
+
+                        <!--<ul class="submenu">
                             <li class="" id="business-sms-sidebar">
                                 <router-link to="/business/sms">
                                     <i class="menu-icon fa fa-caret-right"></i>
@@ -489,7 +492,7 @@
                                 </router-link>
                                 <b class="arrow"></b>
                             </li>
-                        </ul>
+                        </ul>-->
                     </li>
                 </ul><!-- /.nav-list -->
 

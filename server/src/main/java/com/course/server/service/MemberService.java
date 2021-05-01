@@ -73,9 +73,6 @@ public class MemberService {
      */
     private void insert(Member member) {
         Date now = new Date();
-        /*String formatDate = null;
-        DateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //HH表示24小时制；
-        formatDate = dFormat.format(now);*/
 
         member.setId(UuidUtil.getShortUuid());
         //注册时间

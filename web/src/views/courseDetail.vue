@@ -18,11 +18,13 @@
             </p>
             <p class="course-head-desc">{{ course.summary }}</p>
             <p class="course-head-price">
-              <span class="price-now text-danger"
+              <span v-show="course.price!==0" class="price-now text-danger"
                 ><i class="fa fa-yen"></i>&nbsp;{{
                   course.price
-                }}&nbsp;&nbsp;</span
-              >
+                }}&nbsp;&nbsp;</span>
+              <span v-show="course.price==0" class="price-now text-danger"
+              >&nbsp;免费
+                &nbsp;&nbsp;</span>
             </p>
             <div>
               <p class="course-head-button-links" style="float: left">
@@ -193,11 +195,12 @@
           <!-- 讲师信息 -->
           <div class="col-md-3">
             <div class="card" style="width: 18rem">
-              <img v-bind:src="teacher.image" class="card-img-top" />
+              <!--<img v-bind:src="teacher.image" class="card-img-top" />-->
+              <img src="../../public/static/image/js01.png"/>
               <div class="card-body">
-                <h5 class="card-title">{{ teacher.name }}</h5>
-                <p class="card-text">{{ teacher.motto }}</p>
-                <p class="card-text">{{ teacher.intro }}</p>
+                <h5 class="card-title">Qiujuer</h5>
+                <p class="card-text">学无止境</p>
+                <p class="card-text">多年一线开发、架构及技术团队管理经验，是门户、搜索、报价、店铺、专题等核心系统的负责人；担任所在企业的技术讲师、应届生导师、校招、社招面试官；</p>
               </div>
             </div>
           </div>

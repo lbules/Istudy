@@ -72,7 +72,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">表单</h4>
+                    <h4 class="modal-title">新增讲师</h4>
                 </div>
                 <div class="modal-body">
 
@@ -121,7 +121,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">简介</label>
                             <div class="col-sm-10">
-                                <input v-model="teacher.intro" class="form-control">
+                                <textarea v-model="teacher.intro" class="form-control" rows="5"></textarea>
                             </div>
                         </div>
                     </form>

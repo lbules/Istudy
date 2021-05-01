@@ -14,10 +14,10 @@
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
-                <th>id</th>
-                <th>登录名</th>
+                <th>用户id</th>
+                <th>账号</th>
                 <th>昵称</th>
-                <th>密码</th>
+                <!--<th>密码</th>-->
                 <th>操作</th>
             </tr>
             </thead>
@@ -26,7 +26,7 @@
                 <td>{{user.id}}</td>
                 <td>{{user.loginName}}</td>
                 <td>{{user.name}}</td>
-                <td>{{user.password}}</td>
+                <!--<td>{{user.password}}</td>-->
                 <td>
                     <div class="hidden-sm hidden-xs btn-group">
                         <!--编辑-->

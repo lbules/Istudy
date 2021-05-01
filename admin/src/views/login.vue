@@ -6,8 +6,8 @@
                     <div class="login-container">
                         <div class="center">
                             <h1>
-                                <i class="ace-icon fa fa-leaf green"></i>
-                                <span class="red">控制台登录</span>
+                                <!--<i class="ace-icon fa fa-leaf green"></i>-->
+                                <span class="red">iStudy控台登录</span>
                             </h1>
                         </div>
 

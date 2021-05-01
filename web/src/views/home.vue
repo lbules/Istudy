@@ -9,13 +9,16 @@
 
                 <ul class="user-menu-nav-block">
                     <a href="#">
+                        <li class="user-menu-nav">基本信息</li>
+                    </a>
+                    <a href="#">
                         <li class="user-menu-nav">我的课程</li>
                     </a>
                     <a href="#">
-                        <li class="user-menu-nav">我的收藏</li>
+                        <li class="user-menu-nav">收藏管理</li>
                     </a>
                     <a href="#">
-                        <li class="user-menu-nav">个人信息</li>
+                        <li class="user-menu-nav">评论管理</li>
                     </a>
                     <a href="#">
                         <li v-on:click="openPassword()" class="user-menu-nav">修改密码</li>
@@ -23,7 +26,7 @@
                 </ul>
             </div>
             <div class="setting-right col-md-10">
-                <div><span class="f-16">最新动态</span></div>
+                <div><span class="f-16">基本信息</span></div>
                 <div class="split-line" style="margin: 20px 0px;"></div>
                 <div class="clearfix">
 
