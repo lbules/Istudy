@@ -103,9 +103,13 @@ public class MemberCourseService {
      */
     public MemberCourseDto enroll(MemberCourseDto memberCourseDto) {
         MemberCourse memberCourseDb = this.select(memberCourseDto.getMemberId(), memberCourseDto.getCourseId());
+        //未报名
         if (memberCourseDb == null) {
             MemberCourse memberCourse = CopyUtil.copy(memberCourseDto, MemberCourse.class);
+            //添加报名信息
             this.insert(memberCourse);
+            //对应课程报名人数加1
+            courseMapper.increase(memberCourseDto.getCourseId());
             // 将数据库信息全部返回，包括id, at
             return CopyUtil.copy(memberCourse, MemberCourseDto.class);
         } else {
