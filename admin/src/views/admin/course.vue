@@ -10,27 +10,30 @@
         <!--新增按钮--END-->
 
         <div class="row">
-            <div v-for="course in courses" class="col-md-4" style="height: 400px;">
+            <div v-for="course in courses" class="col-md-4" style="height: 460px;">
                 <div class="thumbnail search-thumbnail">
                     <img v-show="!course.image" class="media-object" src="/static/image/demo-course.jpg"/>
                     <img v-show="course.image" class="media-object" v-bind:src="course.image"/>
                     <div class="caption">
                         <div class="clearfix">
-                            <span class="pull-right label label-primary info-label">
-                {{COURSE_LEVEL | optionKV(course.level)}}
-              </span>
-                            <span class="pull-right label label-primary info-label">
-                {{COURSE_CHARGE | optionKV(course.charge)}}
-              </span>
-                            <span class="pull-right label label-primary info-label">
-                {{COURSE_STATUS | optionKV(course.status)}}
-              </span>
+                            <span class="pull-right label label-primary info-label">{{COURSE_LEVEL | optionKV(course.level)}}</span>
+                            <span class="pull-right label label-primary info-label">{{COURSE_CHARGE | optionKV(course.charge)}}</span>
+                            <span class="pull-right label label-primary info-label">{{COURSE_STATUS | optionKV(course.status)}}</span>
                         </div>
 
                         <h3 class="search-title">
                             <a href="#" class="blue">{{course.name}}</a>
                         </h3>
 
+                        <div v-for="teacher in teachers.filter(t=>{return t.id===course.teacherId})" class="profile-activity clearfix">
+                            <div>
+                                <img v-show="!teacher.image" class="pull-left" src="/ace/assets/images/avatars/avatar5.png">
+                                <img v-show="teacher.image" class="pull-left" v-bind:src="teacher.image">
+                                <a class="user" href="#"> {{teacher.name}} </a>
+                                <br>
+                                {{teacher.position}}
+                            </div>
+                        </div>
 
                         <p>{{course.summary}}</p>
                         <p>
