@@ -128,8 +128,10 @@
                                           v-bind:after-upload="afterUpload">
                                   </big-file>
                                   <div v-show="section.image" class="row">
-                                      <div class="col-md-6">
-                                          <video id="video" v-bind:src="section.video" controls="controls"></video>
+                                      <div class="col-md-9">
+                                          <player v-bind:player-id="'form-player-div'"
+                                                  ref="player"></player>
+                                          <video v-bind:src="section.video" id="video" controls="controls" class="hidden"></video>
                                       </div>
                                   </div>
 
