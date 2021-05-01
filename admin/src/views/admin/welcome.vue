@@ -249,8 +249,8 @@
             let _this = this;
             // sidebar激活样式方法一
             // this.$parent.activeSidebar("welcome-sidebar");
-            _this.drawSaleChart();
-            _this.drawPieChart();
+            // _this.drawSaleChart();
+            // _this.drawPieChart();
         },
         methods: {
             drawSaleChart() {
@@ -289,7 +289,7 @@
                 });
             },
 
-            drawPieChart() {
+            /*drawPieChart() {
                 let placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'180px'});
                 let data = [
                     { label: "Java",  data: 38.7, color: "#68BC31"},
@@ -324,7 +324,7 @@
                         clickable: true
                     }
                 })
-            },
+            },*/
         }
     }
 </script>

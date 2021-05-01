@@ -86,11 +86,7 @@
 
             <!-- Tab panes -->
             <div class="tab-content">
-              <div
-                class="tab-pane active"
-                id="info"
-                v-html="course.content"
-              ></div>
+              <div class="tab-pane active" id="info" v-html="course.content"></div>
               <div class="tab-pane" id="chapter">
                 <div v-for="(chapter, i) in chapters" class="chapter">
                   <div
@@ -150,11 +146,12 @@
                   <form role="form">
                     <div class="form-group">
                       <label>写评论</label>
-                      <input
+                      <textarea
                         v-model="newComment"
                         type="text"
                         class="form-control"
                         placeholder="写下您的评论...."
+                        rows="3"
                       />
                     </div>
                     <button
@@ -308,6 +305,8 @@ export default {
           if (resp.success) {
             _this.memberCourse = resp.content;
             Toast.success("报名成功！");
+            //重新加载更新报名人数的显示
+            _this.CourseDetail();
           } else {
             Toast.warning(resp.message);
           }
