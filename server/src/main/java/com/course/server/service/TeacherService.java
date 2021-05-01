@@ -93,4 +93,10 @@ public class TeacherService {
         Teacher teacher = teacherMapper.selectByPrimaryKey(id);
         return CopyUtil.copy(teacher, TeacherDto.class);
     }
+
+    public List<TeacherDto> all() {
+        TeacherExample teacherExample = new TeacherExample();
+        List<Teacher> teacherList = teacherMapper.selectByExample(teacherExample);
+        return CopyUtil.copyList(teacherList, TeacherDto.class);
+    }
 }

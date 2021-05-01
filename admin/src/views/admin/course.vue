@@ -83,6 +83,16 @@
                                     <ul id="tree" class="ztree"></ul>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">讲师</label>
+                                <div class="col-sm-10">
+                                    <select v-model="course.teacherId" class="form-control">
+                                        <option v-for="o in teachers" v-bind:value="o.id">{{o.name}}</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">名称</label>
                                 <div class="col-sm-10">
@@ -150,12 +160,12 @@
                                     </select>
                                 </div>
                             </div>
-                            <!--<div class="form-group">
+                            <div class="form-group">
                                 <label class="col-sm-2 control-label">报名数</label>
                                 <div class="col-sm-10">
-                                    <input v-model="course.enroll" class="form-control">
+                                    <input v-model="course.enroll" class="form-control" disabled>
                                 </div>
-                            </div>-->
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">排序</label>
                                 <div class="col-sm-10">
@@ -256,11 +266,13 @@
                     oldSort: 0,  //旧排序
                     newSort: 0   //新排序
                 },
+                teachers:[], //讲师
             }
         },
         mounted: function () {
             let _this = this;
             _this.allCategory(); //初始时去查所有的课程分类
+            _this.allTeacher() //查找所有的讲师信息
             _this.list(1);
         },
         methods: {
@@ -371,6 +383,17 @@
                     _this.categorys = resp.content;
 
                     _this.initTree();
+                })
+            },
+
+            //查找所有的讲师
+            allTeacher() {
+                let _this = this;
+                Loading.show();
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/teacher/all').then((response) => {
+                    Loading.hide();
+                    let resp = response.data;
+                    _this.teachers = resp.content;
                 })
             },
 
