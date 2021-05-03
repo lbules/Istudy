@@ -40,7 +40,9 @@ public class VodUtil {
         CreateUploadVideoRequest request = new CreateUploadVideoRequest();
         request.setFileName(fileName);
         request.setTitle(fileName);
+        //分类id
         request.setCateId(1000298740L);
+        //转码模板的id
         request.setTemplateGroupId("b1e42c19c1038e4607a668bf5c1efa74");
         //设置请求超时时间
         request.setSysReadTimeout(1000);

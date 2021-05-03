@@ -127,22 +127,36 @@
                                           v-bind:text="'上传视频'"
                                           v-bind:after-upload="afterUpload">
                                   </big-file>
-                                  <div v-show="section.image" class="row">
-                                      <div class="col-md-9">
-                                          <player v-bind:player-id="'form-player-div'"
+                                  <div v-show="section.video" class="row">
+                                      <div class="col-md-6">
+                                          <!--<player v-bind:player-id="'form-player-div'"
                                                   ref="player"></player>
-                                          <video v-bind:src="section.video" id="video" controls="controls" class="hidden"></video>
+                                          <video v-bind:src="section.video" id="video" controls="controls" class="hidden"></video>-->
+                                          <video v-bind:src="section.video" id="video" controls="controls"></video>
                                       </div>
                                   </div>
 
                               </div>
                             </div>
-                            <!--<div class="form-group">
+                            <div class="form-group">
                               <label class="col-sm-2 control-label">时长</label>
                               <div class="col-sm-10">
                                 <input v-model="section.time" class="form-control">
                               </div>
-                            </div>-->
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">视频</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.video" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">VOD</label>
+                                <div class="col-sm-10">
+                                    <input v-model="section.vod" class="form-control" disabled>
+                                </div>
+                            </div>
                             <div class="form-group">
                               <label class="col-sm-2 control-label">类型</label>
                               <div class="col-sm-10">
@@ -299,7 +313,7 @@
                 setTimeout(function () {
                     let ele = document.getElementById("video");
                     _this.section.time = parseInt(ele.duration, 10);
-                }, 1000);
+                }, 2000);
             },
 
         }
