@@ -58,6 +58,16 @@ public class FileDto {
 
     private String shard;
 
+    private String vod;
+
+    public String getVod() {
+        return vod;
+    }
+
+    public void setVod(String vod) {
+        this.vod = vod;
+    }
+
     public Integer getShardIndex() {
         return shardIndex;
     }
@@ -179,6 +189,7 @@ public class FileDto {
                 ", shardTotal=" + shardTotal +
                 ", key='" + key + '\'' +
                 ", shard='" + shard + '\'' +
+                ", vod='" + vod + '\'' +
                 '}';
     }
 }
