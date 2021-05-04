@@ -120,19 +120,21 @@
                               <label class="col-sm-2 control-label">视频</label>
                               <div class="col-sm-10">
 
-                                  <big-file
+                                  <vod
                                           v-bind:suffixs="['mp4']"
                                           v-bind:use="FILE_USE.COURSE.key"
                                           v-bind:input-id="'video-upload'"
                                           v-bind:text="'上传视频'"
                                           v-bind:after-upload="afterUpload">
-                                  </big-file>
+                                  </vod>
                                   <div v-show="section.video" class="row">
-                                      <div class="col-md-6">
+                                      <div class="col-md-10">
                                           <!--<player v-bind:player-id="'form-player-div'"
                                                   ref="player"></player>
+
                                           <video v-bind:src="section.video" id="video" controls="controls" class="hidden"></video>-->
-                                          <video v-bind:src="section.video" id="video" controls="controls"></video>
+                                          <player ref="player"></player>
+                                          <video v-bind:src="section.video" id="video" controls="controls" class="hidden"></video>
                                       </div>
                                   </div>
 
@@ -189,9 +191,11 @@
 <script>
     import Pagination from "../../components/pagination.vue";
     import BigFile from "../../components/big-file";
+    import Vod from "../../components/vod"
+    import Player from "../../components/player"
 
     export default {
-        components: {Pagination,BigFile},
+        components: {Pagination,BigFile,Vod,Player},
         name: 'section',
         data: function () {
             return {
@@ -253,6 +257,7 @@
             //保存
             save() {
                 let _this = this;
+                _this.section.video="";
 
                 // 保存校验
                 if (1 != 1
@@ -265,7 +270,7 @@
 
                 _this.section.courseId = _this.course.id;
                 _this.section.chapterId = _this.chapter.id;
-                _this.section.video="";
+
 
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/section/save', _this.section).then((response) => {
@@ -307,7 +312,7 @@
 
                 _this.section.video = video;
                 _this.section.vod= vod;
-
+                _this.$refs.player.playUrl(video);
                 _this.getTime();
             },
 
@@ -317,7 +322,7 @@
                 setTimeout(function () {
                     let ele = document.getElementById("video");
                     _this.section.time = parseInt(ele.duration, 10);
-                }, 2000);
+                }, 8000);
             },
 
         }
