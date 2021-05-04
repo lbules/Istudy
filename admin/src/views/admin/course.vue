@@ -10,7 +10,7 @@
         <!--新增按钮--END-->
 
         <div class="row">
-            <div v-for="course in courses" class="col-md-4" style="height: 460px;">
+            <div v-for="course in courses" class="col-md-2" style="height: 400px">
                 <div class="thumbnail search-thumbnail">
                     <img v-show="!course.image" class="media-object" src="/static/image/demo-course.jpg"/>
                     <img v-show="course.image" class="media-object" v-bind:src="course.image"/>

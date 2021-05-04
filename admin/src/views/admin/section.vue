@@ -265,6 +265,7 @@
 
                 _this.section.courseId = _this.course.id;
                 _this.section.chapterId = _this.chapter.id;
+                _this.section.video="";
 
                 Loading.show();
                 _this.$ajax.post(process.env.VUE_APP_SERVER+'/business/admin/section/save', _this.section).then((response) => {
@@ -302,7 +303,10 @@
             afterUpload(resp) {
                 let _this = this;
                 let video = resp.content.path;
+                let vod = resp.content.vod;
+
                 _this.section.video = video;
+                _this.section.vod= vod;
 
                 _this.getTime();
             },
