@@ -264,39 +264,44 @@
                         //如果md5的值和rememberUser中不一样时，才进行加密
                         _this.user.password = hex_md5(_this.user.password + KEY);
                     }
-
+                    //获取图片验证码
                     _this.user.imageCodeToken = _this.imageCodeToken;
 
-                    _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', _this.user).then((response) => {
+                    if (_this.user.imageCode!=null) {
+                        _this.$ajax.post(process.env.VUE_APP_SERVER + '/system/admin/user/login', _this.user).then((response) => {
 
-                        let resp = response.data;
-                        if (resp.success) {
-                            console.log("登录成功:", resp.content);
-                            console.log(resp.content);
-                            let loginUser = resp.content;
-                            //保存登录信息
-                            Tool.setLoginUser(resp.content);
-                            //记住我
-                            if (_this.remember) {
-                                //勾选记住我，将用户名和密码保存到本地缓存，md5用于检测是否被重新输入过
-                                let md5 = hex_md5(_this.user.password);
-                                LocalStorage.set("loginUser", {
-                                    loginName: loginUser.loginName,
-                                    password: _this.user.password,
-                                    md5: md5
-                                })
+                            let resp = response.data;
+                            if (resp.success) {
+                                console.log("登录成功:", resp.content);
+                                console.log(resp.content);
+                                let loginUser = resp.content;
+                                //保存登录信息
+                                Tool.setLoginUser(resp.content);
+                                //记住我
+                                if (_this.remember) {
+                                    //勾选记住我，将用户名和密码保存到本地缓存，md5用于检测是否被重新输入过
+                                    let md5 = hex_md5(_this.user.password);
+                                    LocalStorage.set("loginUser", {
+                                        loginName: loginUser.loginName,
+                                        password: _this.user.password,
+                                        md5: md5
+                                    })
+                                } else {
+                                    //清空本地缓存
+                                    LocalStorage.set("loginUser", null);
+                                }
+
+                                this.$router.push("/welcome")
                             } else {
-                                //清空本地缓存
-                                LocalStorage.set("loginUser", null);
+                                Toast.warning(resp.message);
+                                _this.user.password = "";
+                                _this.loadImageCode();
                             }
-
-                            this.$router.push("/welcome")
-                        } else {
-                            Toast.warning(resp.message);
-                            _this.user.password = "";
-                            _this.loadImageCode();
-                        }
-                    })
+                        })
+                    }
+                    else {
+                        Toast.warning("请输入验证码！")
+                    }
                 }
                 else {
                     Toast.warning("请先输入用户名和密码！");
