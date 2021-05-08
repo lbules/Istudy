@@ -204,13 +204,17 @@
         </div>
       </div>
     </div>
+
+    <modal-player ref="modalPlayer"></modal-player>
   </main>
 </template>
 
 <script>
+import ModalPlayer from "../components/modal-player";
 export default {
   // 课程详情
   name: "courseDetail",
+  components: {ModalPlayer},
   data: function () {
     return {
       id: "",
@@ -266,7 +270,7 @@ export default {
               }
             }
 
-            // Tool.sortAsc(c.sections, "sort");
+            Tool.sortAsc(c.sections, "sort");
           }
         });
     },
