@@ -2,8 +2,8 @@
     <div class="row">
         <div class="f-main clearfix">
             <div class="setting-left col-md-2">
-                <img class="setting-header" v-bind:src="memberInfo.photo">
-                <div>{{memberInfo.name}}</div>
+                <img class="setting-header" v-bind:src="member.photo">
+                <div>{{member.name}}</div>
 
                 <div class="split-line" style="margin-bottom: 20px;"></div>
 
@@ -94,16 +94,16 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                    <label class="col-sm-2 control-label">昵称</label>
-                                    <div class="col-sm-10">
-                                        <input v-model="memberInfo.name" class="form-control">
+                                        <label class="col-sm-2 control-label">昵称</label>
+                                        <div class="col-sm-10">
+                                            <input v-model="member.name" class="form-control">
+                                        </div>
                                     </div>
-                                </div>
 
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">性别</label>
                                         <div class="col-sm-10">
-                                            <select v-model="memberInfo.sex" class="form-control">
+                                            <select v-model="member.sex" class="form-control">
                                                 <option v-for="o in SEX" v-bind:value="o.key">{{o.value}}</option>
                                             </select>
                                         </div>
@@ -111,7 +111,8 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">个人简介</label>
                                         <div class="col-sm-10">
-                                            <textarea v-model="memberInfo.introduction" class="form-control" rows="5"></textarea>
+                                            <textarea v-model="member.introduction" class="form-control"
+                                                      rows="5"></textarea>
                                         </div>
                                     </div>
                                 </form>
@@ -121,45 +122,49 @@
                                 <button v-on:click="saveMember()" type="button" class="btn btn-primary">保存</button>
                             </div>
                         </div><!-- /.modal-content -->
-                    </div></div>
-                    <!--测试个人信息-END-->
+                    </div>
+                </div>
+                <!--测试个人信息-END-->
 
-                    <!--测试修改密码-->
-                    <div id="resetPassword-modal" class="modal fade" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-login" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <div class="register-div">
-                                        <h3 style="text-align: center">修改密码</h3>
-                                        <div class="form-group">
-                                            <input v-on:blur="onPasswordBlur()"
-                                                   v-bind:class="PasswordValidateClass"
-                                                   id="password" v-model="memberInfo.password"
-                                                   class="form-control" placeholder="原密码" type="password">
-                                            <span v-show="PasswordValidate === false" class="text-danger">密码最少6位，必须包含字母和数字</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <input v-on:blur="onConfirmPasswordBlur()"
-                                                   v-bind:class="ConfirmPasswordValidateClass"
-                                                   id="confirm-password" v-model="memberInfo.password"
-                                                   class="form-control" placeholder="新密码"
-                                                   name="memberRegisterConfirm" type="password">
-                                            <span v-show="ConfirmPasswordValidate === false" class="text-danger">确认两次密码一致</span>
-                                        </div>
-                                        <div class="form-group">
-                                            <button class="btn btn-primary btn-block submit-button" v-on:click="resetPassword()">
-                                                确认
-                                            </button>
-                                        </div>
+                <!--测试修改密码-->
+                <div id="resetPassword-modal" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="modal-dialog modal-login" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="register-div">
+                                    <h3 style="text-align: center">修改密码</h3>
+                                    <div class="form-group">
+                                        <input v-on:blur="onPasswordBlur()"
+                                               v-bind:class="PasswordValidateClass"
+                                               id="password" v-model="oldPassword"
+                                               class="form-control" placeholder="原密码" type="password">
+                                        <span v-show="PasswordValidate === false"
+                                              class="text-danger">密码最少6位，必须包含字母和数字</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <input v-on:blur="onConfirmPasswordBlur()"
+                                               v-bind:class="ConfirmPasswordValidateClass"
+                                               id="confirm-password" v-model="newPassword"
+                                               class="form-control" placeholder="新密码"
+                                               name="memberRegisterConfirm" type="password">
+                                        <span v-show="ConfirmPasswordValidate === false"
+                                              class="text-danger">确认两次密码一致</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-primary btn-block submit-button"
+                                                v-on:click="resetPassword()">
+                                            确认
+                                        </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--测试修改密码-END-->
                 </div>
+                <!--测试修改密码-END-->
             </div>
         </div>
+    </div>
 
 </template>
 
@@ -177,27 +182,30 @@
         });
     });
     export default {
-        components: {CourseComment, MemberCourse, TheCollection,BigFile},
+        components: {CourseComment, MemberCourse, TheCollection, BigFile},
         data: function () {
             return {
                 collection: [], //收藏课程
-                memberCourse:[], //报名的课程
-                memberComment:[], //评论
+                memberCourse: [], //报名的课程
+                memberComment: [], //评论
+
+                oldPassword: '', //旧密码
+                newPassword: '', //新密码
 
                 FILE_USE: FILE_USE, //上传文件
-                SEX:SEX, //性别选项
-                memberInfo:{},
+                SEX: SEX, //性别选项
+                member: {},
 
-                PasswordValidate:null,
-                ConfirmPasswordValidate:null,
+                PasswordValidate: null,
+                ConfirmPasswordValidate: null,
 
                 //右侧显示内容的切换
-                STATUS:'', //初始默认为空
-                STATUS_COLLECTION:'STATUS_COLLECTION', //收藏
-                STATUS_COURSE:'STATUS_COURSE',
-                STATUS_INFO:'STATUS_INFO',
-                STATUS_COMMENT:'STATUS_COMMENT',
-                title:'',
+                STATUS: '', //初始默认为空
+                STATUS_COLLECTION: 'STATUS_COLLECTION', //收藏
+                STATUS_COURSE: 'STATUS_COURSE',
+                STATUS_INFO: 'STATUS_INFO',
+                STATUS_COMMENT: 'STATUS_COMMENT',
+                title: '',
 
             }
         },
@@ -217,7 +225,7 @@
 
 
         },
-        computed:{
+        computed: {
             PasswordValidateClass: function () {
                 return {
                     'border-success': this.PasswordValidate === true,
@@ -284,23 +292,23 @@
                 })
             },
 
-           memberinfo() {
-               let _this = this;
-               //获取登录会员的信息
-               let loginMember = Tool.getLoginMember();
-               _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/member/findMember/' + loginMember.id).then((response) => {
+            memberinfo() {
+                let _this = this;
+                //获取登录会员的信息
+                let loginMember = Tool.getLoginMember();
+                _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/member/findMember/' + loginMember.id).then((response) => {
                     let resp = response.data;
                     if (resp.success) {
-                        console.log("查询会员成功",resp.content);
-                        _this.memberInfo = resp.content;
-                        console.log("查询member成功",_this.memberInfo);
+                        console.log("查询会员成功", resp.content);
+                        _this.member = resp.content;
+                        console.log("查询member成功", _this.member);
                     }
-               });
-           },
+                });
+            },
 
             saveMember() {
                 let _this = this;
-                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/save', _this.memberInfo).then((response) => {
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/save', _this.member).then((response) => {
                     console.log("保存结果:", response);
                     let resp = response.data;
                     if (resp.success) { //保存成功就将弹出框隐藏
@@ -320,42 +328,57 @@
 
             //修改密码
             resetPassword() {
+                let _this = this;
+                _this.member.oldPassword = hex_md5(_this.oldPassword + KEY);
 
+                //先校验旧密码
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/check', {
+                    oldPassword:_this.member.oldPassword,
+                    mobile:_this.member.mobile,
+                }).then((response) => {
+                    console.log("校验的结果:", response);
+                    let resp = response.data;
+                    if (resp.success) { //校验通过，更新密码
+                        console.log("校验通过！");
+                    } else {
+                        Toast.warning(resp.message);
+                    }
+                })
             },
 
             //打开个人信息页面
             openInfo() {
-              let _this = this;
-              _this.STATUS = _this.STATUS_INFO;
-                _this.title ='基本信息';
+                let _this = this;
+                _this.STATUS = _this.STATUS_INFO;
+                _this.title = '基本信息';
             },
 
             //打开我的收藏
             openCollection() {
                 let _this = this;
                 _this.STATUS = _this.STATUS_COLLECTION;
-                _this.title ='我的收藏';
+                _this.title = '我的收藏';
             },
 
             //打开我的报名课程
             openCourse() {
                 let _this = this;
                 _this.STATUS = _this.STATUS_COURSE;
-                _this.title ='我的报名';
+                _this.title = '我的报名';
             },
 
             //打开我的评论
             openComment() {
                 let _this = this;
                 _this.STATUS = _this.STATUS_COMMENT;
-                _this.title ='我的评论';
+                _this.title = '我的评论';
             },
             //删除评论,传入参数id
             del(id) {
                 let _this = this;
                 // 确认弹出框
-                Confirm.show("删除后将无法恢复，请谨慎操作！",function () {
-                    _this.$ajax.delete(process.env.VUE_APP_SERVER+'/business/web/courseComment/delete/'+id).then((response) => {
+                Confirm.show("删除后将无法恢复，请谨慎操作！", function () {
+                    _this.$ajax.delete(process.env.VUE_APP_SERVER + '/business/web/courseComment/delete/' + id).then((response) => {
                         console.log("删除结果:", response);
                         let resp = response.data;
                         if (resp.success) {
@@ -368,27 +391,26 @@
 
 
             // ==================重置密码校验============
-            onPasswordBlur () {
+            onPasswordBlur() {
                 let _this = this;
-                _this.PasswordValidate = Pattern.validatePasswordWeak(_this.memberInfo.password);
+                _this.PasswordValidate = Pattern.validatePasswordWeak(_this.member.password);
                 return _this.registerMobileValidate;
             },
-            onConfirmPasswordBlur () {
+            onConfirmPasswordBlur() {
                 let _this = this;
                 let confirmPassword = $("#confirm-password").val();
                 if (Tool.isEmpty(confirmPassword)) {
                     return _this.ConfirmPasswordValidate = false;
                 }
-                return _this.ConfirmPasswordValidate = (confirmPassword === _this.memberInfo.password);
+                return _this.ConfirmPasswordValidate = (confirmPassword === _this.member.password);
             },
-
 
 
             //回调函数
             afterUpload(resp) {
                 let _this = this;
                 let image = resp.content.path;
-                _this.memberInfo.photo = image;
+                _this.member.photo = image;
             },
 
         }

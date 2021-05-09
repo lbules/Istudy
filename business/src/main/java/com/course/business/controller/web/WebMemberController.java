@@ -2,10 +2,7 @@ package com.course.business.controller.web;
 
 import com.alibaba.fastjson.JSON;
 import com.course.server.domain.Member;
-import com.course.server.dto.CourseDto;
-import com.course.server.dto.LoginMemberDto;
-import com.course.server.dto.MemberDto;
-import com.course.server.dto.ResponseDto;
+import com.course.server.dto.*;
 import com.course.server.exception.BusinessException;
 import com.course.server.service.MemberService;
 import com.course.server.util.UuidUtil;
@@ -155,6 +152,19 @@ public class WebMemberController {
         responseDto.setContent(memberDto);
         return responseDto;
 
+    }
+
+
+    @PostMapping("/check")
+    public ResponseDto checkPassword(@RequestBody MemberDto memberDto) {
+
+        memberDto.setOldPassword(DigestUtils.md5DigestAsHex(memberDto.getOldPassword().getBytes()));
+        ResponseDto responseDto = new ResponseDto();
+
+        LOG.info("开始校验密码");
+        MemberDto MemberDto = memberService.checkPassword(memberDto);
+        responseDto.setContent(MemberDto);
+        return responseDto;
     }
 
 

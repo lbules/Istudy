@@ -2,6 +2,7 @@ package com.course.server.service;
 
 import com.course.server.domain.Member;
 import com.course.server.domain.MemberExample;
+import com.course.server.dto.CheckMemberDto;
 import com.course.server.dto.LoginMemberDto;
 import com.course.server.dto.MemberDto;
 import com.course.server.dto.PageDto;
@@ -174,6 +175,24 @@ public class MemberService {
             return null;
         } else {
             return memberList.get(0);
+        }
+    }
+
+    public MemberDto checkPassword(MemberDto memberDto) {
+        Member member = selectByMobile(memberDto.getMobile());
+        if (member == null) {
+            LOG.info("手机号不存在, {}", memberDto.getMobile());
+            throw new BusinessException(BusinessExceptionCode.LOGIN_MEMBER_ERROR);
+        } else {
+            if (member.getPassword().equals(memberDto.getOldPassword())) {
+                //校验成功
+                LOG.info("旧密码：{}, 数据库密码：{}", memberDto.getOldPassword(), member.getPassword());
+                MemberDto MemberDto = CopyUtil.copy(member,MemberDto.class);
+                return MemberDto;
+            } else {
+                LOG.info("旧密码不对, 输入密码：{}, 数据库密码：{}", memberDto.getOldPassword(), member.getPassword());
+                throw new BusinessException(BusinessExceptionCode.LOGIN_MEMBER_ERROR);
+            }
         }
     }
 }

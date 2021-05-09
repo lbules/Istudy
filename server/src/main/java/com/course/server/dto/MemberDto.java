@@ -21,6 +21,11 @@ public class MemberDto {
     private String password;
 
     /**
+     * 密码
+     */
+    private String oldPassword;
+
+    /**
      * 昵称
      */
     private String name;
@@ -125,12 +130,21 @@ public class MemberDto {
         this.introduction = introduction;
     }
 
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
     @Override
     public String toString() {
         return "MemberDto{" +
                 "id='" + id + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", password='" + password + '\'' +
+                ", oldPassword='" + oldPassword + '\'' +
                 ", name='" + name + '\'' +
                 ", photo='" + photo + '\'' +
                 ", registerTime=" + registerTime +
