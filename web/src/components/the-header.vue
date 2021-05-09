@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark head-bg">
       <div class="container">
         <router-link to="/" class="navbar-brand">
           <i class="ace-icon fa fa-video-camera"></i>&nbsp;
@@ -92,3 +92,10 @@
     }
   }
 </script>
+
+
+<style>
+  .head-bg {
+    background-color: rgb(0, 123, 255);
+  }
+</style>

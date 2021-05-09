@@ -9,16 +9,16 @@
 
                 <ul class="user-menu-nav-block">
                     <a href="#">
-                        <li class="user-menu-nav">基本信息</li>
+                        <li v-on:click="openInfo()" class="user-menu-nav">基本信息</li>
                     </a>
                     <a href="#">
-                        <li class="user-menu-nav">我的课程</li>
+                        <li v-on:click="openCourse()" class="user-menu-nav">我的课程</li>
                     </a>
                     <a href="#">
-                        <li class="user-menu-nav">收藏管理</li>
+                        <li v-on:click="openCollection()" class="user-menu-nav">收藏管理</li>
                     </a>
                     <a href="#">
-                        <li class="user-menu-nav">评论管理</li>
+                        <li v-on:click="openComment()" class="user-menu-nav">评论管理</li>
                     </a>
                     <a href="#">
                         <li v-on:click="openPassword()" class="user-menu-nav">修改密码</li>
@@ -28,15 +28,16 @@
             <div class="setting-right col-md-10">
                 <div><span class="f-16">基本信息</span></div>
                 <div class="split-line" style="margin: 20px 0px;"></div>
-                <div class="clearfix">
+                <!--右侧显示内容区域-->
+                <div class="clearfix col-md-12">
 
                     <!--收藏的课程-->
-                    <div v-for="c in collection" :key=c.id class="col-md-3" style="float: left">
-                        <!--<the-collection v-bind:collectionCourse="c"></the-collection>-->
+                    <div v-for="c in collection" :key=c.id style="float: left;" v-show="STATUS===STATUS_COLLECTION">
+                        <the-collection v-bind:collectionCourse="c"></the-collection>
                     </div>
 
                     <!--测试个人信息-->
-                    <div class="col-md-9" style="float: left">
+                    <div class="col-md-9" style="float: left" v-show="STATUS===STATUS_INFO">
                         <div class="modal-content">
                             <div class="modal-body">
                                 <form class="form-horizontal">
@@ -51,7 +52,6 @@
                                                     v-bind:after-upload="afterUpload"></big-file>
                                             <div class="row">
                                                 <div class="col-md-4">
-                                                    <!--<img v-bind:src="memberInfo.photo" class="img-responsive" style="width: 100px;height: 100px;">-->
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +74,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">个人简介</label>
                                         <div class="col-sm-10">
-                                            <input v-model="memberInfo.introduction" class="form-control">
+                                            <textarea v-model="memberInfo.introduction" class="form-control" rows="5"></textarea>
                                         </div>
                                     </div>
                                 </form>
@@ -120,7 +120,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!--测试修改密码-END-->
                 </div>
             </div>
@@ -150,6 +149,14 @@
 
                 PasswordValidate:null,
                 ConfirmPasswordValidate:null,
+
+                //右侧显示内容的切换
+                STATUS:'', //初始默认为空
+                STATUS_COLLECTION:'STATUS_COLLECTION', //收藏
+                STATUS_COURSE:'STATUS_COURSE',
+                STATUS_INFO:'STATUS_INFO',
+                STATUS_COMMENT:'STATUS_COMMENT',
+
             }
         },
 
@@ -160,6 +167,11 @@
             // _this.listMemberCourse();
 
             _this.memberinfo();
+            _this.listCollection();
+
+            //默认进入到个人主页显示个人信息页面
+            _this.openInfo();
+
 
         },
         computed:{
@@ -249,6 +261,32 @@
             //修改密码
             resetPassword() {
 
+            },
+
+            //打开个人信息页面
+            openInfo() {
+              let _this = this;
+              _this.STATUS = _this.STATUS_INFO;
+              // _this.STATUS = _this.STATUS_COLLECTION;
+            },
+
+            //打开我的收藏
+            openCollection() {
+                let _this = this;
+                _this.STATUS = _this.STATUS_COLLECTION;
+
+            },
+
+            //打开我的报名课程
+            openCourse() {
+                let _this = this;
+                _this.STATUS = _this.STATUS_COURSE;
+            },
+
+            //打开我的评论
+            openComment() {
+                let _this = this;
+                _this.STATUS = _this.STATUS_COMMENT;
             },
 
 

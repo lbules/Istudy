@@ -1,15 +1,15 @@
 <template>
     <div class="course-card-container">
         <div class="course-card-top purple-bg">
-            <span>{{collectionCourse.name}}</span>
+            <router-link v-bind:to="'/courseDetail?id=' + collectionCourse.id" class="course-name">
+                <span>{{collectionCourse.name}}</span>
+            </router-link>
         </div>
         <img class="img-fluid" v-bind:src="collectionCourse.image">
         <div class="course-card-content">
             <h3 class="course-card-name">{{collectionCourse.summary}}</h3>
             <div class="clearfix course-card-bottom">
-                <div class="btn-group">
-                    <router-link v-bind:to="'/courseDetail?id=' + collectionCourse.id" class="btn btn-outline-secondary">进入课程</router-link>
-                </div>
+
             </div>
         </div>
     </div>
@@ -83,5 +83,15 @@
     }
     .clearfix {
         clear: both;
+    }
+
+    .course-name {
+        height: 48px;
+        line-height: 48px;
+        padding: 0 24px;
+        overflow: hidden;
+        color: #FFF;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
     }
 </style>
