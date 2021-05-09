@@ -1,13 +1,13 @@
 <template>
     <div class="course-card-container">
         <div class="course-card-top purple-bg">
-            <router-link v-bind:to="'/courseDetail?id=' + collectionCourse.id" class="course-name">
-                <span>{{collectionCourse.name}}</span>
+            <router-link v-bind:to="'/courseDetail?id=' + memberCourse.id" class="course-name">
+                <span>{{memberCourse.name}}</span>
             </router-link>
         </div>
-        <img class="img-fluid" style="height: 123px;width: 224px;" v-bind:src="collectionCourse.image">
+        <img class="img-fluid" style="height: 123px;width: 224px;" v-bind:src="memberCourse.image">
         <div class="course-card-content">
-            <h3 class="course-card-name">{{collectionCourse.summary}}</h3>
+            <h3 class="course-card-name">{{memberCourse.summary}}</h3>
             <div class="clearfix course-card-bottom">
 
             </div>
@@ -19,9 +19,9 @@
 
 <script>
     export default {
-        name: 'the-collection',
+        name: 'member-course',
         props: {
-            collectionCourse: {}
+            memberCourse: {}
         },
         data: function () {
             return {

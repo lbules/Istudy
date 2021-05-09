@@ -26,7 +26,7 @@
                 </ul>
             </div>
             <div class="setting-right col-md-10">
-                <div><span class="f-16">基本信息</span></div>
+                <div><span class="f-16">{{title}}</span></div>
                 <div class="split-line" style="margin: 20px 0px;"></div>
                 <!--右侧显示内容区域-->
                 <div class="clearfix col-md-12">
@@ -34,6 +34,11 @@
                     <!--收藏的课程-->
                     <div v-for="c in collection" :key=c.id style="float: left;" v-show="STATUS===STATUS_COLLECTION">
                         <the-collection v-bind:collectionCourse="c"></the-collection>
+                    </div>
+
+                    <!--报名的课程-->
+                    <div v-for="c in memberCourse" style="float: left;" v-show="STATUS===STATUS_COURSE">
+                        <member-course v-bind:memberCourse="c"></member-course>
                     </div>
 
                     <!--测试个人信息-->
@@ -130,6 +135,7 @@
 <script type="text/javascript">
     import TheCollection from "../components/the-collection";
     import BigFile from "../components/big-file";
+    import MemberCourse from "../components/member-course";
 
     $(function () {
         $('.user-menu-nav').hover(function () {
@@ -139,10 +145,13 @@
         });
     });
     export default {
-        components: {TheCollection,BigFile},
+        components: {MemberCourse, TheCollection,BigFile},
         data: function () {
             return {
                 collection: [], //收藏课程
+                memberCourse:[], //报名的课程
+                memberComment:[], //评论
+
                 FILE_USE: FILE_USE, //上传文件
                 SEX:SEX, //性别选项
                 memberInfo:{},
@@ -156,19 +165,21 @@
                 STATUS_COURSE:'STATUS_COURSE',
                 STATUS_INFO:'STATUS_INFO',
                 STATUS_COMMENT:'STATUS_COMMENT',
+                title:'',
 
             }
         },
 
         mounted() {
             let _this = this;
-
-            //测试获取用户报名的课程
-            // _this.listMemberCourse();
-
+            //获取会员信息
             _this.memberinfo();
+            //获取用户报名的课程
+            _this.listMemberCourse();
+            //获取会员收藏的课程
             _this.listCollection();
-
+            //查找会员的评论
+            _this.listComment();
             //默认进入到个人主页显示个人信息页面
             _this.openInfo();
 
@@ -217,7 +228,24 @@
                     let resp = response.data;
 
                     if (resp.success) {
-                        _this.collection = resp.content;
+                        _this.memberCourse = resp.content;
+                    }
+                }).catch((response) => {
+                    console.log("error：", response);
+                })
+            },
+
+            /*获取会员所有的评论*/
+            listComment() {
+                let _this = this;
+                //获取登录会员的信息
+                let loginMember = Tool.getLoginMember();
+                _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/home/listComment/' + loginMember.id).then((response) => {
+                    console.log("查询我的评论：", response);
+                    let resp = response.data;
+
+                    if (resp.success) {
+                        _this.memberComment = resp.content;
                     }
                 }).catch((response) => {
                     console.log("error：", response);
@@ -267,26 +295,28 @@
             openInfo() {
               let _this = this;
               _this.STATUS = _this.STATUS_INFO;
-              // _this.STATUS = _this.STATUS_COLLECTION;
+                _this.title ='基本信息';
             },
 
             //打开我的收藏
             openCollection() {
                 let _this = this;
                 _this.STATUS = _this.STATUS_COLLECTION;
-
+                _this.title ='我的收藏';
             },
 
             //打开我的报名课程
             openCourse() {
                 let _this = this;
                 _this.STATUS = _this.STATUS_COURSE;
+                _this.title ='我的报名';
             },
 
             //打开我的评论
             openComment() {
                 let _this = this;
                 _this.STATUS = _this.STATUS_COMMENT;
+                _this.title ='我的评论';
             },
 
 

@@ -113,9 +113,12 @@ public class CourseCommentService {
     }
 
 
+    public List<CourseComment> listComment(String memberId) {
+        CourseCommentExample example = new CourseCommentExample();
+        example.createCriteria().andMemberIdEqualTo(memberId);
 
+        List<CourseComment> courseCommentDto = courseCommentMapper.selectByExample(example);
 
-
-
-
+        return courseCommentDto;
+    }
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="card mb-4 shadow-sm course">
-        <img class="img-fluid" v-bind:src="newcourse.image">
+        <img class="img-fluid" style="width: 345px;height: 192px;" v-bind:src="newcourse.image">
         <div class="card-body">
             <h4 class="">{{newcourse.name}}</h4>
             <p class="card-text">{{newcourse.summary}}</p>
