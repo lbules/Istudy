@@ -116,11 +116,12 @@ public class WebMemberController {
         return responseDto;
     }
 
-    @PostMapping("/reset-password")
+    @PostMapping("/reset")
     public ResponseDto resetPassword(@RequestBody MemberDto memberDto) throws BusinessException {
         LOG.info("会员密码重置开始:");
-        memberDto.setPassword(DigestUtils.md5DigestAsHex(memberDto.getPassword().getBytes()));
-        ResponseDto<MemberDto> responseDto = new ResponseDto();
+        memberDto.setNewPassword(DigestUtils.md5DigestAsHex(memberDto.getNewPassword().getBytes()));
+//        memberDto.setNewPassword(DigestUtils.md5DigestAsHex(memberDto.getNewPassword().getBytes()));
+        ResponseDto responseDto = new ResponseDto();
 
         // 重置密码
         memberService.resetPassword(memberDto);

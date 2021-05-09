@@ -159,7 +159,7 @@ public class MemberService {
         } else {
             Member member = new Member();
             member.setId(memberDb.getId());
-            member.setPassword(memberDto.getPassword());
+            member.setPassword(memberDto.getNewPassword());
             memberMapper.updateByPrimaryKeySelective(member);
         }
     }

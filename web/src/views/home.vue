@@ -147,8 +147,6 @@
                                                id="confirm-password" v-model="newPassword"
                                                class="form-control" placeholder="新密码"
                                                name="memberRegisterConfirm" type="password">
-                                        <span v-show="ConfirmPasswordValidate === false"
-                                              class="text-danger">确认两次密码一致</span>
                                     </div>
                                     <div class="form-group">
                                         <button class="btn btn-primary btn-block submit-button"
@@ -330,7 +328,7 @@
             resetPassword() {
                 let _this = this;
                 _this.member.oldPassword = hex_md5(_this.oldPassword + KEY);
-
+                _this.member.newPassword = hex_md5(_this.newPassword+KEY);
                 //先校验旧密码
                 _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/check', {
                     oldPassword:_this.member.oldPassword,
@@ -340,8 +338,21 @@
                     let resp = response.data;
                     if (resp.success) { //校验通过，更新密码
                         console.log("校验通过！");
+                        //重置密码
+                        _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/reset',_this.member).then((response) => {
+                            let resp = response.data;
+                            if (resp.success) {
+                                Toast.success("密码已修改");
+                                //关闭密码修改框
+                                $("#resetPassword-modal").modal("hide");
+
+                            } else {
+                                Toast.warning(resp.message);
+                            }
+                        })
+
                     } else {
-                        Toast.warning(resp.message);
+                        Toast.warning("请输入正确密码");
                     }
                 })
             },
@@ -388,7 +399,6 @@
                     })
                 });
             },
-
 
             // ==================重置密码校验============
             onPasswordBlur() {

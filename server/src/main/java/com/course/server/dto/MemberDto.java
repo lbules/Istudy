@@ -26,6 +26,11 @@ public class MemberDto {
     private String oldPassword;
 
     /**
+     * 密码
+     */
+    private String newPassword;
+
+    /**
      * 昵称
      */
     private String name;
@@ -138,6 +143,14 @@ public class MemberDto {
         this.oldPassword = oldPassword;
     }
 
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
     @Override
     public String toString() {
         return "MemberDto{" +
@@ -145,6 +158,7 @@ public class MemberDto {
                 ", mobile='" + mobile + '\'' +
                 ", password='" + password + '\'' +
                 ", oldPassword='" + oldPassword + '\'' +
+                ", newPassword='" + newPassword + '\'' +
                 ", name='" + name + '\'' +
                 ", photo='" + photo + '\'' +
                 ", registerTime=" + registerTime +
