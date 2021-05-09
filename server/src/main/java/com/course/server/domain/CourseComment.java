@@ -15,6 +15,8 @@ public class CourseComment {
 
     private Date createTime;
 
+    private String courseName;
+
     public String getId() {
         return id;
     }
@@ -63,6 +65,14 @@ public class CourseComment {
         this.createTime = createTime;
     }
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -75,6 +85,7 @@ public class CourseComment {
         sb.append(", memberName=").append(memberName);
         sb.append(", comment=").append(comment);
         sb.append(", createTime=").append(createTime);
+        sb.append(", courseName=").append(courseName);
         sb.append("]");
         return sb.toString();
     }

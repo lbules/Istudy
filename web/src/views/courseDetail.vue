@@ -180,7 +180,7 @@
                         {{ commentItem.comment }}
                       </div>
                       <div class="comment-footer">
-                        {{ commentItem.createTime.slice(0,9)}}
+                        {{ commentItem.createTime.slice(0,10)}}
                       </div>
                     </div>
                   </div>
@@ -406,6 +406,7 @@ export default {
                 courseId: _this.course.id,
                 memberId: loginMember.id,
                 memberName: loginMember.name,
+                courseName:_this.course.name,
                 comment: _this.newComment,
               }
             )

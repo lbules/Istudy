@@ -48,7 +48,7 @@
         <!--<table tableName="course_category" domainObjectName="CourseCategory"/>-->
         <!--<table tableName="course_content" domainObjectName="CourseContent"/>-->
         <!--<table tableName="teacher" domainObjectName="Teacher"/>-->
-        <table tableName="file" domainObjectName="File"/>
+        <!--<table tableName="file" domainObjectName="File"/>-->
         <!--<table tableName="course_content_file" domainObjectName="CourseContentFile"/>-->
         <!--<table tableName="user" domainObjectName="User"/>-->
         <!--<table tableName="resources" domainObjectName="Resources"/>-->
@@ -58,7 +58,7 @@
         <!--<table tableName="member" domainObjectName="Member"/>-->
         <!--<table tableName="sms" domainObjectName="Sms"/>-->
         <!--<table tableName="member_course" domainObjectName="MemberCourse"/>-->
-        <!--<table tableName="course_comment" domainObjectName="CourseComment"/>-->
+        <table tableName="course_comment" domainObjectName="CourseComment"/>
         <!--<table tableName="collection" domainObjectName="Collection"/>-->
     </context>
 </generatorConfiguration>

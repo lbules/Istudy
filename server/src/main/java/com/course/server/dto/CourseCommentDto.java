@@ -25,6 +25,11 @@ public class CourseCommentDto {
      */
     private String memberName;
 
+
+    /*课程名称*/
+
+    private String courseName;
+
     /**
      * 评论内容
      */
@@ -33,7 +38,7 @@ public class CourseCommentDto {
     /**
      * 评论时间
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+//    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
     public String getId() {
@@ -85,6 +90,14 @@ public class CourseCommentDto {
     }
 
 
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -97,6 +110,7 @@ public class CourseCommentDto {
         sb.append(", memberName=").append(memberName);
         sb.append(", comment=").append(comment);
         sb.append(", createTime=").append(createTime);
+        sb.append(", courseName=").append(courseName);
         sb.append("]");
         return sb.toString();
     }

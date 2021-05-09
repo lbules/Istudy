@@ -47,6 +47,7 @@ public class WebCourseCommentController {
             ValidatorUtil.require(courseCommentDto.getMemberId(), "会员id");
             ValidatorUtil.require(courseCommentDto.getMemberName(), "会员昵称");
             ValidatorUtil.require(courseCommentDto.getComment(), "评论内容");
+            ValidatorUtil.require(courseCommentDto.getCourseName(), "课程名");
             ValidatorUtil.length(courseCommentDto.getMemberName(), "会员昵称", 1, 50);
             ValidatorUtil.length(courseCommentDto.getComment(), "评论内容", 1, 255);
 

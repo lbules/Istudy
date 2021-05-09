@@ -41,6 +41,38 @@
                         <member-course v-bind:memberCourse="c"></member-course>
                     </div>
 
+                    <!--会员的评论-->
+                    <div v-show="STATUS===STATUS_COMMENT">
+                        <!--详细列表-->
+                        <table id="simple-table" class="table  table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>课程名</th>
+                                <th>评论内容</th>
+                                <th>评论时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="courseComment in memberComment">
+                                <td>{{courseComment.courseName}}</td>
+                                <td>{{courseComment.comment}}</td>
+                                <td>{{courseComment.createTime.slice(0,10)}}</td>
+                                <td>
+                                    <div class="hidden-sm hidden-xs btn-group">
+                                        <!--删除,通过id来删除-->
+                                        <button v-on:click="del(courseComment.id)" class="btn btn-xs btn-danger">
+                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <h3 v-show="memberComment.length===0">还未发表过评论！</h3>
+                        <!--详细列表-END-->
+                    </div>
+
                     <!--测试个人信息-->
                     <div class="col-md-9" style="float: left" v-show="STATUS===STATUS_INFO">
                         <div class="modal-content">
@@ -89,8 +121,7 @@
                                 <button v-on:click="saveMember()" type="button" class="btn btn-primary">保存</button>
                             </div>
                         </div><!-- /.modal-content -->
-                    </div>
-                    </div>
+                    </div></div>
                     <!--测试个人信息-END-->
 
                     <!--测试修改密码-->
@@ -136,6 +167,7 @@
     import TheCollection from "../components/the-collection";
     import BigFile from "../components/big-file";
     import MemberCourse from "../components/member-course";
+    import CourseComment from "../components/course-comment";
 
     $(function () {
         $('.user-menu-nav').hover(function () {
@@ -145,7 +177,7 @@
         });
     });
     export default {
-        components: {MemberCourse, TheCollection,BigFile},
+        components: {CourseComment, MemberCourse, TheCollection,BigFile},
         data: function () {
             return {
                 collection: [], //收藏课程
@@ -317,6 +349,21 @@
                 let _this = this;
                 _this.STATUS = _this.STATUS_COMMENT;
                 _this.title ='我的评论';
+            },
+            //删除评论,传入参数id
+            del(id) {
+                let _this = this;
+                // 确认弹出框
+                Confirm.show("删除后将无法恢复，请谨慎操作！",function () {
+                    _this.$ajax.delete(process.env.VUE_APP_SERVER+'/business/web/courseComment/delete/'+id).then((response) => {
+                        console.log("删除结果:", response);
+                        let resp = response.data;
+                        if (resp.success) {
+                            _this.listComment();
+                            Toast.success("删除成功！");
+                        }
+                    })
+                });
             },
 
 
