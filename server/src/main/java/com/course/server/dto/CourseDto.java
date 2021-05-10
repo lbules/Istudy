@@ -88,6 +88,16 @@ public class CourseDto {
 
     private String teacherId;
 
+    private String searchName;
+
+    public String getSearchName() {
+        return searchName;
+    }
+
+    public void setSearchName(String searchName) {
+        this.searchName = searchName;
+    }
+
     public List<ChapterDto> getChapters() {
         return chapters;
     }
@@ -263,6 +273,7 @@ public class CourseDto {
                 ", content='" + content + '\'' +
                 ", teacher=" + teacher +
                 ", teacherId='" + teacherId + '\'' +
+                ", searchName='" + searchName + '\'' +
                 '}';
     }
 }

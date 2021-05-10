@@ -222,4 +222,10 @@ public class CourseService {
 
     }
 
+    public List<CourseDto> search(String courseName) {
+        CourseExample courseExample = new CourseExample();
+        courseExample.createCriteria().andNameLike(courseName);
+        List<Course> courseList = courseMapper.selectByExample(courseExample);
+        return CopyUtil.copyList(courseList,CourseDto.class);
+    }
 }

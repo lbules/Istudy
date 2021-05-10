@@ -5,43 +5,43 @@
             <div class="col-xs-12">
                 <div class="text-center">
           <span class="btn btn-app btn-sm btn-light no-hover">
-              <span class="line-height-1 bigger-170 blue"> 10 </span>
+              <span class="line-height-1 bigger-170 blue"> 518 </span>
               <br>
-              <span class="line-height-1 smaller-90"> 全部课程 </span>
+              <span class="line-height-1 smaller-90"> 课程 </span>
           </span>
                     <span class="btn btn-app btn-sm btn-yellow no-hover">
-              <span class="line-height-1 bigger-170"> 73 </span>
+              <span class="line-height-1 bigger-170"> 6,321 </span>
 
               <br>
               <span class="line-height-1 smaller-90"> 大章 </span>
           </span>
 
                     <span class="btn btn-app btn-sm btn-pink no-hover">
-              <span class="line-height-1 bigger-170"> 126 </span>
+              <span class="line-height-1 bigger-170"> 4,182 </span>
 
               <br>
               <span class="line-height-1 smaller-90"> 小节 </span>
           </span>
 
                     <span class="btn btn-app btn-sm btn-success no-hover">
-              <span class="line-height-1 bigger-170"> 203 </span>
+              <span class="line-height-1 bigger-170"> 5.23 </span>
 
               <br>
-              <span class="line-height-1 smaller-90"> 会员总数 </span>
+              <span class="line-height-1 smaller-90"> 会员(万) </span>
           </span>
 
                     <span class="btn btn-app btn-sm btn-primary no-hover">
-              <span class="line-height-1 bigger-170"> 54 </span>
+              <span class="line-height-1 bigger-170"> 12.76 </span>
 
               <br>
-              <span class="line-height-1 smaller-90"> 报名人数 </span>
+              <span class="line-height-1 smaller-90"> 报名(万) </span>
           </span>
 
                     <span class="btn btn-app btn-sm btn-grey no-hover">
-              <span class="line-height-1 bigger-170"> 32</span>
+              <span class="line-height-1 bigger-170"> 32.96 </span>
 
               <br>
-              <span class="line-height-1 smaller-90"> 评论总数 </span>
+              <span class="line-height-1 smaller-90"> 评论(万) </span>
           </span>
 
                 </div>
@@ -61,11 +61,11 @@
                     </div>
 
                     <div class="infobox-data">
-                        <span class="infobox-data-number">3</span>
+                        <span class="infobox-data-number">332</span>
                         <div class="infobox-content">新增评论</div>
                     </div>
 
-                    <!--<div class="stat stat-success">8%</div>-->
+                    <div class="stat stat-success">8%</div>
                 </div>
 
                 <div class="infobox infobox-blue">
@@ -74,10 +74,14 @@
                     </div>
 
                     <div class="infobox-data">
-                        <span class="infobox-data-number">5</span>
-                        <div class="infobox-content">新增会员</div>
+                        <span class="infobox-data-number">58</span>
+                        <div class="infobox-content">新增注册会员</div>
                     </div>
 
+                    <div class="badge badge-success">
+                        +10%
+                        <i class="ace-icon fa fa-arrow-up"></i>
+                    </div>
                 </div>
 
                 <div class="infobox infobox-pink">
@@ -86,10 +90,10 @@
                     </div>
 
                     <div class="infobox-data">
-                        <span class="infobox-data-number">8</span>
-                        <div class="infobox-content">新增报名</div>
+                        <span class="infobox-data-number">108</span>
+                        <div class="infobox-content">课程报名</div>
                     </div>
-                    <!--<div class="stat stat-important">4%</div>-->
+                    <div class="stat stat-important">4%</div>
                 </div>
 
                 <div class="space-12"></div>
@@ -105,9 +109,11 @@
                     <div class="widget-header widget-header-flat">
                         <h4 class="widget-title lighter">
                             <i class="ace-icon fa fa-signal"></i>
-                                注册会员
+                            销售量
                         </h4>
+
                     </div>
+
                     <div class="widget-body">
                         <div class="widget-main padding-4">
                             <div id="sales-charts"></div>
@@ -122,13 +128,12 @@
                 <div class="space-12"></div>
             </div><!-- /.col -->
 
-            <!--课程销售排行-->
             <div class="col-sm-6">
                 <div class="widget-box transparent">
                     <div class="widget-header widget-header-flat">
                         <h4 class="widget-title lighter">
                             <i class="ace-icon fa fa-star orange"></i>
-                            课程报名人数排行
+                            课程销售排名
                         </h4>
 
                     </div>
@@ -147,69 +152,69 @@
                                     </th>
 
                                     <th>
-                                        <i class="ace-icon fa fa-caret-right blue"></i>报名人数
+                                        <i class="ace-icon fa fa-caret-right blue"></i>购买数
                                     </th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
                                 <tr>
-                                    <td>网络编程</td>
+                                    <td>开发工具IDEA从入门到爱不释手</td>
 
                                     <td>
-                                        <b class="green">￥0</b>
+                                        <b class="green">￥299.00</b>
                                     </td>
 
                                     <td>
-                                        <span class="label label-warning arrowed arrowed-right">23</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>Springboot源码</td>
-
-                                    <td>
-                                        <b class="red">￥36</b>
-                                    </td>
-
-                                    <td>
-                                        <span class="label label-warning arrowed arrowed-right">12</span>
+                                        <span class="label label-warning arrowed arrowed-right">5,132</span>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td>Java设计模式</td>
+                                    <td>开发工具IDEA从入门到爱不释手</td>
 
                                     <td>
-                                        <b class="green">￥0</b>
+                                        <b class="red">￥388.00</b>
                                     </td>
 
                                     <td>
-                                        <span class="label label-warning arrowed arrowed-right">8</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>Redis入门</td>
-
-                                    <td>
-                                        <b class="green">￥0</b>
-                                    </td>
-
-                                    <td>
-                                        <span class="label label-success arrowed arrowed-right">7</span>
+                                        <span class="label label-warning arrowed arrowed-right">3,132</span>
                                     </td>
                                 </tr>
 
                                 <tr>
-                                    <td>测试课程</td>
+                                    <td>开发工具IDEA从入门到爱不释手</td>
 
                                     <td>
-                                        <b class="green">￥0</b>
+                                        <b class="green">￥199.00</b>
                                     </td>
 
                                     <td>
-                                        <span class="label label-success arrowed arrowed-right">1</span>
+                                        <span class="label label-warning arrowed arrowed-right">2,132</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>开发工具IDEA从入门到爱不释手</td>
+
+                                    <td>
+                                        <b class="green">￥299.00</b>
+                                    </td>
+
+                                    <td>
+                                        <span class="label label-success arrowed arrowed-right">1,654</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>开发工具IDEA从入门到爱不释手</td>
+
+                                    <td>
+                                        <b class="green">￥199.00</b>
+                                    </td>
+
+                                    <td>
+                                        <span class="label label-success arrowed arrowed-right">1,254</span>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -218,9 +223,7 @@
                     </div><!-- /.widget-body -->
                 </div><!-- /.widget-box -->
             </div><!-- /.col -->
-            <!--课程销售排行-END-->
-
-            <!--<div class="col-sm-6">
+            <div class="col-sm-6">
                 <div class="widget-box transparent">
                     <div class="widget-header widget-header-flat">
                         <h4 class="widget-title lighter">
@@ -234,10 +237,10 @@
                         <div class="widget-main">
                             <div id="piechart-placeholder"></div>
 
-                        </div>&lt;!&ndash; /.widget-main &ndash;&gt;
-                    </div>&lt;!&ndash; /.widget-body &ndash;&gt;
-                </div>&lt;!&ndash; /.widget-box &ndash;&gt;
-            </div>&lt;!&ndash; /.col &ndash;&gt;-->
+                        </div><!-- /.widget-main -->
+                    </div><!-- /.widget-body -->
+                </div><!-- /.widget-box -->
+            </div><!-- /.col -->
         </div><!-- /.row -->
     </div>
 </template>
@@ -249,25 +252,25 @@
             let _this = this;
             // sidebar激活样式方法一
             // this.$parent.activeSidebar("welcome-sidebar");
-            // _this.drawSaleChart();
-            // _this.drawPieChart();
+            _this.drawSaleChart();
+            _this.drawPieChart();
         },
         methods: {
             drawSaleChart() {
                 // 生成随机两组数据
                 let d1 = [];
-                for (let i = 0; i < 7; i += 1) {
-                    d1.push([i + 1, 0 + Math.floor((Math.random()*10)+1)]);
+                for (let i = 0; i < 30; i += 1) {
+                    d1.push([i + 1, 2000 + Math.floor((Math.random()*100)+1)]);
                 }
                 let d2 = [];
-                for (let i = 0; i < 7; i += 1) {
-                    d2.push([i + 1, 0 + Math.floor((Math.random()*10)+1)]);
+                for (let i = 0; i < 30; i += 1) {
+                    d2.push([i + 1, 1900 + Math.floor((Math.random()*100)+1)]);
                 }
 
                 let sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
                 $.plot("#sales-charts", [
-                    { label: "最近7天", data: d1 },
-                    // { label: "上一周期", data: d2 },
+                    { label: "最近30天", data: d1 },
+                    { label: "上一周期", data: d2 },
                 ], {
                     hoverable: true,
                     shadowSize: 0,
@@ -289,7 +292,7 @@
                 });
             },
 
-            /*drawPieChart() {
+            drawPieChart() {
                 let placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'180px'});
                 let data = [
                     { label: "Java",  data: 38.7, color: "#68BC31"},
@@ -324,7 +327,7 @@
                         clickable: true
                     }
                 })
-            },*/
+            },
         }
     }
 </script>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.xml.crypto.Data;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -96,5 +97,30 @@ public class CountService {
 
 
         return countDto;
+    }
+
+    public ArrayList memberAnalyse() {
+        ArrayList memberArray = new ArrayList();
+        //获取现在的时间
+        Date now  = new Date();
+
+//         new Date(now.getTime()-2*24*60*60*1000);
+
+        LOG.info("减去两天的时间为：{}",new Date(now.getTime()-2*24*60*60*1000));
+        //设置当前时间为起始时间点
+        /*Calendar calendar  = Calendar.getInstance();
+        calendar.setTime(now);*/
+
+        //循环获取最近30天，每天的注册会员人数
+
+        for (int i=0;i<30;i++) {
+            //时间间隔为1天
+            MemberExample memberExample = new MemberExample();
+            Date pre = new Date(now.getTime()-i*24*60*60*1000);
+            Date next = new Date(now.getTime()-(i+1)*24*60*60*1000);
+            memberExample.createCriteria().andRegisterTimeBetween(next,pre);
+            memberArray.add(memberMapper.countByExample(memberExample));
+        }
+        return memberArray;
     }
 }

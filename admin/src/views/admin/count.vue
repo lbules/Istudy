@@ -85,7 +85,7 @@
                     </div>
 
                     <div class="infobox-data">
-                        <span class="infobox-data-number">{{count.newEnroll}}</span>
+                        <span class="infobox-data-number">{{count.newComment}}</span>
                         <div class="infobox-content">新增报名</div>
                     </div>
                 </div>
@@ -98,15 +98,17 @@
 
             </div>
 
-            <!--新会员，课程报名人数和评论-->
+            <!--新会员数据曲线-->
             <div class="col-sm-12">
                 <div class="widget-box transparent">
                     <div class="widget-header widget-header-flat">
                         <h4 class="widget-title lighter">
                             <i class="ace-icon fa fa-signal"></i>
-                                注册会员
+                            会员注册
                         </h4>
+
                     </div>
+
                     <div class="widget-body">
                         <div class="widget-main padding-4">
                             <div id="sales-charts"></div>
@@ -119,7 +121,7 @@
                 <div class="hr hr2 hr-double"></div>
 
                 <div class="space-12"></div>
-            </div>
+            </div><!-- /.col -->
 
             <!--课程销售排行-->
             <div class="col-sm-6">
@@ -198,6 +200,7 @@
         name: "welcome",
         mounted: function () {
             let _this = this;
+            _this.drawSaleChart();
             _this.getAllCount();
             _this.getMostEnroll();
 
@@ -206,6 +209,7 @@
             return {
                 count:{}, //汇总数据
                 mostEnroll:[], //报名人数最多的五门课
+                memberAnalyse:null, //最近30天每天的注册会员数量
             }
         },
         methods: {
@@ -243,39 +247,51 @@
 
 
             drawSaleChart() {
-                // 生成随机两组数据
-                let d1 = [];
-                for (let i = 0; i < 7; i += 1) {
-                    d1.push([i + 1, 0 + Math.floor((Math.random()*10)+1)]);
-                }
-                let d2 = [];
-                for (let i = 0; i < 7; i += 1) {
-                    d2.push([i + 1, 0 + Math.floor((Math.random()*10)+1)]);
-                }
+                //获取最近30天每天注册的会员数
+                let _this = this;
+                _this.$ajax
+                    .get(
+                        process.env.VUE_APP_SERVER +
+                        "/business/admin/count/member-analyse"
+                    )
+                    .then((response) => {
+                        console.log("获取最近30天每天注册的会员数");
+                        let resp = response.data;
+                        _this.memberAnalyse = resp.content;
+                        console.log("测试获取数组"+response.data.content[1]);
 
-                let sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
-                $.plot("#sales-charts", [
-                    { label: "最近7天", data: d1 },
-                    // { label: "上一周期", data: d2 },
-                ], {
-                    hoverable: true,
-                    shadowSize: 0,
-                    series: {
-                        lines: { show: true },
-                        points: { show: true }
-                    },
-                    xaxis: {
-                        tickLength: 0
-                    },
-                    yaxis: {
-                        tickLength: 0
-                    },
-                    grid: {
-                        backgroundColor: { colors: [ "#fff", "#fff" ] },
-                        borderWidth: 1,
-                        borderColor:'#555'
-                    }
-                });
+                        let d1 = [];
+                        for (let i = 0; i < 30; i += 1) {
+                            d1.push([i + 1, response.data.content[i]]);
+                        }
+
+                        let sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
+                        $.plot("#sales-charts", [
+                            { label: "最近30天", data: d1 },
+                        ], {
+                            hoverable: true,
+                            shadowSize: 0,
+                            series: {
+                                lines: { show: true },
+                                points: { show: true }
+                            },
+                            xaxis: {
+                                tickLength: 0
+                            },
+                            yaxis: {
+                                tickLength: 0
+                            },
+                            grid: {
+                                backgroundColor: { colors: [ "#fff", "#fff" ] },
+                                borderWidth: 1,
+                                borderColor:'#555'
+                            }
+                        });
+                    });
+
+
+
+
             },
 
         }

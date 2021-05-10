@@ -32,6 +32,15 @@ public class CourseController {
         return responseDto;
     }
 
+
+    @PostMapping("/search")
+    public ResponseDto search(@RequestBody CourseDto courseDto) {
+        ResponseDto responseDto = new ResponseDto();
+        List<CourseDto> courseDtoList = courseService.search(courseDto.getSearchName());
+        responseDto.setContent(courseDtoList);
+        return responseDto;
+    }
+
     /**
      * 保存
      * @param courseDto

@@ -1,12 +1,22 @@
 <template>
     <div>
         <!--新增按钮-->
-        <p>
-            <button v-on:click="add()" class="btn btn-white btn-default btn-round">
-                <i class="ace-icon fa fa-edit"></i>
-                新增
-            </button>
-        </p>
+        <div>
+            <p>
+                <button v-on:click="add()" class="btn btn-white btn-default btn-round">
+                    <i class="ace-icon fa fa-edit"></i>
+                    新增
+                </button>
+            </p>
+            <form style="float: right;margin-top: -48px" role="search">
+                <div class="">
+                    <input v-model="courseName" type="text" style="margin-right: 5px" placeholder="搜索课程">
+                    <button type="button" v-on:click="searchCourse()" class="btn btn-white btn-default btn-round">搜索</button>
+                </div>
+
+            </form>
+        </div>
+
         <!--新增按钮--END-->
 
         <div class="row">
@@ -108,12 +118,7 @@
                                     <input v-model="course.summary" class="form-control">
                                 </div>
                             </div>
-                            <!--<div class="form-group">
-                                <label class="col-sm-2 control-label">时长</label>
-                                <div class="col-sm-10">
-                                    <input v-model="course.time" class="form-control">
-                                </div>
-                            </div>-->
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">价格</label>
                                 <div class="col-sm-10">
@@ -131,7 +136,7 @@
                                             v-bind:text="'上传封面'"
                                             v-bind:after-upload="afterUpload">
                                     </big-file>
-                                    <div v-show="course.image" class="row">
+                                    <div v-show="course.image" class="row" style="height: 105px;">
                                         <div class="col-md-4">
                                             <img v-bind:src="course.image" class="img-responsive">
                                         </div>
@@ -176,18 +181,7 @@
                                     <input v-model="course.sort" class="form-control" disabled>
                                 </div>
                             </div>
-                            <!--<div class="form-group">
-                                <label class="col-sm-2 control-label">创建时间</label>
-                                <div class="col-sm-10">
-                                    <input v-model="course.createAt" class="form-control">
-                                </div>
-                            </div>-->
-                            <!--<div class="form-group">
-                                <label class="col-sm-2 control-label">修改时间</label>
-                                <div class="col-sm-10">
-                                    <input v-model="course.updateAt" class="form-control">
-                                </div>
-                            </div>-->
+
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -258,6 +252,7 @@
             return {
                 course: {}, //映射表单数据
                 courses: [],
+                courseName:'', //搜索课程名
                 FILE_USE: FILE_USE,
                 COURSE_LEVEL: COURSE_LEVEL,
                 COURSE_CHARGE: COURSE_CHARGE,
@@ -312,6 +307,24 @@
                     _this.courses = resp.content.list;
                     _this.$refs.pagination.render(page, resp.content.total)
                 })
+            },
+
+            //搜索课程
+            searchCourse() {
+              let _this = this;
+                Loading.show(); //缓冲提示
+                if (_this.courseName==='') {
+                    _this.list(1);
+                }
+                _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/admin/course/search',{
+                    searchName:_this.courseName}
+                ).then((response) => {
+                    Loading.hide();
+                    console.log("查询结果:", response);
+                    let resp = response.data;
+                    _this.courses = resp.content;
+                    _this.courseName='';
+                });
             },
 
             //保存
