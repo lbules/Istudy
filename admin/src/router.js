@@ -14,6 +14,7 @@ import User from "./views/admin/user.vue"
 import Resources from "./views/admin/resources.vue"
 import Role from "./views/admin/role.vue"
 import Member from "./views/admin/member.vue"
+import Count    from "./views/admin/count.vue"
 
 Vue.use(Router);
 
@@ -104,6 +105,12 @@ export default new Router({
                     name: "business/member",
                     component: Member,
                 },
+
+                {
+                    path: "business/count",
+                    name: "business/count",
+                    component: Count,
+                }
 
             ]
         }]

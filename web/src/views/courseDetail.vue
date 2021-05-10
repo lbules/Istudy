@@ -377,7 +377,6 @@ export default {
         .then((response) => {
           let resp = response.data;
           _this.courseComment = resp.content;
-        //   _this.courseComment.createTime = Tool.dateFormat("yy:MM:dd",resp.content.createTime);
         });
     },
 
