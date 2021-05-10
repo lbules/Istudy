@@ -61,11 +61,10 @@
                     </div>
 
                     <div class="infobox-data">
-                        <span class="infobox-data-number">3</span>
+                        <span class="infobox-data-number">{{count.newComment}}</span>
                         <div class="infobox-content">新增评论</div>
                     </div>
 
-                    <!--<div class="stat stat-success">8%</div>-->
                 </div>
 
                 <div class="infobox infobox-blue">
@@ -74,7 +73,7 @@
                     </div>
 
                     <div class="infobox-data">
-                        <span class="infobox-data-number">5</span>
+                        <span class="infobox-data-number">{{count.newMember}}</span>
                         <div class="infobox-content">新增会员</div>
                     </div>
 
@@ -86,7 +85,7 @@
                     </div>
 
                     <div class="infobox-data">
-                        <span class="infobox-data-number">8</span>
+                        <span class="infobox-data-number">{{count.newEnroll}}</span>
                         <div class="infobox-content">新增报名</div>
                     </div>
                 </div>
