@@ -28,4 +28,11 @@ public class MemberController {
         return responseDto;
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseDto delete(@PathVariable String id) {
+        ResponseDto responseDto = new ResponseDto();
+        memberService.delete(id);
+        return responseDto;
+    }
+
 }
