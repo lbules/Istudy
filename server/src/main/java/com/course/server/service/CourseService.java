@@ -44,6 +44,8 @@ public class CourseService {
     @Resource
     private SectionService sectionService;
 
+
+
     public void list(CoursePageDto pageDto) {
         PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
         List<CourseDto> courseDtoList = myCourseMapper.listCourse(pageDto);
@@ -207,6 +209,17 @@ public class CourseService {
         courseDto.setSections(sectionDtoList);
 
         return courseDto;
+    }
+
+    //查询最多人报名的五门课程
+    public List<CourseDto> mostEnroll(PageDto pageDto) {
+        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
+        CourseExample CourseExample = new CourseExample();
+        CourseExample.setOrderByClause("enroll desc");
+
+        List<Course> courseList = courseMapper.selectByExample(CourseExample);
+        return CopyUtil.copyList(courseList,CourseDto.class);
+
     }
 
 }

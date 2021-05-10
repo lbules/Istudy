@@ -99,6 +99,7 @@
 
             </div>
 
+            <!--新会员，课程报名人数和评论-->
             <div class="col-sm-12">
                 <div class="widget-box transparent">
                     <div class="widget-header widget-header-flat">
@@ -119,7 +120,7 @@
                 <div class="hr hr2 hr-double"></div>
 
                 <div class="space-12"></div>
-            </div><!-- /.col -->
+            </div>
 
             <!--课程销售排行-->
             <div class="col-sm-6">
@@ -131,8 +132,6 @@
                         </h4>
 
                     </div>
-
-
                     <div class="widget-body">
                         <div class="widget-main no-padding">
                             <table class="table table-bordered table-striped">
@@ -143,7 +142,7 @@
                                     </th>
 
                                     <th>
-                                        <i class="ace-icon fa fa-caret-right blue"></i>价格
+                                        <i class="ace-icon fa fa-caret-right blue"></i>课程价格
                                     </th>
 
                                     <th>
@@ -153,65 +152,18 @@
                                 </thead>
 
                                 <tbody>
-                                <tr>
-                                    <td>网络编程</td>
+                                <tr v-for="course in mostEnroll">
+                                    <td>{{course.name}}</td>
 
                                     <td>
-                                        <b class="green">￥0</b>
+                                        <b class="green">￥{{course.price}}</b>
                                     </td>
 
                                     <td>
-                                        <span class="label label-warning arrowed arrowed-right">23</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>Springboot源码</td>
-
-                                    <td>
-                                        <b class="red">￥36</b>
-                                    </td>
-
-                                    <td>
-                                        <span class="label label-warning arrowed arrowed-right">12</span>
+                                        <span class="label label-warning arrowed arrowed-right">{{course.enroll}}</span>
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td>Java设计模式</td>
-
-                                    <td>
-                                        <b class="green">￥0</b>
-                                    </td>
-
-                                    <td>
-                                        <span class="label label-warning arrowed arrowed-right">8</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>Redis入门</td>
-
-                                    <td>
-                                        <b class="green">￥0</b>
-                                    </td>
-
-                                    <td>
-                                        <span class="label label-success arrowed arrowed-right">7</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>测试课程</td>
-
-                                    <td>
-                                        <b class="green">￥0</b>
-                                    </td>
-
-                                    <td>
-                                        <span class="label label-success arrowed arrowed-right">1</span>
-                                    </td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div><!-- /.widget-main -->
@@ -248,20 +200,13 @@
         mounted: function () {
             let _this = this;
             _this.getAllCount();
+            _this.getMostEnroll();
 
         },
         data: function () {
             return {
                 count:{}, //汇总数据
-                allCourse:'',
-                allChapter:'',
-                allSection:'',
-                allEnroll:'',
-                allComment:'',
-                newComment: '',
-                newMember:'',
-                newEnroll:''
-
+                mostEnroll:[], //报名人数最多的五门课
             }
         },
         methods: {
@@ -278,7 +223,20 @@
                         console.log("汇总数据");
                         let resp = response.data;
                         _this.count = resp.content;
-                        // console.log(_this.count.allCourse);
+                    });
+            },
+
+            getMostEnroll() {
+                let _this = this;
+                _this.$ajax
+                    .get(
+                        process.env.VUE_APP_SERVER +
+                        "/business/admin/count/most-enroll"
+                    )
+                    .then((response) => {
+                        console.log("报名数最多的五门课");
+                        let resp = response.data;
+                        _this.mostEnroll = resp.content;
                     });
             },
 

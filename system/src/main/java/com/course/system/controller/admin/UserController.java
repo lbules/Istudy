@@ -125,7 +125,7 @@ public class UserController {
         //登录凭证token
         String token = UuidUtil.getShortUuid();
         loginUserDto.setToken(token);
-        redisTemplate.opsForValue().set(token, JSON.toJSONString(loginUserDto), 3600, TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set(token, JSON.toJSONString(loginUserDto), 14400, TimeUnit.SECONDS);
         responseDto.setContent(loginUserDto);
         return responseDto;
     }
