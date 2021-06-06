@@ -98,7 +98,7 @@ public class VodController {
             System.out.println("获取视频信息, response : " + JSON.toJSONString(response));
             fileUrl = response.getMezzanine().getFileURL();
 
-            // 关闭OSSClient。
+            // 关闭OSSClient
             ossClient.shutdown();
         } catch (Exception e) {
             LOG.info("上传视频失败, ErrorMessage : " + e.getLocalizedMessage(), e);
@@ -114,9 +114,7 @@ public class VodController {
         fileDto.setPath(fileUrl);
         responseDto.setContent(fileDto);
 
-//        if (fileDto.getShardIndex().equals(fileDto.getShardTotal())) {
-//            this.merge(fileDto);
-//        }
+
         return responseDto;
     }
 

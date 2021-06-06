@@ -32,6 +32,7 @@ public class ChapterService {
 
         PageHelper.startPage(chapterPageDto.getPage(),chapterPageDto.getSize());
         ChapterExample chapterExample = new ChapterExample();
+        chapterExample.setOrderByClause("name asc");
 
         ChapterExample.Criteria criteria = chapterExample.createCriteria();
         //CourseId不为空的时候查找对应课程下的大章，CourseId为空则查找全部

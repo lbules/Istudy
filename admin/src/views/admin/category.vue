@@ -22,7 +22,7 @@
                 <table id="level1-table" class="table  table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>id</th>
+                        <!--<th>id</th>-->
                         <th>名称</th>
                         <th>顺序</th>
                         <th>操作</th>
@@ -30,7 +30,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="category in level1" v-on:click="clickLevel1(category)" v-bind:class="{'active': category.id===active.id}">
-                        <td>{{category.id}}</td>
+                        <!--<td>{{category.id}}</td>-->
                         <td>{{category.name}}</td>
                         <td>{{category.sort}}</td>
                         <td>
@@ -96,8 +96,7 @@
                 <table id="level2-table" class="table  table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>id
-                        </th>
+                        <!--<th>id</th>-->
                         <th>名称</th>
                         <th>顺序</th>
                         <th>操作</th>
@@ -105,7 +104,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="category in level2">
-                        <td>{{category.id}}</td>
+                        <!--<td>{{category.id}}</td>-->
                         <td>{{category.name}}</td>
                         <td>{{category.sort}}</td>
                         <td>

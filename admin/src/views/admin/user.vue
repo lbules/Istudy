@@ -14,7 +14,7 @@
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
-                <th>用户id</th>
+                <!--<th>用户id</th>-->
                 <th>账号</th>
                 <th>昵称</th>
                 <!--<th>密码</th>-->
@@ -23,7 +23,7 @@
             </thead>
             <tbody>
             <tr v-for="user in users">
-                <td>{{user.id}}</td>
+                <!--<td>{{user.id}}</td>-->
                 <td>{{user.loginName}}</td>
                 <td>{{user.name}}</td>
                 <!--<td>{{user.password}}</td>-->
@@ -92,7 +92,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">表单</h4>
+                        <h4 class="modal-title">新增用户</h4>
                     </div>
                     <div class="modal-body">
 

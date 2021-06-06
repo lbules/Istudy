@@ -5,43 +5,43 @@
             <div class="col-xs-12">
                 <div class="text-center">
           <span class="btn btn-app btn-sm btn-light no-hover">
-              <span class="line-height-1 bigger-170 blue"> 518 </span>
+              <span class="line-height-1 bigger-170 blue">{{count.allCourse}}</span>
               <br>
-              <span class="line-height-1 smaller-90"> 课程 </span>
+              <span class="line-height-1 smaller-90"> 全部课程 </span>
           </span>
                     <span class="btn btn-app btn-sm btn-yellow no-hover">
-              <span class="line-height-1 bigger-170"> 6,321 </span>
+              <span class="line-height-1 bigger-170"> {{count.allChapter}} </span>
 
               <br>
               <span class="line-height-1 smaller-90"> 大章 </span>
           </span>
 
                     <span class="btn btn-app btn-sm btn-pink no-hover">
-              <span class="line-height-1 bigger-170"> 4,182 </span>
+              <span class="line-height-1 bigger-170"> {{count.allSection}} </span>
 
               <br>
               <span class="line-height-1 smaller-90"> 小节 </span>
           </span>
 
                     <span class="btn btn-app btn-sm btn-success no-hover">
-              <span class="line-height-1 bigger-170"> 5.23 </span>
+              <span class="line-height-1 bigger-170"> {{count.allMember}} </span>
 
               <br>
-              <span class="line-height-1 smaller-90"> 会员(万) </span>
+              <span class="line-height-1 smaller-90"> 会员总数 </span>
           </span>
 
                     <span class="btn btn-app btn-sm btn-primary no-hover">
-              <span class="line-height-1 bigger-170"> 12.76 </span>
+              <span class="line-height-1 bigger-170"> {{count.allEnroll}} </span>
 
               <br>
-              <span class="line-height-1 smaller-90"> 报名(万) </span>
+              <span class="line-height-1 smaller-90"> 报名人数 </span>
           </span>
 
                     <span class="btn btn-app btn-sm btn-grey no-hover">
-              <span class="line-height-1 bigger-170"> 32.96 </span>
+              <span class="line-height-1 bigger-170"> {{count.allComment}}</span>
 
               <br>
-              <span class="line-height-1 smaller-90"> 评论(万) </span>
+              <span class="line-height-1 smaller-90"> 评论总数 </span>
           </span>
 
                 </div>
@@ -61,11 +61,10 @@
                     </div>
 
                     <div class="infobox-data">
-                        <span class="infobox-data-number">332</span>
+                        <span class="infobox-data-number">{{count.newComment}}</span>
                         <div class="infobox-content">新增评论</div>
                     </div>
 
-                    <div class="stat stat-success">8%</div>
                 </div>
 
                 <div class="infobox infobox-blue">
@@ -74,14 +73,10 @@
                     </div>
 
                     <div class="infobox-data">
-                        <span class="infobox-data-number">58</span>
-                        <div class="infobox-content">新增注册会员</div>
+                        <span class="infobox-data-number">{{count.newMember}}</span>
+                        <div class="infobox-content">新增会员</div>
                     </div>
 
-                    <div class="badge badge-success">
-                        +10%
-                        <i class="ace-icon fa fa-arrow-up"></i>
-                    </div>
                 </div>
 
                 <div class="infobox infobox-pink">
@@ -90,10 +85,9 @@
                     </div>
 
                     <div class="infobox-data">
-                        <span class="infobox-data-number">108</span>
-                        <div class="infobox-content">课程报名</div>
+                        <span class="infobox-data-number">{{count.newComment}}</span>
+                        <div class="infobox-content">新增报名</div>
                     </div>
-                    <div class="stat stat-important">4%</div>
                 </div>
 
                 <div class="space-12"></div>
@@ -104,12 +98,13 @@
 
             </div>
 
+            <!--新会员数据曲线-->
             <div class="col-sm-12">
                 <div class="widget-box transparent">
                     <div class="widget-header widget-header-flat">
                         <h4 class="widget-title lighter">
                             <i class="ace-icon fa fa-signal"></i>
-                            销售量
+                            会员注册
                         </h4>
 
                     </div>
@@ -128,16 +123,41 @@
                 <div class="space-12"></div>
             </div><!-- /.col -->
 
+            <!--新报名数据曲线-->
+            <div class="col-sm-12">
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-flat">
+                        <h4 class="widget-title lighter">
+                            <i class="ace-icon fa fa-signal"></i>
+                            课程报名
+                        </h4>
+
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-4">
+                            <div id="course-charts"></div>
+                        </div><!-- /.widget-main -->
+                    </div><!-- /.widget-body -->
+                </div><!-- /.widget-box -->
+
+                <div class="space-12"></div>
+
+                <div class="hr hr2 hr-double"></div>
+
+                <div class="space-12"></div>
+            </div><!-- /.col -->
+
+            <!--课程销售排行-->
             <div class="col-sm-6">
                 <div class="widget-box transparent">
                     <div class="widget-header widget-header-flat">
                         <h4 class="widget-title lighter">
                             <i class="ace-icon fa fa-star orange"></i>
-                            课程销售排名
+                            课程报名人数排行
                         </h4>
 
                     </div>
-
                     <div class="widget-body">
                         <div class="widget-main no-padding">
                             <table class="table table-bordered table-striped">
@@ -148,82 +168,37 @@
                                     </th>
 
                                     <th>
-                                        <i class="ace-icon fa fa-caret-right blue"></i>价格
+                                        <i class="ace-icon fa fa-caret-right blue"></i>课程价格
                                     </th>
 
                                     <th>
-                                        <i class="ace-icon fa fa-caret-right blue"></i>购买数
+                                        <i class="ace-icon fa fa-caret-right blue"></i>报名人数
                                     </th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                <tr>
-                                    <td>开发工具IDEA从入门到爱不释手</td>
+                                <tr v-for="course in mostEnroll">
+                                    <td>{{course.name}}</td>
 
                                     <td>
-                                        <b class="green">￥299.00</b>
+                                        <b class="green">￥{{course.price}}</b>
                                     </td>
 
                                     <td>
-                                        <span class="label label-warning arrowed arrowed-right">5,132</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>开发工具IDEA从入门到爱不释手</td>
-
-                                    <td>
-                                        <b class="red">￥388.00</b>
-                                    </td>
-
-                                    <td>
-                                        <span class="label label-warning arrowed arrowed-right">3,132</span>
+                                        <span class="label label-warning arrowed arrowed-right">{{course.enroll}}</span>
                                     </td>
                                 </tr>
 
-                                <tr>
-                                    <td>开发工具IDEA从入门到爱不释手</td>
-
-                                    <td>
-                                        <b class="green">￥199.00</b>
-                                    </td>
-
-                                    <td>
-                                        <span class="label label-warning arrowed arrowed-right">2,132</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>开发工具IDEA从入门到爱不释手</td>
-
-                                    <td>
-                                        <b class="green">￥299.00</b>
-                                    </td>
-
-                                    <td>
-                                        <span class="label label-success arrowed arrowed-right">1,654</span>
-                                    </td>
-                                </tr>
-
-                                <tr>
-                                    <td>开发工具IDEA从入门到爱不释手</td>
-
-                                    <td>
-                                        <b class="green">￥199.00</b>
-                                    </td>
-
-                                    <td>
-                                        <span class="label label-success arrowed arrowed-right">1,254</span>
-                                    </td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div><!-- /.widget-main -->
                     </div><!-- /.widget-body -->
                 </div><!-- /.widget-box -->
             </div><!-- /.col -->
-            <div class="col-sm-6">
+            <!--课程销售排行-END-->
+
+            <!--<div class="col-sm-6">
                 <div class="widget-box transparent">
                     <div class="widget-header widget-header-flat">
                         <h4 class="widget-title lighter">
@@ -237,10 +212,10 @@
                         <div class="widget-main">
                             <div id="piechart-placeholder"></div>
 
-                        </div><!-- /.widget-main -->
-                    </div><!-- /.widget-body -->
-                </div><!-- /.widget-box -->
-            </div><!-- /.col -->
+                        </div>&lt;!&ndash; /.widget-main &ndash;&gt;
+                    </div>&lt;!&ndash; /.widget-body &ndash;&gt;
+                </div>&lt;!&ndash; /.widget-box &ndash;&gt;
+            </div>&lt;!&ndash; /.col &ndash;&gt;-->
         </div><!-- /.row -->
     </div>
 </template>
@@ -250,84 +225,139 @@
         name: "welcome",
         mounted: function () {
             let _this = this;
-            // sidebar激活样式方法一
-            // this.$parent.activeSidebar("welcome-sidebar");
             _this.drawSaleChart();
-            _this.drawPieChart();
+            _this.getAllCount();
+            _this.getMostEnroll();
+            _this.drawCourseChart();
+
+        },
+        data: function () {
+            return {
+                count:{}, //汇总数据
+                mostEnroll:[], //报名人数最多的五门课
+                memberAnalyse:null, //最近30天每天的注册会员数量
+            }
         },
         methods: {
+
+            //获取课程相关的全部信息
+            getAllCount() {
+                let _this = this;
+                _this.$ajax
+                    .get(
+                        process.env.VUE_APP_SERVER +
+                        "/business/admin/count/allCount/"
+                    )
+                    .then((response) => {
+                        console.log("汇总数据");
+                        let resp = response.data;
+                        _this.count = resp.content;
+                    });
+            },
+
+            getMostEnroll() {
+                let _this = this;
+                _this.$ajax
+                    .get(
+                        process.env.VUE_APP_SERVER +
+                        "/business/admin/count/most-enroll"
+                    )
+                    .then((response) => {
+                        console.log("报名数最多的五门课");
+                        let resp = response.data;
+                        _this.mostEnroll = resp.content;
+                    });
+            },
+
+
+
+
             drawSaleChart() {
-                // 生成随机两组数据
-                let d1 = [];
-                for (let i = 0; i < 30; i += 1) {
-                    d1.push([i + 1, 2000 + Math.floor((Math.random()*100)+1)]);
-                }
-                let d2 = [];
-                for (let i = 0; i < 30; i += 1) {
-                    d2.push([i + 1, 1900 + Math.floor((Math.random()*100)+1)]);
-                }
+                //获取最近30天每天注册的会员数
+                let _this = this;
+                _this.$ajax
+                    .get(
+                        process.env.VUE_APP_SERVER +
+                        "/business/admin/count/member-analyse"
+                    )
+                    .then((response) => {
+                        console.log("获取最近30天每天注册的会员数");
+                        let resp = response.data;
+                        _this.memberAnalyse = resp.content;
 
-                let sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
-                $.plot("#sales-charts", [
-                    { label: "最近30天", data: d1 },
-                    { label: "上一周期", data: d2 },
-                ], {
-                    hoverable: true,
-                    shadowSize: 0,
-                    series: {
-                        lines: { show: true },
-                        points: { show: true }
-                    },
-                    xaxis: {
-                        tickLength: 0
-                    },
-                    yaxis: {
-                        tickLength: 0
-                    },
-                    grid: {
-                        backgroundColor: { colors: [ "#fff", "#fff" ] },
-                        borderWidth: 1,
-                        borderColor:'#555'
-                    }
-                });
-            },
-
-            drawPieChart() {
-                let placeholder = $('#piechart-placeholder').css({'width':'90%' , 'min-height':'180px'});
-                let data = [
-                    { label: "Java",  data: 38.7, color: "#68BC31"},
-                    { label: "Python",  data: 24.5, color: "#2091CF"},
-                    { label: "Android",  data: 18.6, color: "#DA5430"},
-                    { label: "其它",  data: 10, color: "#FEE074"},
-                ];
-                $.plot(placeholder, data, {
-                    series: {
-                        pie: {
-                            show: true,
-                            tilt:0.8,
-                            highlight: {
-                                opacity: 0.25
-                            },
-                            stroke: {
-                                color: '#fff',
-                                width: 2
-                            },
-                            startAngle: 2
+                        let d1 = [];
+                        for (let i = 0; i < 30; i += 1) {
+                            d1.push([i + 1, response.data.content[i]]);
                         }
-                    },
-                    legend: {
-                        show: true,
-                        position: "ne",
-                        labelBoxBorderColor: null,
-                        margin:[-30,15]
-                    }
-                    ,
-                    grid: {
-                        hoverable: true,
-                        clickable: true
-                    }
-                })
+
+                        let sales_charts = $('#sales-charts').css({'width':'100%' , 'height':'220px'});
+                        $.plot("#sales-charts", [
+                            { label: "最近30天", data: d1 },
+                        ], {
+                            hoverable: true,
+                            shadowSize: 0,
+                            series: {
+                                lines: { show: true },
+                                points: { show: true }
+                            },
+                            xaxis: {
+                                tickLength: 0
+                            },
+                            yaxis: {
+                                tickLength: 0
+                            },
+                            grid: {
+                                backgroundColor: { colors: [ "#fff", "#fff" ] },
+                                borderWidth: 1,
+                                borderColor:'#555'
+                            }
+                        });
+                    });
             },
+
+            drawCourseChart() {
+                //获取最近30天每天报名课程的数量
+                let _this = this;
+                _this.$ajax
+                    .get(
+                        process.env.VUE_APP_SERVER +
+                        "/business/admin/count/course-analyse"
+                    )
+                    .then((response) => {
+                        console.log("获取最近30天每天报名课程的数量");
+                        let resp = response.data;
+                        _this.courseAnalyse = resp.content;
+
+                        let d1 = [];
+                        for (let i = 0; i < 30; i += 1) {
+                            d1.push([i + 1, response.data.content[i]]);
+                        }
+
+                        let sales_charts = $('#course-charts').css({'width':'100%' , 'height':'220px'});
+                        $.plot("#course-charts", [
+                            { label: "最近30天", data: d1 },
+                        ], {
+                            hoverable: true,
+                            shadowSize: 0,
+                            series: {
+                                lines: { show: true },
+                                points: { show: true }
+                            },
+                            xaxis: {
+                                tickLength: 0
+                            },
+                            yaxis: {
+                                tickLength: 0
+                            },
+                            grid: {
+                                backgroundColor: { colors: [ "#fff", "#fff" ] },
+                                borderWidth: 1,
+                                borderColor:'#555'
+                            }
+                        });
+                    });
+            },
+
         }
     }
 </script>

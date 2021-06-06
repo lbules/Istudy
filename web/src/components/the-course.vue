@@ -3,7 +3,7 @@
         <img class="img-fluid" style="width: 345px;height: 192px;" v-bind:src="course.image">
         <div class="card-body">
             <h4 class="">{{course.name}}</h4>
-            <p class="card-text">{{course.summary}}</p>
+            <p class="card-text" style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">{{course.summary}}</p>
             <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
                     <router-link v-bind:to="'/courseDetail?id=' + course.id" class="btn btn-outline-secondary">课程详情</router-link>

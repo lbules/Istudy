@@ -38,10 +38,8 @@
                     </h1>
                 </div>
                 <div class="row">
-                    <div class="row">
-                        <div v-for="o in news" :key=o.id class="col-md-4">
-                            <new-course v-bind:newcourse="o"></new-course>
-                        </div>
+                    <div v-for="o in hot" :key=o.id class="col-md-4">
+                        <hot-course v-bind:hotCourse="o"></hot-course>
                     </div>
                 </div>
             </div>
@@ -53,23 +51,24 @@
 <script>
 
     import NewCourse from "../components/new-course";
+    import HotCourse from "../components/hot-course"
     export default {
         name: 'index',
-        components: {NewCourse},
+        components: {NewCourse,HotCourse},
         data: function () {
             return {
                 news: [], //最新课程
+                hot:[], //最多报名
             }
         },
 
         mounted() {
             let _this = this;
-            console.log("hello!")
             _this.listNew();
+            _this.listHot();
         },
         methods: {
             listNew() {
-                console.log("kaissjil")
                 let _this = this;
                 _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/course/list-new').then((response) => {
                     console.log("查询新上好课结果：", response);
@@ -80,7 +79,21 @@
                 }).catch((response) => {
                     console.log("error：", response);
                 })
+            },
+
+            listHot() {
+                let _this = this;
+                _this.$ajax.get(process.env.VUE_APP_SERVER + '/business/web/course/list-hot').then((response) => {
+                    console.log("查询新上好课结果：", response);
+                    let resp = response.data;
+                    if (resp.success) {
+                        _this.hot = resp.content;
+                    }
+                }).catch((response) => {
+                    console.log("error：", response);
+                })
             }
+
         }
 
     }

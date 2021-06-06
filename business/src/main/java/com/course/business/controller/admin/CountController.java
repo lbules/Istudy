@@ -71,5 +71,17 @@ public class CountController {
         return responseDto;
     }
 
+    //获取近一个月会员注册数量
+    @RequestMapping("/course-analyse")
+    public ResponseDto courseAnalyse() {
+        ResponseDto responseDto = new ResponseDto();
+        //存放近一个月的会员注册数量
+        ArrayList enrollArray= new ArrayList();
+        enrollArray = countService.courseAnalyse();
+        responseDto.setContent(enrollArray);
+
+        return responseDto;
+    }
+
 
 }

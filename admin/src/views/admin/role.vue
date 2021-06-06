@@ -14,7 +14,7 @@
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
-                <th>id</th>
+                <!--<th>id</th>-->
                 <th>角色</th>
                 <th>描述</th>
                 <th>操作</th>
@@ -22,7 +22,7 @@
             </thead>
             <tbody>
             <tr v-for="role in roles">
-                <td>{{role.id}}</td>
+                <!--<td>{{role.id}}</td>-->
                 <td>{{role.name}}</td>
                 <td>{{role.desc}}</td>
                 <td>
@@ -62,7 +62,7 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">表单</h4>
+                        <h4 class="modal-title">新增角色</h4>
                     </div>
                     <div class="modal-body">
 

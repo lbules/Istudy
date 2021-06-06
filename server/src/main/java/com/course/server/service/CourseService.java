@@ -177,6 +177,20 @@ public class CourseService {
         return CopyUtil.copyList(courseList, CourseDto.class);
     }
 
+    /**
+     * 新课列表查询，只查询已发布的，按创建日期倒序
+     */
+    public List<CourseDto> listHot(PageDto pageDto) {
+        PageHelper.startPage(pageDto.getPage(), pageDto.getSize());
+        CourseExample courseExample = new CourseExample();
+        //只有已发布的才会显示，课程有草稿和已发布两种状态
+        courseExample.createCriteria().andStatusEqualTo(CourseStatusEnum.PUBLISH.getCode());
+        //时间倒叙排序
+        courseExample.setOrderByClause("enroll desc");
+        List<Course> courseList = courseMapper.selectByExample(courseExample);
+        return CopyUtil.copyList(courseList, CourseDto.class);
+    }
+
 
     /**
      * 查找某一课程，包括该课程的大章、小节、讲师等信息，只能查已发布的

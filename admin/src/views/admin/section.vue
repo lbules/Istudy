@@ -108,18 +108,18 @@
                                 <input v-model="section.title" class="form-control">
                               </div>
                             </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">课程</label>
-                              <div class="col-sm-10">
-                                  <p class="form-control-static">{{course.name}}</p>
-                              </div>
-                            </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">大章</label>
-                              <div class="col-sm-10">
-                                  <p class="form-control-static">{{chapter.name}}</p>
-                              </div>
-                            </div>
+                            <!--<div class="form-group">-->
+                              <!--<label class="col-sm-2 control-label">课程</label>-->
+                              <!--<div class="col-sm-10">-->
+                                  <!--<p class="form-control-static">{{course.name}}</p>-->
+                              <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                              <!--<label class="col-sm-2 control-label">大章</label>-->
+                              <!--<div class="col-sm-10">-->
+                                  <!--<p class="form-control-static">{{chapter.name}}</p>-->
+                              <!--</div>-->
+                            <!--</div>-->
                             <div class="form-group">
                               <label class="col-sm-2 control-label">视频</label>
                               <div class="col-sm-10">
@@ -144,25 +144,25 @@
 
                               </div>
                             </div>
-                            <div class="form-group">
-                              <label class="col-sm-2 control-label">时长</label>
-                              <div class="col-sm-10">
-                                <input v-model="section.time" class="form-control" disabled>
-                              </div>
-                            </div>
+                            <!--<div class="form-group">-->
+                              <!--<label class="col-sm-2 control-label">时长</label>-->
+                              <!--<div class="col-sm-10">-->
+                                <!--<input v-model="section.time" class="form-control" disabled>-->
+                              <!--</div>-->
+                            <!--</div>-->
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">视频</label>
-                                <div class="col-sm-10">
-                                    <input v-model="section.video" class="form-control" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">VOD</label>
-                                <div class="col-sm-10">
-                                    <input v-model="section.vod" class="form-control" disabled>
-                                </div>
-                            </div>
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-2 control-label">视频</label>-->
+                                <!--<div class="col-sm-10">-->
+                                    <!--<input v-model="section.video" class="form-control" disabled>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-2 control-label">VOD</label>-->
+                                <!--<div class="col-sm-10">-->
+                                    <!--<input v-model="section.vod" class="form-control" disabled>-->
+                                <!--</div>-->
+                            <!--</div>-->
                             <div class="form-group">
                               <label class="col-sm-2 control-label">类型</label>
                               <div class="col-sm-10">
@@ -329,7 +329,7 @@
                 setTimeout(function () {
                     let ele = document.getElementById("video");
                     _this.section.time = parseInt(ele.duration, 10);
-                }, 8000);
+                }, 6000);
             },
             /**
              * 播放视频
@@ -337,7 +337,12 @@
              */
             play(section) {
                 let _this = this;
-                _this.$refs.modalPlayer.playVod(section.vod);
+                if (_this.section.vod ===null) {
+                    Toast.warning("还未上传视频！");
+                }else {
+                    _this.$refs.modalPlayer.playVod(section.vod);
+                }
+
             }
 
         }

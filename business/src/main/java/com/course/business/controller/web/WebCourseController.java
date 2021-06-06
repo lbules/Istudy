@@ -28,15 +28,26 @@ public class WebCourseController {
     private CourseService courseService;
 
     /**
-     * 列表查询，查询最新的3门已发布的课程
+     * 列表查询，查询最新的6门已发布的课程
      */
     @GetMapping("/list-new")
     public ResponseDto listNew() {
         PageDto pageDto = new PageDto();
         pageDto.setPage(1);
-        pageDto.setSize(3);
+        pageDto.setSize(6);
         ResponseDto responseDto = new ResponseDto();
         List<CourseDto> courseDtoList = courseService.listNew(pageDto);
+        responseDto.setContent(courseDtoList);
+        return responseDto;
+    }
+
+    @GetMapping("/list-hot")
+    public ResponseDto listHot() {
+        PageDto pageDto = new PageDto();
+        pageDto.setPage(1);
+        pageDto.setSize(6);
+        ResponseDto responseDto = new ResponseDto();
+        List<CourseDto> courseDtoList = courseService.listHot(pageDto);
         responseDto.setContent(courseDtoList);
         return responseDto;
     }

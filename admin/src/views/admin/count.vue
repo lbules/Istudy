@@ -123,6 +123,31 @@
                 <div class="space-12"></div>
             </div><!-- /.col -->
 
+            <!--新报名数据曲线-->
+            <div class="col-sm-12">
+                <div class="widget-box transparent">
+                    <div class="widget-header widget-header-flat">
+                        <h4 class="widget-title lighter">
+                            <i class="ace-icon fa fa-signal"></i>
+                            课程报名
+                        </h4>
+
+                    </div>
+
+                    <div class="widget-body">
+                        <div class="widget-main padding-4">
+                            <div id="course-charts"></div>
+                        </div><!-- /.widget-main -->
+                    </div><!-- /.widget-body -->
+                </div><!-- /.widget-box -->
+
+                <div class="space-12"></div>
+
+                <div class="hr hr2 hr-double"></div>
+
+                <div class="space-12"></div>
+            </div><!-- /.col -->
+
             <!--课程销售排行-->
             <div class="col-sm-6">
                 <div class="widget-box transparent">
@@ -203,6 +228,7 @@
             _this.drawSaleChart();
             _this.getAllCount();
             _this.getMostEnroll();
+            _this.drawCourseChart();
 
         },
         data: function () {
@@ -258,7 +284,6 @@
                         console.log("获取最近30天每天注册的会员数");
                         let resp = response.data;
                         _this.memberAnalyse = resp.content;
-                        console.log("测试获取数组"+response.data.content[1]);
 
                         let d1 = [];
                         for (let i = 0; i < 30; i += 1) {
@@ -288,10 +313,49 @@
                             }
                         });
                     });
+            },
 
+            drawCourseChart() {
+                //获取最近30天每天报名课程的数量
+                let _this = this;
+                _this.$ajax
+                    .get(
+                        process.env.VUE_APP_SERVER +
+                        "/business/admin/count/course-analyse"
+                    )
+                    .then((response) => {
+                        console.log("获取最近30天每天报名课程的数量");
+                        let resp = response.data;
+                        _this.courseAnalyse = resp.content;
 
+                        let d1 = [];
+                        for (let i = 0; i < 30; i += 1) {
+                            d1.push([i + 1, response.data.content[i]]);
+                        }
 
-
+                        let sales_charts = $('#course-charts').css({'width':'100%' , 'height':'220px'});
+                        $.plot("#course-charts", [
+                            { label: "最近30天", data: d1 },
+                        ], {
+                            hoverable: true,
+                            shadowSize: 0,
+                            series: {
+                                lines: { show: true },
+                                points: { show: true }
+                            },
+                            xaxis: {
+                                tickLength: 0
+                            },
+                            yaxis: {
+                                tickLength: 0
+                            },
+                            grid: {
+                                backgroundColor: { colors: [ "#fff", "#fff" ] },
+                                borderWidth: 1,
+                                borderColor:'#555'
+                            }
+                        });
+                    });
             },
 
         }

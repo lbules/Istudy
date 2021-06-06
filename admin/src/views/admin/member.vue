@@ -5,7 +5,7 @@
         <table id="simple-table" class="table  table-bordered table-hover">
             <thead>
             <tr>
-                        <th>id</th>
+                        <!--<th>id</th>-->
                         <th>手机号</th>
                         <th>昵称</th>
                         <th>注册时间</th>
@@ -14,10 +14,10 @@
             </thead>
             <tbody>
             <tr v-for="member in members">
-                            <td>{{member.id}}</td>
+                            <!--<td>{{member.id}}</td>-->
                             <td>{{member.mobile}}</td>
                             <td>{{member.name}}</td>
-                            <td>{{member.registerTime}}</td>
+                            <td>{{member.registerTime.slice(0,10)}}</td>
                 <td>
                     <div class="hidden-sm hidden-xs btn-group">
 

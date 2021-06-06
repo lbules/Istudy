@@ -19,6 +19,10 @@
 
         <!--新增按钮--END-->
 
+        <!--分页组件-->
+        <pagination ref="pagination" v-bind:list="list" v-bind:itemCount="8"></pagination>
+        <!--分页组件--END-->
+
         <div class="row">
             <div v-for="course in courses" class="col-md-2" style="height: 400px">
                 <div class="thumbnail search-thumbnail">
@@ -45,10 +49,11 @@
                             </div>
                         </div>
 
-                        <p>{{course.summary}}</p>
+                        <p style="overflow:hidden; white-space:nowrap; text-overflow:ellipsis;">{{course.summary}}</p>
                         <p>
-                            <span class="badge badge-info">{{course.id}}</span>
-                            <span class="badge badge-info">排序：{{course.sort}}</span>
+                            <!--<span class="badge badge-info">{{course.id}}</span>-->
+                            <span v-show="course.enroll!=null" class="badge badge-info">报名人数：{{course.enroll}}</span>
+                            <span v-show="course.enroll===null" class="badge badge-info">报名人数：0</span>
                             <span class="badge badge-info">{{course.time | formatSecond}}</span>
                         </p>
                         <p>
@@ -73,9 +78,7 @@
             </div>
         </div>
 
-        <!--分页组件-->
-        <pagination ref="pagination" v-bind:list="list" v-bind:itemCount="8"></pagination>
-        <!--分页组件--END-->
+
 
         <!--模态框-->
         <div id="form-modal" class="modal fade" tabindex="-1" role="dialog">
@@ -168,19 +171,19 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">报名数</label>
-                                <div class="col-sm-10">
-                                    <input v-model="course.enroll" class="form-control" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">排序</label>
-                                <div class="col-sm-10">
-                                    <!--设置成不可编辑-->
-                                    <input v-model="course.sort" class="form-control" disabled>
-                                </div>
-                            </div>
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-2 control-label">报名数</label>-->
+                                <!--<div class="col-sm-10">-->
+                                    <!--<input v-model="course.enroll" class="form-control" disabled>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label class="col-sm-2 control-label">排序</label>-->
+                                <!--<div class="col-sm-10">-->
+                                    <!--&lt;!&ndash;设置成不可编辑&ndash;&gt;-->
+                                    <!--<input v-model="course.sort" class="form-control" disabled>-->
+                                <!--</div>-->
+                            <!--</div>-->
 
                         </form>
                     </div>

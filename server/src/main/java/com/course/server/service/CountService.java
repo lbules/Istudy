@@ -123,4 +123,21 @@ public class CountService {
         }
         return memberArray;
     }
+
+    //最近30天报名人数数据
+    public ArrayList courseAnalyse() {
+        ArrayList memberArray = new ArrayList();
+        //获取现在的时间
+        Date now  = new Date();
+
+        for (int i=0;i<30;i++) {
+            //时间间隔为1天
+            MemberCourseExample memberCourseExample = new MemberCourseExample();
+            Date pre = new Date(now.getTime()-i*24*60*60*1000);
+            Date next = new Date(now.getTime()-(i+1)*24*60*60*1000);
+            memberCourseExample.createCriteria().andAtBetween(next,pre);
+            memberArray.add(memberCourseMapper.countByExample(memberCourseExample));
+        }
+        return memberArray;
+    }
 }
